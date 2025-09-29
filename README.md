@@ -33,108 +33,146 @@ Chickalo enables users to appear on an interactive map as anonymous avatars when
 
 ## Tech Stack
 
-### Frontend
-- **React Native** - Cross-platform mobile development
-- **React Navigation** - Navigation between screens
-- **Redux/Context API** - State management
-- **React Native Maps** - Map integration
+### Frontend (Expo)
+- **Expo** - Cross-platform mobile development framework
+- **React Native** - Mobile app framework (via Expo)
+- **TypeScript** - Type-safe JavaScript
+- **React Navigation** - Screen navigation
+- **Expo Location** - GPS and location services
+- **Expo Maps** - Interactive map components
+- **Expo SQLite** - Local database storage
+- **Socket.io Client** - Real-time communication
+- **Axios** - HTTP client for API calls
 
-### Backend
-- **Node.js** - Runtime environment
-- **Express.js** - Web framework
-- **Socket.io** - Real-time communication
+### Backend (Python Flask)
+- **Flask** - Python web framework
+- **Flask-SocketIO** - Real-time communication
 - **PostgreSQL** - Primary database
-- **PostGIS** - Geographic data extension
-
-### Authentication & Security
-- **Firebase Auth** - User authentication
-- **JWT** - Token-based authentication
-
-### Maps & Location
-- **Google Maps API** - Map rendering and geocoding
-- **React Native Maps** - Mobile map integration
+- **psycopg2** - PostgreSQL adapter
+- **Flask-CORS** - Cross-origin resource sharing
+- **Flask-SQLAlchemy** - Database ORM
+- **Flask-Migrate** - Database migrations
+- **Python-dotenv** - Environment configuration
+- **PyJWT** - JSON Web Tokens
+- **bcrypt** - Password hashing
+- **geopy** - Geographic calculations
 
 ### Development Tools
 - **Git** - Version control
-- **ESLint** - Code linting
-- **Jest** - Testing framework
+- **Python Virtual Environment** - Backend dependency isolation
+- **Node.js (NVM)** - Frontend development
+- **PostgreSQL** - Database server
+- **Expo CLI** - Mobile development
 
 ## Project Structure
 
 ```
 chickalo/
-├── mobile/              # React Native app
+├── mobile/              # Expo app
+│   ├── App.tsx         # Main app component
+│   ├── index.ts        # App entry point
+│   ├── app.json        # Expo configuration
+│   ├── package.json    # Dependencies
+│   ├── tsconfig.json   # TypeScript config
+│   └── assets/         # Images and icons
+├── backend/            # Python Flask API
 │   ├── src/
-│   │   ├── components/  # Reusable components
-│   │   ├── screens/     # App screens
-│   │   ├── navigation/  # Navigation setup
-│   │   ├── services/    # API calls
-│   │   └── utils/       # Helper functions
-│   └── package.json
-├── backend/             # Node.js API
-│   ├── src/
+│   │   ├── app.py      # Flask application
+│   │   ├── database.py # Database connection
 │   │   ├── controllers/ # Route handlers
-│   │   ├── models/      # Database models
-│   │   ├── routes/      # API routes
-│   │   ├── middleware/  # Custom middleware
-│   │   └── utils/       # Helper functions
-│   └── package.json
-├── database/            # Database schemas and migrations
-└── docs/               # Documentation
+│   │   ├── models/     # Database models
+│   │   ├── routes/     # API routes
+│   │   ├── middleware/ # Custom middleware
+│   │   └── utils/      # Helper functions
+│   ├── database/
+│   │   └── schema.sql   # Database schema
+│   ├── venv/           # Python virtual environment
+│   └── requirements.txt # Python dependencies
+└── docs/              # Documentation
 ```
+
+## Current Status
+
+### ✅ Completed
+- **Project Architecture**: Full-stack setup with Expo frontend and Flask backend
+- **Database Setup**: PostgreSQL with complete schema (users, locations, friends)
+- **Backend API**: Flask server with Socket.io for real-time communication
+- **Frontend Foundation**: Expo app with location services, maps, and navigation
+- **Development Environment**: Virtual environment, dependencies, and tooling
+- **Dependencies**: All required packages installed and configured
+
+### 🚧 In Progress
+- **Core Functionality**: User authentication, map rendering, real-time location sharing
+- **UI/UX Development**: Avatar system, navigation, user interface
+
+### 📋 Next Steps
+- **User Authentication**: Login/register system
+- **Map Implementation**: Interactive map with user avatars
+- **Location Services**: Real-time proximity detection
+- **Testing**: User testing and feedback integration
 
 ## Development Setup
 
 ### Prerequisites
-- Node.js (v16 or higher)
-- React Native CLI
-- PostgreSQL
-- Android Studio / Xcode (for mobile development)
+- **Node.js** (v16+) - Install via NVM
+- **Python 3.12+** - For backend development
+- **PostgreSQL** - Database server
+- **Expo CLI** - Mobile development
+- **Git** - Version control
 
 ### Installation
 
-1. Clone the repository
+1. **Clone the repository**
 ```bash
 git clone <repository-url>
 cd chickalo
 ```
 
-2. Install backend dependencies
+2. **Backend Setup (Python)**
 ```bash
 cd backend
-npm install
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
 ```
 
-3. Install mobile dependencies
+3. **Database Setup**
 ```bash
-cd ../mobile
-npm install
+# Install PostgreSQL
+brew install postgresql
+brew services start postgresql
+
+# Create database
+createdb chickalo
+
+# Run schema
+psql chickalo -f backend/database/schema.sql
 ```
 
-4. Set up environment variables
+4. **Frontend Setup (Expo)**
 ```bash
-# Backend .env
-DATABASE_URL=postgresql://username:password@localhost:5432/chickalo
-JWT_SECRET=your-secret-key
-GOOGLE_MAPS_API_KEY=your-api-key
-
-# Mobile .env
-API_BASE_URL=http://localhost:3000
-GOOGLE_MAPS_API_KEY=your-api-key
+cd mobile
+npm install
 ```
 
 ### Running the Application
 
-1. Start the backend server
+1. **Start the backend server**
 ```bash
 cd backend
-npm run dev
+source venv/bin/activate
+python src/app.py
 ```
 
-2. Start the mobile app
+2. **Start the mobile app**
 ```bash
 cd mobile
-npx react-native run-android  # or run-ios
+npx expo start
+```
+
+3. **Test the API**
+```bash
+curl http://localhost:3000/health
 ```
 
 ## Key Technical Considerations
@@ -156,16 +194,16 @@ npx react-native run-android  # or run-ios
 
 ## Development Timeline
 
-- **Phase 1**: Project setup and architecture
-- **Phase 2**: Backend infrastructure
-- **Phase 3**: Mobile app foundation
-- **Phase 4**: Map implementation
-- **Phase 5**: Core features
-- **Phase 6**: Testing and polish
+- **Phase 1**: ✅ Project setup and architecture
+- **Phase 2**: ✅ Backend infrastructure and database
+- **Phase 3**: ✅ Mobile app foundation (Expo)
+- **Phase 4**: 🚧 Map implementation and location services
+- **Phase 5**: 📋 Core features (authentication, real-time updates)
+- **Phase 6**: 📋 Testing and polish
 
 ## Contributing
 
-This is a senior project for Cal Poly. For questions or contributions, please contact the project maintainer.
+This is a senior project for Cal Poly. For questions or contributions, please contact mfung06@calpoly.edu.
 
 ## License
 
