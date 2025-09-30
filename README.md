@@ -2,6 +2,9 @@
 
 *An anonymous, consent-based mobile app for spontaneous social interaction in public spaces*
 
+## Proposal Link 
+https://docs.google.com/document/d/15G8fIXyQHO87AUUBRo3NkDl85nDPth-3gokQ9nyrrN0/edit?usp=sharing 
+
 ## Overview
 
 Chickalo is a mobile application designed to bridge the gap between digital isolation and real-world social connection. In an increasingly digital world where organic spontaneous social interactions in public spaces have become rare, Chickalo facilitates anonymous, consent-based connections between individuals in shared physical spaces.
