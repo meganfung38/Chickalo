@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from database import db
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from auth import register_user, login_user, get_user_profile
 
 load_dotenv()
 
@@ -36,6 +37,19 @@ def health_check():
             'message': 'Database connection failed',
             'error': str(error)
         }), 500
+
+# Authentication routes
+@app.route('/api/auth/register', methods=['POST'])
+def register():
+    return register_user()
+
+@app.route('/api/auth/login', methods=['POST'])
+def login():
+    return login_user()
+
+@app.route('/api/auth/profile', methods=['GET'])
+def profile():
+    return get_user_profile()
 
 # Socket.io connection handling
 @socketio.on('connect')

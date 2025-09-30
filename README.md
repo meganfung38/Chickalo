@@ -46,6 +46,7 @@ Chickalo enables users to appear on an interactive map as anonymous avatars when
 - **Expo SQLite** - Local database storage
 - **Socket.io Client** - Real-time communication
 - **Axios** - HTTP client for API calls
+- **AsyncStorage** - Secure token storage
 
 ### Backend (Python Flask)
 - **Flask** - Python web framework
@@ -77,11 +78,16 @@ chickalo/
 │   ├── app.json        # Expo configuration
 │   ├── package.json    # Dependencies
 │   ├── tsconfig.json   # TypeScript config
+│   ├── src/
+│   │   ├── screens/    # Login, Register, Map screens
+│   │   ├── services/   # API calls and storage
+│   │   └── components/ # Reusable components
 │   └── assets/         # Images and icons
 ├── backend/            # Python Flask API
 │   ├── src/
 │   │   ├── app.py      # Flask application
 │   │   ├── database.py # Database connection
+│   │   ├── auth.py     # Authentication logic
 │   │   ├── controllers/ # Route handlers
 │   │   ├── models/     # Database models
 │   │   ├── routes/     # API routes
@@ -100,18 +106,21 @@ chickalo/
 - **Project Architecture**: Full-stack setup with Expo frontend and Flask backend
 - **Database Setup**: PostgreSQL with complete schema (users, locations, friends)
 - **Backend API**: Flask server with Socket.io for real-time communication
-- **Frontend Foundation**: Expo app with location services, maps, and navigation
+- **User Authentication**: Complete login/register system with JWT tokens
+- **Frontend Foundation**: Expo app with navigation and authentication screens
 - **Development Environment**: Virtual environment, dependencies, and tooling
-- **Dependencies**: All required packages installed and configured
+- **Network Configuration**: Mobile app configured for local development
 
 ### 🚧 In Progress
-- **Core Functionality**: User authentication, map rendering, real-time location sharing
-- **UI/UX Development**: Avatar system, navigation, user interface
-
-### 📋 Next Steps
-- **User Authentication**: Login/register system
 - **Map Implementation**: Interactive map with user avatars
 - **Location Services**: Real-time proximity detection
+- **Activity Toggle**: Show/hide functionality on map
+
+### 📋 Next Steps
+- **Map Integration**: Add Expo Maps to show user locations
+- **Location Services**: Implement GPS tracking and proximity detection
+- **Real-time Updates**: Socket.io integration for live location sharing
+- **Avatar System**: User avatar customization and display
 - **Testing**: User testing and feedback integration
 
 ## Development Setup
@@ -167,16 +176,46 @@ source venv/bin/activate
 python src/app.py
 ```
 
-2. **Start the mobile app**
+2. **Configure network access (for mobile testing)**
+```bash
+# Find your computer's IP address
+ipconfig getifaddr en0
+
+# Update mobile/src/services/api.ts with your IP address
+# Replace localhost with your IP: http://YOUR_IP:3000
+```
+
+3. **Start the mobile app**
 ```bash
 cd mobile
 npx expo start
 ```
 
-3. **Test the API**
+4. **Test the API**
 ```bash
 curl http://localhost:3000/health
 ```
+
+## Authentication System
+
+### **Implemented Features:**
+- ✅ **User Registration**: Email, password, headline, random username generation
+- ✅ **User Login**: Secure authentication with JWT tokens
+- ✅ **Password Security**: bcrypt hashing for password protection
+- ✅ **Token Management**: JWT tokens with 7-day expiration
+- ✅ **Session Persistence**: AsyncStorage for token storage
+- ✅ **Database Integration**: PostgreSQL with proper transaction handling
+
+### **API Endpoints:**
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/login` - User login
+- `GET /api/auth/profile` - Get user profile (requires JWT token)
+
+### **Mobile Screens:**
+- **LoginScreen**: Email/password login with validation
+- **RegisterScreen**: Account creation with headline
+- **MapScreen**: Main app interface with activity toggle
+- **Navigation**: Seamless flow between screens
 
 ## Key Technical Considerations
 
@@ -200,9 +239,10 @@ curl http://localhost:3000/health
 - **Phase 1**: ✅ Project setup and architecture
 - **Phase 2**: ✅ Backend infrastructure and database
 - **Phase 3**: ✅ Mobile app foundation (Expo)
-- **Phase 4**: 🚧 Map implementation and location services
-- **Phase 5**: 📋 Core features (authentication, real-time updates)
-- **Phase 6**: 📋 Testing and polish
+- **Phase 4**: ✅ User authentication system
+- **Phase 5**: 🚧 Map implementation and location services
+- **Phase 6**: 📋 Core features (real-time updates, proximity detection)
+- **Phase 7**: 📋 Testing and polish
 
 ## Contributing
 
