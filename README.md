@@ -176,13 +176,13 @@ source venv/bin/activate
 python src/app.py
 ```
 
-2. **Configure network access (for mobile testing)**
+2. **Configure network access (REQUIRED for mobile testing)**
 ```bash
 # Find your computer's IP address
-ipconfig getifaddr en0
+ifconfig | grep "inet " | grep -v 127.0.0.1
 
 # Update mobile/src/services/api.ts with your IP address
-# Replace localhost with your IP: http://YOUR_IP:3000
+# Replace the API_BASE_URL with your current IP: http://YOUR_IP:3000
 ```
 
 3. **Start the mobile app**
@@ -193,8 +193,46 @@ npx expo start
 
 4. **Test the API**
 ```bash
-curl http://localhost:3000/health
+curl http://YOUR_IP:3000/health
 ```
+
+## Network Configuration (Important!)
+
+### **IP Address Changes**
+Your computer's IP address may change when you:
+- Reconnect to WiFi
+- Switch between different networks
+- Restart your computer
+- Move to a different location
+
+### **How to Update API Configuration**
+
+1. **Find your current IP address:**
+```bash
+ifconfig | grep "inet " | grep -v 127.0.0.1
+```
+
+2. **Update the mobile app configuration:**
+   - Open `mobile/src/services/api.ts`
+   - Find the line: `const API_BASE_URL = 'http://YOUR_IP:3000';`
+   - Replace `YOUR_IP` with your current IP address
+
+3. **Test the connection:**
+```bash
+curl http://YOUR_IP:3000/health
+```
+
+4. **Restart the mobile app:**
+```bash
+cd mobile
+npx expo start
+```
+
+### **Troubleshooting Network Issues**
+
+- **"Network Error"**: Your IP address has changed - update the API_BASE_URL
+- **"Connection refused"**: Backend server is not running - start it with `python src/app.py`
+- **"Cannot find module"**: Clear Expo cache with `npx expo start --clear`
 
 ## Authentication System
 
