@@ -1,96 +1,85 @@
-import React, { useState, useEffect } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Alert,
-  Switch,
-} from 'react-native';
-import { authAPI } from '../services/api';
+import React from 'react';
+import { View, Text } from 'react-native';
+// WebView will be added when react-native-webview is installed
+// import { WebView } from 'react-native-webview';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
+import { styles } from '../styles';
+import { MapScreenProps } from '../types';
 
-interface MapScreenProps {
-  user: any;
-  isActive: boolean;
-  onToggleActivity: () => void;
-  onNavigateToSettings: () => void;
-}
-
-const MapScreen: React.FC<MapScreenProps> = ({ user, isActive, onToggleActivity, onNavigateToSettings }) => {
-
-  const handleNavigateToMap = () => {
-    // Already on map screen, do nothing or scroll to top
+const MapScreen: React.FC<MapScreenProps> = ({ 
+  user, 
+  isActive, 
+  onToggleActivity, 
+  onNavigateToSettings 
+}) => {
+  const onNavigateToMap = () => {
+    // Already on map screen, do nothing
   };
 
+  const mapHTML = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        body { margin: 0; padding: 20px; font-family: Arial, sans-serif; }
+        .map-container { 
+          width: 100%; 
+          height: 400px; 
+          background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 2px solid #90caf9;
+        }
+        .placeholder { 
+          text-align: center; 
+          color: #1976d2;
+          font-size: 18px;
+          font-weight: bold;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="map-container">
+        <div class="placeholder">
+          🗺️<br>
+          Interactive Map<br>
+          <small>Coming Soon</small>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
   return (
-    <View style={styles.container}>
+    <View style={styles.mapContainer}>
       {/* Header */}
       <Header username={user.username} isActive={isActive} />
       
       {/* Main Content - Map View */}
-      <View style={styles.content}>
-        {/* Map Container - Full Screen */}
-        <View style={styles.mapContainer}>
-          <Text style={styles.mapText}>🗺️ Interactive Map</Text>
-          <Text style={styles.mapSubtext}>
-            {isActive ? 'You are visible to others nearby' : 'You are hidden from the map'}
-          </Text>
-          <Text style={styles.mapPlaceholder}>
-            Map implementation coming soon...
-          </Text>
+      <View style={styles.mapContent}>
+        {/* Placeholder for WebView - will be enabled when react-native-webview is installed */}
+        <View style={styles.webView}>
+          <View style={styles.centered}>
+            <Text style={styles.bodyText}>🗺️ Interactive Map Coming Soon</Text>
+          </View>
         </View>
       </View>
 
-      {/* Floating Bottom Navigation */}
+      {/* Bottom Navigation */}
       <BottomNavigation
         currentScreen="map"
         isActive={isActive}
         onToggleActivity={onToggleActivity}
-        onNavigateToMap={handleNavigateToMap}
+        onNavigateToMap={onNavigateToMap}
         onNavigateToSettings={onNavigateToSettings}
         userAvatarData={user.avatar_data}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white', // Clean white background
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 0, // Remove horizontal padding for full width map
-    paddingBottom: 120, // Add space so content doesn't get hidden under floating nav
-  },
-  mapContainer: {
-    flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 0, // Full width and height
-    borderRadius: 0, // Remove border radius for full coverage
-  },
-  mapText: {
-    fontSize: 28,
-    marginBottom: 15,
-  },
-  mapSubtext: {
-    fontSize: 16,
-    color: '#666',
-    textAlign: 'center',
-    marginBottom: 20,
-    paddingHorizontal: 20,
-  },
-  mapPlaceholder: {
-    fontSize: 14,
-    color: '#999',
-    textAlign: 'center',
-    paddingHorizontal: 20,
-  },
-});
 
 export default MapScreen;

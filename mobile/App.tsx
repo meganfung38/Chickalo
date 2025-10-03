@@ -1,23 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
+import { View, Alert } from 'react-native';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import MapScreen from './src/screens/MapScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import { authAPI, storageAPI } from './src/services/api';
-
-type Screen = 'login' | 'register' | 'map' | 'settings';
-
-interface User {
-  id: number;
-  username: string;
-  email: string;
-  headline: string;
-  avatar_data: any;
-  pronouns: string | null;
-  is_active: boolean;
-  created_at: string;
-}
+import { styles } from './src/styles';
+import { User, Screen } from './src/types';
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('login');
@@ -150,11 +139,6 @@ const App: React.FC = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-});
+// Styles now imported from unified system
 
 export default App;

@@ -2,304 +2,244 @@ import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
-  TouchableOpacity,
   TextInput,
-  Alert,
+  TouchableOpacity,
   ScrollView,
+  Alert,
   Modal,
-  Dimensions,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import { authAPI, storageAPI } from '../services/api';
 import DiceBearAvatar from '../components/DiceBearAvatar';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
+import { styles } from '../styles';
+import { AVATAR_OPTIONS, getDefaultAvatarSettings, PRONOUN_OPTIONS } from '../constants/avatar';
+import { SettingsScreenProps, AvatarSettings } from '../types';
 
 const { width: screenWidth } = Dimensions.get('window');
 
-interface SettingsScreenProps {
-  user: any;
-  isActive: boolean;
-  onToggleActivity: () => void;
-  onBack: () => void;
-  onLogout: () => void;
-  onUserUpdate: (user: any) => void;
-}
-
-interface AvatarSettings {
-  style: string;
-  seed: string;
-  backgroundColor?: string[];
-  // DiceBear Big Smile schema options
-  accessories?: string[];
-  accessoriesChance?: number;
-  eyes?: string[];
-  eyesChance?: number;
-  mouth?: string[];
-  mouthChance?: number;
-  hair?: string[];
-  hairChance?: number;
-  hairColor?: string[];
-  skinColor?: string[];
-}
-
-const SettingsScreen: React.FC<SettingsScreenProps> = ({ user, isActive, onToggleActivity, onBack, onLogout, onUserUpdate }) => {
+const SettingsScreen: React.FC<SettingsScreenProps> = ({ 
+  user, 
+  isActive, 
+  onToggleActivity, 
+  onBack, 
+  onLogout, 
+  onUserUpdate 
+}) => {
   const [headline, setHeadline] = useState(user.headline || '');
   const [pronouns, setPronouns] = useState(user.pronouns || '');
   const [showPronounsModal, setShowPronounsModal] = useState(false);
 
-  const pronounsOptions = [
-    'they/them',
-    'she/her', 
-    'he/him',
-    'she/they',
-    'he/they',
-    'any pronouns',
-    'ask me',
-    'prefer not to say'
-  ];
-  const getDefaultAvatarSettings = (): AvatarSettings => ({
-    style: 'big-smile',
-    seed: Math.random().toString(36).substring(2, 15), // Random seed instead of username
-    backgroundColor: ['b6e3f4'],
-    accessories: ['glasses'],
-    accessoriesChance: 50,
-    eyes: ['normal'],
-    eyesChance: 100,
-    mouth: ['openedSmile'],
-    mouthChance: 100,
-    hair: ['shortHair'],
-    hairChance: 100,
-    hairColor: ['71472d'],
-    skinColor: ['ffe4c0']
-  });
+  // Use centralized default avatar settings with proper typing
+  const getDefaultAvatarSettingsLocal = (): AvatarSettings => {
+    const defaults = getDefaultAvatarSettings();
+    return {
+      ...defaults,
+      seed: Math.random().toString(36).substring(2, 15), // Random seed
+      accessoriesChance: 0,
+      eyesChance: 100,
+      mouthChance: 100,
+      hairChance: 100,
+    } as AvatarSettings;
+  };
 
-  const [avatarSettings, setAvatarSettings] = useState<AvatarSettings>(() => {
+  // Separate state for saved avatar (what's displayed) vs editing avatar (what's being customized)
+  const [savedAvatarSettings, setSavedAvatarSettings] = useState<AvatarSettings>(() => {
     if (user.avatar_data && typeof user.avatar_data === 'object') {
       return {
-        ...getDefaultAvatarSettings(),
+        ...getDefaultAvatarSettingsLocal(),
         ...user.avatar_data
       };
     }
-    return getDefaultAvatarSettings();
+    return getDefaultAvatarSettingsLocal();
   });
+  
+  const [editingAvatarSettings, setEditingAvatarSettings] = useState<AvatarSettings>(savedAvatarSettings);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
-  // DiceBear Big Smile options based on official schema
-  const avatarOptions = [
-    {
-      id: 'backgroundColor',
-      title: 'Background',
-      options: [
-        { name: 'Blue', value: 'b6e3f4' },
-        { name: 'Purple', value: 'c0aede' },
-        { name: 'Lavender', value: 'd1d4f9' },
-        { name: 'Pink', value: 'ffd5dc' },
-        { name: 'Orange', value: 'ffdfbf' },
-        { name: 'Green', value: 'c7f9cc' },
-        { name: 'Yellow', value: 'fff2cc' },
-        { name: 'Red', value: 'fca5a5' },
-        { name: 'Teal', value: '5eead4' }
-      ]
-    },
-    {
-      id: 'skinColor',
-      title: 'Skin Color',
-      options: [
-        { name: 'Light', value: 'ffe4c0' },
-        { name: 'Fair', value: 'f5d7b1' },
-        { name: 'Medium', value: 'efcc9f' },
-        { name: 'Tan', value: 'e2ba87' },
-        { name: 'Brown', value: 'c99c62' },
-        { name: 'Dark', value: 'a47539' },
-        { name: 'Deep', value: '8c5a2b' },
-        { name: 'Rich', value: '643d19' }
-      ]
-    },
-    {
-      id: 'hair',
-      title: 'Hair Style',
-      options: [
-        { name: 'Short Hair', value: 'shortHair' },
-        { name: 'Mohawk', value: 'mohawk' },
-        { name: 'Wavy Bob', value: 'wavyBob' },
-        { name: 'Bowl Cut', value: 'bowlCutHair' },
-        { name: 'Curly Bob', value: 'curlyBob' },
-        { name: 'Straight Hair', value: 'straightHair' },
-        { name: 'Braids', value: 'braids' },
-        { name: 'Shaved Head', value: 'shavedHead' },
-        { name: 'Bun Hair', value: 'bunHair' },
-        { name: 'Fro Bun', value: 'froBun' },
-        { name: 'Bangs', value: 'bangs' },
-        { name: 'Half Shaved', value: 'halfShavedHead' },
-        { name: 'Curly Short', value: 'curlyShortHair' }
-      ]
-    },
-    {
-      id: 'hairColor',
-      title: 'Hair Color',
-      options: [
-        { name: 'Dark Red', value: '220f00' },
-        { name: 'Dark Brown', value: '3a1a00' },
-        { name: 'Brown', value: '71472d' },
-        { name: 'Light Brown', value: 'e2ba87' },
-        { name: 'Purple', value: '605de4' },
-        { name: 'Teal', value: '238d80' },
-        { name: 'Orange', value: 'd56c0c' },
-        { name: 'Blonde', value: 'e9b729' }
-      ]
-    },
-    {
-      id: 'eyes',
-      title: 'Eyes',
-      options: [
-        { name: 'Cheery', value: 'cheery' },
-        { name: 'Normal', value: 'normal' },
-        { name: 'Confused', value: 'confused' },
-        { name: 'Starstruck', value: 'starstruck' },
-        { name: 'Winking', value: 'winking' },
-        { name: 'Sleepy', value: 'sleepy' },
-        { name: 'Sad', value: 'sad' },
-        { name: 'Angry', value: 'angry' }
-      ]
-    },
-    {
-      id: 'mouth',
-      title: 'Mouth',
-      options: [
-        { name: 'Opened Smile', value: 'openedSmile' },
-        { name: 'Unimpressed', value: 'unimpressed' },
-        { name: 'Gap Smile', value: 'gapSmile' },
-        { name: 'Open Sad', value: 'openSad' },
-        { name: 'Teeth Smile', value: 'teethSmile' },
-        { name: 'Awkward Smile', value: 'awkwardSmile' },
-        { name: 'Braces', value: 'braces' },
-        { name: 'Kawaii', value: 'kawaii' }
-      ]
-    },
-    {
-      id: 'accessories',
-      title: 'Accessories',
-      options: [
-        { name: 'None', value: 'none' },
-        { name: 'Cat Ears', value: 'catEars' },
-        { name: 'Glasses', value: 'glasses' },
-        { name: 'Sailor Crown', value: 'sailormoonCrown' },
-        { name: 'Clown Nose', value: 'clownNose' },
-        { name: 'Sleep Mask', value: 'sleepMask' },
-        { name: 'Sunglasses', value: 'sunglasses' },
-        { name: 'Face Mask', value: 'faceMask' },
-        { name: 'Mustache', value: 'mustache' }
-      ]
-    }
-  ];
+  // Convert centralized avatar options to the format expected by the component
+  const avatarOptions = Object.entries(AVATAR_OPTIONS).map(([key, options]) => ({
+    id: key,
+    title: key === 'backgroundColor' ? 'Background' : 
+           key === 'skinColor' ? 'Skin Color' :
+           key === 'hair' ? 'Hair Style' :
+           key === 'hairColor' ? 'Hair Color' :
+           key === 'eyes' ? 'Eyes' :
+           key === 'mouth' ? 'Mouth' :
+           key === 'accessories' ? 'Accessories' : key,
+    options: options.map(option => ({ name: option.label, value: option.value }))
+  }));
 
   const updateAvatarSetting = (key: string, value: string) => {
-    setAvatarSettings(prev => {
+    setEditingAvatarSettings(prev => {
       // Create a unique seed based on the combination of all settings
       const newSettings = {
         ...prev,
         [key]: [value]
       };
       
-      // Generate a unique seed that incorporates all the current settings
-      const seedComponents = [
-        newSettings.backgroundColor?.[0] || 'b6e3f4',
-        newSettings.skinColor?.[0] || 'ffe4c0',
-        newSettings.hair?.[0] || 'shortHair',
-        newSettings.hairColor?.[0] || '71472d',
-        newSettings.eyes?.[0] || 'normal',
-        newSettings.mouth?.[0] || 'openedSmile',
-        newSettings.accessories?.[0] || 'glasses'
-      ];
+      // Generate a unique seed based on all current settings
+      const seedString = Object.entries(newSettings)
+        .filter(([k, v]) => k !== 'seed' && Array.isArray(v) && v.length > 0)
+        .map(([k, v]) => `${k}:${(v as string[])[0]}`)
+        .join('|');
       
-      newSettings.seed = seedComponents.join('-');
+      newSettings.seed = btoa(seedString).substring(0, 12);
       
-      console.log('Updated avatar settings:', newSettings);
-      console.log('New seed generated:', newSettings.seed);
       return newSettings;
     });
   };
 
-  const nextSlide = () => {
-    const next = (currentSlide + 1) % avatarOptions.length;
-    setCurrentSlide(next);
-    flatListRef.current?.scrollToIndex({ index: next, animated: true });
+  const randomizeAvatar = () => {
+    const newSettings: AvatarSettings = {
+      style: 'big-smile',
+      seed: Math.random().toString(36).substring(2, 15),
+      backgroundColor: [AVATAR_OPTIONS.backgroundColor[Math.floor(Math.random() * AVATAR_OPTIONS.backgroundColor.length)].value],
+      skinColor: [AVATAR_OPTIONS.skinColor[Math.floor(Math.random() * AVATAR_OPTIONS.skinColor.length)].value],
+      hair: [AVATAR_OPTIONS.hair[Math.floor(Math.random() * AVATAR_OPTIONS.hair.length)].value],
+      hairColor: [AVATAR_OPTIONS.hairColor[Math.floor(Math.random() * AVATAR_OPTIONS.hairColor.length)].value],
+      eyes: [AVATAR_OPTIONS.eyes[Math.floor(Math.random() * AVATAR_OPTIONS.eyes.length)].value],
+      mouth: [AVATAR_OPTIONS.mouth[Math.floor(Math.random() * AVATAR_OPTIONS.mouth.length)].value],
+      accessories: [AVATAR_OPTIONS.accessories[Math.floor(Math.random() * AVATAR_OPTIONS.accessories.length)].value],
+      accessoriesChance: 100,
+      eyesChance: 100,
+      mouthChance: 100,
+      hairChance: 100,
+    };
+    
+    setEditingAvatarSettings(newSettings);
   };
 
-  const prevSlide = () => {
-    const prev = currentSlide === 0 ? avatarOptions.length - 1 : currentSlide - 1;
-    setCurrentSlide(prev);
-    flatListRef.current?.scrollToIndex({ index: prev, animated: true });
-  };
-
-  const handleSaveHeadline = async () => {
+  // Generic save handler to reduce duplication
+  const handleSave = async (
+    apiCall: () => Promise<any>, 
+    successMessage: string, 
+    errorPrefix: string = 'Failed to update',
+    onSuccess?: () => void
+  ) => {
     try {
-      const response = await authAPI.updateHeadline(headline);
-      // Update the user state in parent component
-      onUserUpdate({ ...user, headline: headline });
-      Alert.alert('Success', 'Headline updated successfully!');
-    } catch (error) {
-      console.error('Failed to update headline:', error);
-      Alert.alert('Error', 'Failed to update headline');
+      const response = await apiCall();
+      onUserUpdate(response.user);
+      Alert.alert('Success', successMessage);
+      if (onSuccess) onSuccess();
+    } catch (error: any) {
+      Alert.alert('Error', error.response?.data?.error || `${errorPrefix}. Please try again.`);
     }
   };
 
-  const handleSavePronouns = async () => {
-    try {
-      const response = await authAPI.updatePronouns(pronouns);
-      // Update the user state in parent component
-      onUserUpdate({ ...user, pronouns: pronouns });
-      Alert.alert('Success', 'Pronouns updated successfully!');
-    } catch (error) {
-      console.error('Failed to update pronouns:', error);
-      Alert.alert('Error', 'Failed to update pronouns');
-    }
+  const handleSaveHeadline = () => 
+    handleSave(() => authAPI.updateHeadline(headline), 'Headline updated successfully');
+
+  const handleSavePronouns = () => 
+    handleSave(() => authAPI.updatePronouns(pronouns), 'Pronouns updated successfully');
+
+  const handleSaveAvatar = () => 
+    handleSave(
+      () => authAPI.updateAvatar(editingAvatarSettings), 
+      'Avatar updated successfully',
+      'Failed to update avatar',
+      () => {
+        setSavedAvatarSettings(editingAvatarSettings);
+        setShowAvatarModal(false);
+      }
+    );
+
+  const handleOpenAvatarModal = () => {
+    setEditingAvatarSettings(savedAvatarSettings); // Reset to saved state when opening
+    setCurrentSlide(0); // Reset to first slide
+    setShowAvatarModal(true);
   };
 
-  const handleSaveAvatar = async () => {
-    try {
-      const response = await authAPI.updateAvatar(avatarSettings);
-      // Update the user state in parent component
-      onUserUpdate({ ...user, avatar_data: avatarSettings });
-      Alert.alert('Success', 'Avatar updated successfully!');
-      setShowAvatarModal(false);
-    } catch (error) {
-      console.error('Failed to update avatar:', error);
-      Alert.alert('Error', 'Failed to update avatar');
-    }
+  const handleCloseAvatarModal = () => {
+    setEditingAvatarSettings(savedAvatarSettings); // Reset to saved state when closing without saving
+    setShowAvatarModal(false);
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     Alert.alert(
       'Logout',
       'Are you sure you want to logout?',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Logout', onPress: onLogout },
+        {
+          text: 'Logout',
+          style: 'destructive',
+          onPress: async () => {
+            await storageAPI.removeToken();
+            onLogout();
+          },
+        },
       ]
     );
   };
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
-  const handleNavigateToMap = () => {
+  const onNavigateToMap = () => {
     onBack();
   };
 
-  const handleNavigateToSettings = () => {
+  const onNavigateToSettings = () => {
     // Already on settings screen, do nothing
   };
+
+  const nextSlide = () => {
+    if (currentSlide < avatarOptions.length - 1) {
+      const newSlide = currentSlide + 1;
+      setCurrentSlide(newSlide);
+      flatListRef.current?.scrollToIndex({ index: newSlide, animated: true });
+    }
+  };
+
+  const prevSlide = () => {
+    if (currentSlide > 0) {
+      const newSlide = currentSlide - 1;
+      setCurrentSlide(newSlide);
+      flatListRef.current?.scrollToIndex({ index: newSlide, animated: true });
+    }
+  };
+
+  const renderAvatarOption = ({ item }: { item: typeof avatarOptions[0] }) => (
+    <View style={styles.slideContainer}>
+      <Text style={styles.slideTitle}>{item.title}</Text>
+      <ScrollView style={{ maxHeight: 300 }} showsVerticalScrollIndicator={true}>
+        <View style={styles.optionButtons}>
+          {item.options.map((option: any, index: number) => (
+            <TouchableOpacity
+              key={index}
+              style={[
+                styles.optionButton,
+                (editingAvatarSettings[item.id as keyof AvatarSettings] as string[])?.[0] === option.value && styles.optionButtonActive
+              ]}
+              onPress={() => updateAvatarSetting(item.id, option.value)}
+            >
+              {item.id === 'backgroundColor' ? (
+                <View
+                  style={{
+                    width: 30,
+                    height: 30,
+                    backgroundColor: `#${option.value}`,
+                    borderRadius: 15,
+                    marginRight: 8,
+                  }}
+                />
+              ) : null}
+              <Text
+                style={[
+                  styles.optionButtonText,
+                  (editingAvatarSettings[item.id as keyof AvatarSettings] as string[])?.[0] === option.value && styles.optionButtonTextActive
+                ]}
+              >
+                {option.name}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
@@ -307,89 +247,82 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ user, isActive, onToggl
       <Header username={user.username} isActive={isActive} />
 
       {/* Content Container with proper bounds */}
-      <View style={styles.contentContainer}>
+      <View style={styles.settingsContentContainer}>
         <ScrollView 
-          style={styles.content}
+          style={styles.settingsContent}
           contentInsetAdjustmentBehavior="automatic"
-          showsVerticalScrollIndicator={false}
         >
-        {/* User Info Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Account Information</Text>
-          
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Username:</Text>
-            <Text style={styles.infoValue}>{user.username}</Text>
-          </View>
-          
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Email:</Text>
-            <Text style={styles.infoValue}>{user.email}</Text>
-          </View>
-          
-          <View style={styles.infoRow}>
-            <Text style={styles.infoLabel}>Date Joined:</Text>
-            <Text style={styles.infoValue}>{formatDate(user.created_at)}</Text>
-          </View>
-        </View>
-
-        {/* Headline Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Headline</Text>
-          <TextInput
-            style={styles.headlineInput}
-            value={headline}
-            onChangeText={setHeadline}
-            placeholder="What's on your mind?"
-            multiline
-            maxLength={100}
-          />
-          <TouchableOpacity onPress={handleSaveHeadline} style={styles.saveButton}>
-            <Text style={styles.saveButtonText}>Save Headline</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Pronouns Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Pronouns</Text>
-          <TouchableOpacity 
-            style={styles.pronounsSelector}
-            onPress={() => setShowPronounsModal(true)}
-          >
-            <Text style={[styles.pronounsSelectorText, !pronouns && styles.placeholderText]}>
-              {pronouns || 'Select pronouns'}
-            </Text>
-            <Text style={styles.dropdownArrow}>▼</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={handleSavePronouns} style={styles.saveButton}>
-            <Text style={styles.saveButtonText}>Save Pronouns</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Avatar Section */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Avatar</Text>
-          <TouchableOpacity 
-            onPress={() => setShowAvatarModal(true)} 
-            style={styles.avatarButton}
-          >
-            <View style={styles.avatarPreview}>
+          {/* User Info Section */}
+          <View style={styles.userInfo}>
+            <View style={styles.userInfoAvatar}>
               <DiceBearAvatar 
-                key={avatarSettings.seed} 
-                settings={avatarSettings} 
-                size={60} 
+                key={savedAvatarSettings.seed} 
+                settings={savedAvatarSettings} 
+                size={80} 
               />
             </View>
-            <Text style={styles.avatarButtonText}>Customize Avatar</Text>
-          </TouchableOpacity>
-        </View>
+            <Text style={styles.sectionTitle}>{user.username}</Text>
+            <Text style={styles.userInfoText}>{user.email}</Text>
+            <Text style={styles.userInfoText}>
+              Joined {new Date(user.created_at).toLocaleDateString()}
+            </Text>
+          </View>
 
-        {/* Logout Button */}
-        <View style={styles.logoutSection}>
-          <TouchableOpacity onPress={handleLogout} style={styles.logoutButtonNew}>
-            <Text style={styles.logoutButtonText}>Logout</Text>
-          </TouchableOpacity>
-        </View>
+          {/* Headline Section */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Headline</Text>
+            <TextInput
+              style={styles.input}
+              value={headline}
+              onChangeText={setHeadline}
+              placeholder="Tell others about yourself..."
+              multiline
+            />
+            <TouchableOpacity style={styles.button} onPress={handleSaveHeadline}>
+              <Text style={styles.buttonText}>Save Headline</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Pronouns Section */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Pronouns</Text>
+            <TouchableOpacity
+              style={styles.input}
+              onPress={() => setShowPronounsModal(true)}
+            >
+              <Text style={[styles.bodyText, !pronouns && { color: '#999' }]}>
+                {pronouns || 'Select pronouns (optional)'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={handleSavePronouns}>
+              <Text style={styles.buttonText}>Save Pronouns</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Avatar Section */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Avatar</Text>
+            <TouchableOpacity
+              style={styles.avatarButton}
+              onPress={handleOpenAvatarModal}
+            >
+              <View style={styles.avatarPreview}>
+                <DiceBearAvatar 
+                  key={savedAvatarSettings.seed} 
+                  settings={savedAvatarSettings} 
+                  size={60} 
+                />
+              </View>
+              <Text style={styles.avatarButtonText}>Customize Avatar</Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Logout Button */}
+          <View style={styles.logoutSection}>
+            <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+              <Text style={styles.logoutButtonText}>Logout</Text>
+            </TouchableOpacity>
+          </View>
         </ScrollView>
       </View>
 
@@ -401,16 +334,19 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ user, isActive, onToggl
         onRequestClose={() => setShowPronounsModal(false)}
       >
         <View style={styles.modalOverlay}>
-          <View style={styles.pronounsModalContent}>
+          <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalTitle}>Select Pronouns</Text>
-              <TouchableOpacity onPress={() => setShowPronounsModal(false)}>
-                <Text style={styles.closeButton}>✕</Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={() => setShowPronounsModal(false)}
+              >
+                <Text style={styles.modalCloseText}>✕</Text>
               </TouchableOpacity>
             </View>
             
             <ScrollView style={styles.pronounsOptionsContainer}>
-              {pronounsOptions.map((option, index) => (
+              {PRONOUN_OPTIONS.map((option, index) => (
                 <TouchableOpacity
                   key={index}
                   style={[
@@ -422,25 +358,9 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ user, isActive, onToggl
                     setShowPronounsModal(false);
                   }}
                 >
-                  <Text style={[
-                    styles.pronounsOptionText,
-                    pronouns === option && styles.pronounsOptionTextSelected
-                  ]}>
-                    {option}
-                  </Text>
+                  <Text style={styles.pronounsOptionText}>{option}</Text>
                 </TouchableOpacity>
               ))}
-              
-              {/* Clear selection option */}
-              <TouchableOpacity
-                style={[styles.pronounsOption, styles.clearOption]}
-                onPress={() => {
-                  setPronouns('');
-                  setShowPronounsModal(false);
-                }}
-              >
-                <Text style={styles.clearOptionText}>Clear selection</Text>
-              </TouchableOpacity>
             </ScrollView>
           </View>
         </View>
@@ -450,502 +370,100 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ user, isActive, onToggl
       <Modal
         visible={showAvatarModal}
         animationType="slide"
-        presentationStyle="pageSheet"
+        onRequestClose={() => setShowAvatarModal(false)}
       >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalHeader}>
-            <TouchableOpacity onPress={() => setShowAvatarModal(false)}>
-              <Text style={styles.modalCancelText}>Cancel</Text>
-            </TouchableOpacity>
-            <Text style={styles.modalTitle}>Customize Avatar</Text>
-            <TouchableOpacity onPress={handleSaveAvatar}>
-              <Text style={styles.modalSaveText}>Save</Text>
-            </TouchableOpacity>
-          </View>
+        <View style={styles.modalOverlay}>
+          <View style={styles.avatarModalContent}>
+            <View style={styles.modalHeader}>
+              <Text style={styles.modalTitle}>Customize Avatar</Text>
+              <TouchableOpacity
+                style={styles.modalCloseButton}
+                onPress={handleCloseAvatarModal}
+              >
+                <Text style={styles.modalCloseText}>✕</Text>
+              </TouchableOpacity>
+            </View>
 
-          {/* Fixed Avatar Preview */}
-          <View style={styles.fixedAvatarPreview}>
-            <DiceBearAvatar 
-              key={avatarSettings.seed} 
-              settings={avatarSettings} 
-              size={150} 
-            />
-          </View>
-
-          {/* Slideshow Navigation */}
-          <View style={styles.slideNavigation}>
-            <TouchableOpacity onPress={prevSlide} style={styles.navButton}>
-              <Text style={styles.navButtonText}>←</Text>
-            </TouchableOpacity>
-            <Text style={styles.slideTitle}>{avatarOptions[currentSlide]?.title}</Text>
-            <TouchableOpacity onPress={nextSlide} style={styles.navButton}>
-              <Text style={styles.navButtonText}>→</Text>
-            </TouchableOpacity>
-          </View>
-
-          {/* Slide Indicators */}
-          <View style={styles.slideIndicators}>
-            {avatarOptions.map((_, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.slideIndicator,
-                  index === currentSlide && styles.slideIndicatorActive
-                ]}
+            {/* Fixed Avatar Preview */}
+            <View style={styles.fixedAvatarPreview}>
+              <DiceBearAvatar 
+                key={editingAvatarSettings.seed}
+                settings={editingAvatarSettings} 
+                size={100} 
               />
-            ))}
-          </View>
+            </View>
 
-          {/* Slideshow Content */}
-          <FlatList
-            ref={flatListRef}
-            data={avatarOptions}
-            horizontal
-            pagingEnabled
-            showsHorizontalScrollIndicator={false}
-            keyExtractor={(item) => item.id}
-            onMomentumScrollEnd={(event) => {
-              const slideIndex = Math.round(event.nativeEvent.contentOffset.x / screenWidth);
-              setCurrentSlide(slideIndex);
-            }}
-            renderItem={({ item }) => (
-              <View style={[styles.slideContainer, { width: screenWidth }]}>
-                <ScrollView style={styles.slideScrollView} showsVerticalScrollIndicator={false}>
-                  <View style={styles.optionsGrid}>
-                  {item.options.map((option: any, index: number) => (
-                    <TouchableOpacity
-                      key={index}
-                      style={[
-                        styles.optionCard,
-                        item.id === 'backgroundColor' || item.id === 'skinColor' || item.id === 'hairColor'
-                          ? { backgroundColor: `#${option.value}` }
-                          : {},
-                        (avatarSettings as any)[item.id]?.[0] === option.value && styles.optionCardActive
-                      ]}
-                      onPress={() => updateAvatarSetting(item.id, option.value)}
-                    >
-                      <Text style={[
-                        styles.optionCardText,
-                        item.id === 'backgroundColor' || item.id === 'skinColor' || item.id === 'hairColor'
-                          ? { color: 'white', textShadowColor: 'rgba(0,0,0,0.5)', textShadowOffset: { width: 1, height: 1 }, textShadowRadius: 2 }
-                          : {}
-                      ]}>
-                        {option.name}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
-                  </View>
-                </ScrollView>
+            {/* Slideshow for customization options */}
+            <FlatList
+              ref={flatListRef}
+              data={avatarOptions}
+              renderItem={renderAvatarOption}
+              horizontal
+              pagingEnabled
+              showsHorizontalScrollIndicator={false}
+              onMomentumScrollEnd={(event) => {
+                const slideIndex = Math.round(event.nativeEvent.contentOffset.x / (screenWidth - 80));
+                setCurrentSlide(slideIndex);
+              }}
+            />
+
+            {/* Navigation arrows and indicators */}
+            <View style={styles.navigationArrows}>
+              <TouchableOpacity 
+                style={styles.arrowButton} 
+                onPress={prevSlide}
+                disabled={currentSlide === 0}
+              >
+                <Text style={styles.arrowText}>‹</Text>
+              </TouchableOpacity>
+              
+              <View style={styles.slideIndicators}>
+                {avatarOptions.map((_, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.slideIndicator,
+                      index === currentSlide && styles.slideIndicatorActive
+                    ]}
+                  />
+                ))}
               </View>
-            )}
-          />
+              
+              <TouchableOpacity 
+                style={styles.arrowButton} 
+                onPress={nextSlide}
+                disabled={currentSlide === avatarOptions.length - 1}
+              >
+                <Text style={styles.arrowText}>›</Text>
+              </TouchableOpacity>
+            </View>
 
-          {/* Randomize Button */}
-          <View style={styles.randomizeContainer}>
+            {/* Randomize and Save buttons */}
             <TouchableOpacity
               style={styles.randomizeButton}
-              onPress={() => {
-                console.log('Randomizing avatar...');
-                const randomSettings = {
-                  ...avatarSettings,
-                  backgroundColor: [avatarOptions[0].options[Math.floor(Math.random() * avatarOptions[0].options.length)].value],
-                  skinColor: [avatarOptions[1].options[Math.floor(Math.random() * avatarOptions[1].options.length)].value],
-                  hair: [avatarOptions[2].options[Math.floor(Math.random() * avatarOptions[2].options.length)].value],
-                  hairColor: [avatarOptions[3].options[Math.floor(Math.random() * avatarOptions[3].options.length)].value],
-                  eyes: [avatarOptions[4].options[Math.floor(Math.random() * avatarOptions[4].options.length)].value],
-                  mouth: [avatarOptions[5].options[Math.floor(Math.random() * avatarOptions[5].options.length)].value],
-                  accessories: [avatarOptions[6].options[Math.floor(Math.random() * avatarOptions[6].options.length)].value],
-                  seed: Math.random().toString(36).substring(2, 15)
-                };
-                console.log('New random settings:', randomSettings);
-                setAvatarSettings(randomSettings);
-              }}
+              onPress={randomizeAvatar}
             >
               <Text style={styles.randomizeButtonText}>🎲 Randomize Avatar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.saveAvatarButton} onPress={handleSaveAvatar}>
+              <Text style={styles.saveAvatarButtonText}>Save Avatar</Text>
             </TouchableOpacity>
           </View>
         </View>
       </Modal>
 
-      {/* Floating Bottom Navigation */}
+      {/* Bottom Navigation */}
       <BottomNavigation
         currentScreen="settings"
         isActive={isActive}
         onToggleActivity={onToggleActivity}
-        onNavigateToMap={handleNavigateToMap}
-        onNavigateToSettings={handleNavigateToSettings}
+        onNavigateToMap={onNavigateToMap}
+        onNavigateToSettings={onNavigateToSettings}
         userAvatarData={user.avatar_data}
       />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: 'white', // Remove gray background
-  },
-  contentContainer: {
-    flex: 1,
-    paddingBottom: 120, // Reserve space for floating navigation
-    backgroundColor: 'white', // Ensure white background
-  },
-  content: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: 'white', // Ensure white background
-  },
-  logoutSection: {
-    padding: 20,
-    backgroundColor: 'white',
-    marginTop: 20,
-  },
-  logoutButtonNew: {
-    backgroundColor: '#cc4e00', // Theme color
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  logoutButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  section: {
-    backgroundColor: 'white',
-    borderRadius: 15,
-    padding: 20,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 15,
-  },
-  infoRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  infoLabel: {
-    fontSize: 16,
-    color: '#666',
-    fontWeight: '500',
-  },
-  infoValue: {
-    fontSize: 16,
-    color: '#333',
-    flex: 1,
-    textAlign: 'right',
-  },
-  headlineInput: {
-    backgroundColor: '#f8f8f8',
-    borderRadius: 10,
-    padding: 15,
-    fontSize: 16,
-    minHeight: 80,
-    textAlignVertical: 'top',
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  pronounsSelector: {
-    backgroundColor: '#f8f8f8',
-    borderRadius: 10,
-    padding: 15,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  pronounsSelectorText: {
-    fontSize: 16,
-    color: '#333',
-    flex: 1,
-  },
-  placeholderText: {
-    color: '#999',
-  },
-  dropdownArrow: {
-    fontSize: 12,
-    color: '#666',
-  },
-  pronounsModalContent: {
-    backgroundColor: 'white',
-    marginHorizontal: 20,
-    marginVertical: 100,
-    borderRadius: 20,
-    padding: 20,
-    maxHeight: '70%',
-  },
-  pronounsOptionsContainer: {
-    maxHeight: 400,
-  },
-  pronounsOption: {
-    padding: 15,
-    borderRadius: 10,
-    marginVertical: 5,
-    backgroundColor: '#f8f8f8',
-  },
-  pronounsOptionSelected: {
-    backgroundColor: '#cc4e00', // Main theme color
-  },
-  pronounsOptionText: {
-    fontSize: 16,
-    color: '#333',
-    textAlign: 'center',
-  },
-  pronounsOptionTextSelected: {
-    color: 'white',
-    fontWeight: '600',
-  },
-  clearOption: {
-    backgroundColor: '#ff4444',
-    marginTop: 10,
-  },
-  clearOptionText: {
-    fontSize: 16,
-    color: 'white',
-    textAlign: 'center',
-    fontWeight: '600',
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  closeButton: {
-    fontSize: 24,
-    color: '#666',
-    fontWeight: 'bold',
-  },
-  saveButton: {
-    backgroundColor: '#cc4e00', // Main theme color
-    padding: 12,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  saveButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  avatarButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#457a00', // Green theme color
-    padding: 15,
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#457a00',
-  },
-  avatarPreview: {
-    marginRight: 15,
-  },
-  avatarPreviewLarge: {
-    alignItems: 'center',
-    padding: 20,
-  },
-  avatarButtonText: {
-    fontSize: 16,
-    color: 'white', // White text on theme background
-    flex: 1,
-    fontWeight: '600',
-  },
-  optionButtons: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  optionButton: {
-    paddingHorizontal: 15,
-    paddingVertical: 8,
-    borderRadius: 20,
-    borderWidth: 1,
-    borderColor: '#ddd',
-    backgroundColor: 'white',
-  },
-  optionButtonActive: {
-    backgroundColor: '#cc4e00', // Main theme color
-    borderColor: '#cc4e00',
-  },
-  optionButtonText: {
-    fontSize: 14,
-    color: '#666',
-  },
-  optionButtonTextActive: {
-    color: 'white',
-  },
-  randomizeButton: {
-    backgroundColor: '#cc4e00', // Theme color
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  randomizeButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  fixedAvatarPreview: {
-    alignItems: 'center',
-    padding: 20,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  slideNavigation: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  navButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#cc4e00', // Main theme color
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  navButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
-  },
-  slideTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  slideIndicators: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    paddingVertical: 10,
-    backgroundColor: 'white',
-  },
-  slideIndicator: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#ddd',
-    marginHorizontal: 4,
-  },
-  slideIndicatorActive: {
-    backgroundColor: '#cc4e00', // Main theme color
-  },
-  slideContainer: {
-    flex: 1,
-    padding: 20,
-  },
-  slideScrollView: {
-    flex: 1,
-  },
-  optionsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-  },
-  optionCard: {
-    width: '48%',
-    padding: 12,
-    marginBottom: 8,
-    borderRadius: 10,
-    backgroundColor: '#f8f8f8',
-    borderWidth: 2,
-    borderColor: 'transparent',
-    alignItems: 'center',
-    minHeight: 50,
-  },
-  optionCardActive: {
-    borderColor: '#007AFF',
-    backgroundColor: '#e6f3ff',
-  },
-  optionCardText: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: '#333',
-    textAlign: 'center',
-  },
-  randomizeContainer: {
-    padding: 20,
-    backgroundColor: 'white',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-  },
-  modalContainer: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
-    paddingTop: 50,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  modalCancelText: {
-    color: '#007AFF',
-    fontSize: 16,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  modalSaveText: {
-    color: '#007AFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  modalContent: {
-    flex: 1,
-    padding: 20,
-  },
-  optionSection: {
-    backgroundColor: 'white',
-    borderRadius: 15,
-    padding: 20,
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  optionTitle: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 15,
-  },
-  colorOptions: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 10,
-  },
-  colorOption: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    borderWidth: 2,
-    borderColor: 'transparent',
-  },
-  colorOptionActive: {
-    borderColor: '#007AFF',
-    borderWidth: 3,
-  },
-});
 
 export default SettingsScreen;

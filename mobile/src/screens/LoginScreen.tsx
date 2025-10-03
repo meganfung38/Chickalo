@@ -4,38 +4,35 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
   Alert,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import { authAPI, storageAPI } from '../services/api';
-
-interface LoginScreenProps {
-  onLogin: (token: string, user: any) => void;
-  onNavigateToRegister: () => void;
-}
+import { styles } from '../styles';
+import { LoginScreenProps } from '../types';
+import { ValidationUtils } from '../utils/validation';
 
 const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onNavigateToRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const isFormValid = ValidationUtils.areRequiredFieldsFilled([email, password]);
+
   const handleLogin = async () => {
-    if (!email || !password) {
+    if (!isFormValid) {
       Alert.alert('Error', 'Please fill in all fields');
       return;
     }
 
     setLoading(true);
     try {
-      const response = await authAPI.login(email, password);
+      const response = await authAPI.login(email.trim(), password);
       await storageAPI.setToken(response.token);
       onLogin(response.token, response.user);
     } catch (error: any) {
-      console.error('Login failed:', error);
-      const errorMessage = error.response?.data?.error || 'Login failed. Please check your credentials.';
-      Alert.alert('Login Failed', errorMessage);
+      Alert.alert('Login Failed', error.response?.data?.error || 'An error occurred during login');
     } finally {
       setLoading(false);
     }
@@ -43,12 +40,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onNavigateToRegister
 
   return (
     <KeyboardAvoidingView 
-      style={styles.container} 
+      style={styles.containerGray}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View style={styles.content}>
-        <Text style={styles.title}>Welcome to Chickalo</Text>
-        <Text style={styles.subtitle}>Connect with people around you</Text>
+      <View style={styles.centeredContainer}>
+        <Text style={styles.title}>Welcome Back</Text>
+        <Text style={styles.subtitle}>Sign in to continue</Text>
         
         <View style={styles.form}>
           <TextInput
@@ -68,84 +65,28 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onNavigateToRegister
             onChangeText={setPassword}
             secureTextEntry
             autoCapitalize="none"
+            autoCorrect={false}
           />
           
-          <TouchableOpacity 
-            style={[styles.button, loading && styles.buttonDisabled]} 
+          <TouchableOpacity
+            style={[styles.button, !isFormValid && styles.buttonDisabled]}
             onPress={handleLogin}
-            disabled={loading}
+            disabled={!isFormValid || loading}
           >
-            <Text style={styles.buttonText}>
-              {loading ? 'Logging in...' : 'Login'}
-            </Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity onPress={onNavigateToRegister}>
-            <Text style={styles.linkText}>
-              Don't have an account? Register
+            <Text style={[styles.buttonText, !isFormValid && styles.buttonTextDisabled]}>
+              {loading ? 'Signing In...' : 'Sign In'}
             </Text>
           </TouchableOpacity>
         </View>
+        
+        <TouchableOpacity onPress={onNavigateToRegister}>
+          <Text style={styles.linkText}>
+            Don't have an account? Sign up
+          </Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-    color: '#333',
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 40,
-    color: '#666',
-  },
-  form: {
-    width: '100%',
-  },
-  input: {
-    backgroundColor: 'white',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 15,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  button: {
-    backgroundColor: '#cc4e00', // Main theme color
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  buttonDisabled: {
-    backgroundColor: '#ccc',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  linkText: {
-    color: '#007AFF',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-});
 
 export default LoginScreen;

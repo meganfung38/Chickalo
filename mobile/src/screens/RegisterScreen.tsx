@@ -4,17 +4,14 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
   Alert,
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
 import { authAPI, storageAPI } from '../services/api';
-
-interface RegisterScreenProps {
-  onRegister: (token: string, user: any) => void;
-  onNavigateToLogin: () => void;
-}
+import { styles } from '../styles';
+import { RegisterScreenProps } from '../types';
+import { validateRegistrationForm } from '../utils/validation';
 
 const RegisterScreen: React.FC<RegisterScreenProps> = ({ onRegister, onNavigateToLogin }) => {
   const [email, setEmail] = useState('');
@@ -23,31 +20,23 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ onRegister, onNavigateT
   const [headline, setHeadline] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Use centralized validation - no duplication
+  const { isValid: isFormValid, error: validationError } = validateRegistrationForm(email, password, confirmPassword);
+
   const handleRegister = async () => {
-    if (!email || !password || !confirmPassword) {
-      Alert.alert('Error', 'Please fill in all required fields');
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      Alert.alert('Error', 'Passwords do not match');
-      return;
-    }
-
-    if (password.length < 6) {
-      Alert.alert('Error', 'Password must be at least 6 characters');
+    // This should never be called if button is properly disabled, but adding safeguard
+    if (!isFormValid) {
+      Alert.alert('Error', validationError || 'Please complete all required fields correctly');
       return;
     }
 
     setLoading(true);
     try {
-      const response = await authAPI.register(email, password, headline);
+      const response = await authAPI.register(email.trim(), password, headline.trim());
       await storageAPI.setToken(response.token);
       onRegister(response.token, response.user);
     } catch (error: any) {
-      console.error('Registration failed:', error);
-      const errorMessage = error.response?.data?.error || 'Registration failed. Please try again.';
-      Alert.alert('Registration Failed', errorMessage);
+      Alert.alert('Registration Failed', error.response?.data?.error || 'An error occurred during registration');
     } finally {
       setLoading(false);
     }
@@ -55,17 +44,17 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ onRegister, onNavigateT
 
   return (
     <KeyboardAvoidingView 
-      style={styles.container} 
+      style={styles.containerGray}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <View style={styles.content}>
-        <Text style={styles.title}>Join Chickalo</Text>
-        <Text style={styles.subtitle}>Create your anonymous profile</Text>
+      <View style={styles.centeredContainer}>
+        <Text style={styles.title}>Create Account</Text>
+        <Text style={styles.subtitle}>Join the community</Text>
         
         <View style={styles.form}>
           <TextInput
             style={styles.input}
-            placeholder="Email *"
+            placeholder="Email"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
@@ -75,107 +64,53 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ onRegister, onNavigateT
           
           <TextInput
             style={styles.input}
-            placeholder="Password *"
+            placeholder="Password (min 6 characters)"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
             autoCapitalize="none"
+            autoCorrect={false}
           />
           
           <TextInput
             style={styles.input}
-            placeholder="Confirm Password *"
+            placeholder="Confirm Password"
             value={confirmPassword}
             onChangeText={setConfirmPassword}
             secureTextEntry
             autoCapitalize="none"
+            autoCorrect={false}
           />
           
           <TextInput
             style={styles.input}
-            placeholder="Headline (optional)"
+            placeholder="Headline (optional - tell us about yourself)"
             value={headline}
             onChangeText={setHeadline}
             multiline
-            numberOfLines={2}
+            autoCapitalize="sentences"
+            autoCorrect={true}
           />
           
-          <TouchableOpacity 
-            style={[styles.button, loading && styles.buttonDisabled]} 
+          <TouchableOpacity
+            style={[styles.button, !isFormValid && styles.buttonDisabled]}
             onPress={handleRegister}
-            disabled={loading}
+            disabled={!isFormValid || loading}
           >
-            <Text style={styles.buttonText}>
+            <Text style={[styles.buttonText, !isFormValid && styles.buttonTextDisabled]}>
               {loading ? 'Creating Account...' : 'Create Account'}
             </Text>
           </TouchableOpacity>
-          
-          <TouchableOpacity onPress={onNavigateToLogin}>
-            <Text style={styles.linkText}>
-              Already have an account? Login
-            </Text>
-          </TouchableOpacity>
         </View>
+        
+        <TouchableOpacity onPress={onNavigateToLogin}>
+          <Text style={styles.linkText}>
+            Already have an account? Sign in
+          </Text>
+        </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f5f5f5',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-    color: '#333',
-  },
-  subtitle: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 40,
-    color: '#666',
-  },
-  form: {
-    width: '100%',
-  },
-  input: {
-    backgroundColor: 'white',
-    padding: 15,
-    borderRadius: 10,
-    marginBottom: 15,
-    fontSize: 16,
-    borderWidth: 1,
-    borderColor: '#ddd',
-  },
-  button: {
-    backgroundColor: '#cc4e00', // Main theme color
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  buttonDisabled: {
-    backgroundColor: '#ccc',
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  linkText: {
-    color: '#007AFF',
-    fontSize: 16,
-    textAlign: 'center',
-  },
-});
 
 export default RegisterScreen;

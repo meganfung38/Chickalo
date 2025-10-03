@@ -22,6 +22,12 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
+// Generic API update function to reduce duplication
+const updateUserField = async (endpoint: string, data: any) => {
+  const response = await api.put(endpoint, data);
+  return response.data;
+};
+
 export const authAPI = {
   register: async (email: string, password: string, headline?: string) => {
     const response = await api.post('/api/auth/register', {
@@ -45,33 +51,18 @@ export const authAPI = {
     return response.data;
   },
 
-  updateHeadline: async (headline: string) => {
-    const response = await api.put('/api/auth/update-headline', {
-      headline,
-    });
-    return response.data;
-  },
+  // Simplified update functions using generic helper
+  updateHeadline: async (headline: string) => 
+    updateUserField('/api/auth/update-headline', { headline }),
 
-  updateAvatar: async (avatarData: any) => {
-    const response = await api.put('/api/auth/update-avatar', {
-      avatar_data: avatarData,
-    });
-    return response.data;
-  },
+  updateAvatar: async (avatarData: any) => 
+    updateUserField('/api/auth/update-avatar', { avatar_data: avatarData }),
 
-  updatePronouns: async (pronouns: string) => {
-    const response = await api.put('/api/auth/update-pronouns', {
-      pronouns,
-    });
-    return response.data;
-  },
+  updatePronouns: async (pronouns: string) => 
+    updateUserField('/api/auth/update-pronouns', { pronouns }),
 
-  updateActivity: async (isActive: boolean) => {
-    const response = await api.put('/api/auth/update-activity', {
-      is_active: isActive,
-    });
-    return response.data;
-  },
+  updateActivity: async (isActive: boolean) => 
+    updateUserField('/api/auth/update-activity', { is_active: isActive }),
 };
 
 export const storageAPI = {
