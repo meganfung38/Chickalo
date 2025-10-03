@@ -83,29 +83,37 @@ Chickalo enables users to appear on an interactive map as anonymous avatars when
 ```
 chickalo/
 ├── mobile/              # Expo React Native app
-│   ├── App.tsx         # Main app component with navigation
-│   ├── package.json    # Dependencies including DiceBear
+│   ├── App.tsx         # Main app component with global state & navigation
+│   ├── package.json    # Dependencies including DiceBear, Axios, Socket.io
 │   ├── src/
-│   │   ├── screens/    # Login, Register, Map, Settings screens
-│   │   │   ├── LoginScreen.tsx
-│   │   │   ├── RegisterScreen.tsx
-│   │   │   ├── MapScreen.tsx
-│   │   │   └── SettingsScreen.tsx
-│   │   ├── services/   # API calls and storage
-│   │   │   └── api.ts  # Axios configuration and auth API
-│   │   └── components/ # Reusable UI components
-│   │       ├── DiceBearAvatar.tsx  # Avatar rendering
-│   │       ├── Header.tsx          # Dynamic themed header
-│   │       └── BottomNavigation.tsx # Floating navigation bar
+│   │   ├── screens/    # Application screens
+│   │   │   ├── LoginScreen.tsx      # User login interface
+│   │   │   ├── RegisterScreen.tsx   # User registration with validation
+│   │   │   ├── MapScreen.tsx        # Main map view with activity toggle
+│   │   │   └── SettingsScreen.tsx   # Profile management & avatar customization
+│   │   ├── components/ # Reusable UI components
+│   │   │   ├── DiceBearAvatar.tsx   # Avatar rendering with useMemo
+│   │   │   ├── Header.tsx           # Dynamic themed header (activity-based colors)
+│   │   │   └── BottomNavigation.tsx # Floating navigation bar with themed icons
+│   │   ├── services/   # API and storage services
+│   │   │   └── api.ts  # Axios configuration, auth API, generic update functions
+│   │   ├── types/      # TypeScript definitions
+│   │   │   └── index.ts # Centralized interfaces (User, AvatarSettings, Props)
+│   │   ├── styles/     # Styling system
+│   │   │   └── index.ts # Unified stylesheet with theme constants (COLORS, TYPOGRAPHY)
+│   │   ├── utils/      # Utility functions
+│   │   │   └── validation.ts # Centralized form validation (DRY principle)
+│   │   └── constants/  # App constants
+│   │       └── avatar.ts # Avatar options, defaults, pronoun options
 ├── backend/            # Python Flask API
 │   ├── src/
-│   │   ├── app.py      # Flask application with Socket.io
-│   │   ├── database.py # PostgreSQL connection pool
-│   │   └── auth.py     # Authentication and user management
+│   │   ├── app.py      # Flask application with Socket.io & API routes
+│   │   ├── database.py # PostgreSQL connection pool with error handling
+│   │   └── auth.py     # Authentication, user management, generic update handlers
 │   ├── database/
-│   │   └── schema.sql  # Complete database schema
+│   │   └── schema.sql  # Complete database schema (users, locations, friends)
 │   ├── venv/           # Python virtual environment
-│   └── requirements.txt # Python dependencies
+│   └── requirements.txt # Python dependencies (Flask, PostgreSQL, JWT, bcrypt)
 └── README.md          # This file
 ```
 
@@ -134,6 +142,18 @@ chickalo/
   - Floating navigation bar with app logo, activity toggle, and user avatar
   - Consistent theme colors throughout app (#cc4e00 primary, #457a00 secondary)
   - Clean white backgrounds with themed accent colors
+- **Code Quality & Architecture**:
+  - Centralized validation utilities (DRY principle)
+  - Unified styling system with theme constants
+  - Generic update functions to eliminate backend duplication
+  - TypeScript interfaces centralized in types directory
+  - Clean, maintainable, and testable codebase
+- **Form Validation**: Robust client-side validation:
+  - Email format validation (regex)
+  - Password minimum length (6 characters)
+  - Password confirmation matching
+  - Required field validation
+  - Real-time form state updates
 - **Database Schema**: Complete with users, user_locations, friends tables
 - **Error Handling**: Secure error messages (no backend details exposed)
 - **Network Configuration**: Mobile app configured for local development
@@ -267,16 +287,22 @@ npx expo start
 - ✅ **Real-time State Updates**: Changes reflect across all screens immediately
 
 ### **API Endpoints:**
-- `POST /api/auth/register` - User registration with random avatar
-- `POST /api/auth/login` - User login
+- `POST /api/auth/register` - User registration with random avatar, validation
+- `POST /api/auth/login` - User login with email/password
 - `GET /api/auth/profile` - Get user profile (requires JWT token)
 - `PUT /api/auth/update-headline` - Update user headline
 - `PUT /api/auth/update-pronouns` - Update user pronouns
-- `PUT /api/auth/update-avatar` - Update avatar customization
+- `PUT /api/auth/update-avatar` - Update avatar customization (JSONB)
+- `PUT /api/auth/update-activity` - Toggle user visibility on map
+- `GET /health` - Backend health check and database connectivity
 
 ### **Mobile Screens:**
-- **LoginScreen**: Email/password login with validation and themed buttons
-- **RegisterScreen**: Account creation with headline and themed buttons
+- **LoginScreen**: Email/password login with real-time validation and themed buttons
+- **RegisterScreen**: Account creation with:
+  - Email validation (format and uniqueness)
+  - Password validation (min 6 characters, matching confirmation)
+  - Optional headline field
+  - Form disabled until all requirements met
 - **MapScreen**: Main app interface with dynamic header, floating navigation, and activity toggle
 - **SettingsScreen**: Complete profile management with avatar customization and themed UI
 
@@ -307,6 +333,53 @@ npx expo start
 - `user2_id` (INTEGER) - Second user
 - `status` (VARCHAR) - Friendship status
 - `created_at` (TIMESTAMP) - Friendship creation date
+
+## Validation System
+
+### **Centralized Validation Utilities**
+All form validation is handled through a centralized `utils/validation.ts` module following DRY principles:
+
+**Email Validation:**
+```typescript
+isValidEmail(email: string): boolean
+// Regex pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+// Validates proper email format
+```
+
+**Password Validation:**
+```typescript
+isValidPassword(password: string): boolean
+// Minimum 6 characters
+// Does not trim (spaces may be intentional)
+```
+
+**Password Matching:**
+```typescript
+doPasswordsMatch(password: string, confirmPassword: string): boolean
+// Both fields must exist and match exactly
+```
+
+**Registration Form Validation:**
+```typescript
+validateRegistrationForm(email, password, confirmPassword)
+// Returns: { isValid: boolean, error: string | null }
+// Comprehensive validation with descriptive error messages
+```
+
+### **Real-time Form Validation**
+- **Button State**: Form submit button disabled until all validations pass
+- **Visual Feedback**: Button styling changes based on form validity
+- **Error Messages**: User-friendly error alerts with specific guidance
+- **Edge Case Prevention**: Multiple validation layers (UI + handler + backend)
+
+### **Validation Features**
+- ✅ Email uniqueness checked in backend
+- ✅ Password minimum length enforced
+- ✅ Password confirmation required
+- ✅ Optional fields clearly marked
+- ✅ Real-time validation feedback
+- ✅ No duplication across screens
+- ✅ Testable validation functions
 
 ## Theme System
 
@@ -357,14 +430,27 @@ npx expo start
 - **Password Security**: bcrypt hashing with salt
 - **Token Security**: JWT with expiration and secure storage
 - **Error Handling**: Generic error messages (no backend details exposed)
-- **Data Validation**: Input validation on both frontend and backend
-- **Optional Data**: Pronouns and other personal info are optional
+- **Data Validation**: Comprehensive validation:
+  - Frontend: Real-time form validation with regex patterns
+  - Backend: Server-side validation and sanitization
+  - Database: Unique constraints and foreign key integrity
+- **Input Validation**: Centralized validation utilities (DRY):
+  - Email format validation (regex)
+  - Password strength requirements
+  - Required field checks
+  - Password confirmation matching
+- **Optional Data**: Pronouns and headline are optional for user privacy
 
 ### Performance Optimization
 - **Avatar Rendering**: useMemo hooks for efficient re-rendering
 - **Database**: Connection pooling and proper transaction handling
-- **State Management**: Optimized React state updates
+- **State Management**: Optimized React state updates with lifting state up pattern
 - **Network**: Axios with proper error handling and timeouts
+- **Code Architecture**: 
+  - DRY principle: Generic functions eliminate duplication
+  - KISS principle: Simple, readable code structure
+  - SRP principle: Single responsibility per function/component
+  - Centralized utilities: Validation, styling, types in dedicated modules
 
 ### Real-time Architecture
 - **Socket.io**: Setup for future real-time features
@@ -379,15 +465,27 @@ npx expo start
 - **Phase 4**: ✅ User authentication system
 - **Phase 5**: ✅ Avatar system and profile management
 - **Phase 6**: ✅ Settings interface and state management
-- **Phase 7**: 🚧 Location services and real-time map
-- **Phase 8**: 📋 Testing and polish
+- **Phase 7**: ✅ Code quality refactoring and validation
+- **Phase 8**: 🚧 Location services and real-time map
+- **Phase 9**: 📋 Testing and polish
 
 ## Testing the Current Build
 
 ### **Registration Flow**
-1. Open app → Register with email/password/headline
-2. Receive random avatar and unique username
-3. Navigate to map screen with activity toggle
+1. Open app → Tap "Create Account"
+2. Enter valid email (format validated with regex)
+3. Enter password (min 6 characters)
+4. Confirm password (must match)
+5. Optionally add headline
+6. Button enables only when all validations pass
+7. Receive random avatar and unique username
+8. Navigate to map screen with activity toggle
+
+### **Login Flow**
+1. Open app → Tap "Sign in"
+2. Enter registered email and password
+3. JWT token stored securely in AsyncStorage
+4. Navigate to map screen with user state loaded
 
 ### **Profile Management**
 1. Navigate to Settings from floating navigation bar (tap user avatar)
@@ -409,6 +507,59 @@ npx expo start
 2. Navigate between screens using floating navigation bar
 3. Experience consistent theme colors throughout app
 4. All buttons and UI elements follow the orange/green color scheme
+
+## Code Quality & Best Practices
+
+### **Architecture Principles**
+The codebase follows industry-standard software engineering principles:
+
+**DRY (Don't Repeat Yourself):**
+- ✅ Centralized validation utilities (`utils/validation.ts`)
+- ✅ Unified styling system (`styles/index.ts`)
+- ✅ Generic update functions in backend (`update_user_field`)
+- ✅ Reusable API update wrapper (`updateUserField`)
+- ✅ Shared type definitions (`types/index.ts`)
+
+**KISS (Keep It Simple, Stupid):**
+- ✅ Clear, readable function names
+- ✅ Single-purpose functions
+- ✅ Minimal complexity per module
+- ✅ Intuitive component structure
+
+**SRP (Single Responsibility Principle):**
+- ✅ Each file has one clear purpose
+- ✅ Separation of concerns (screens, components, services, utils)
+- ✅ Modular architecture with clear boundaries
+
+### **Code Organization**
+- **Frontend**: 
+  - `screens/` - UI screens (Login, Register, Map, Settings)
+  - `components/` - Reusable UI components (Header, Navigation, Avatar)
+  - `services/` - API and storage logic
+  - `utils/` - Pure utility functions (validation)
+  - `types/` - TypeScript interfaces
+  - `styles/` - Centralized styling and theme constants
+  - `constants/` - App-wide constants (avatar options, pronouns)
+
+- **Backend**:
+  - `app.py` - Flask routes and Socket.io setup
+  - `auth.py` - Authentication logic with generic update handlers
+  - `database.py` - PostgreSQL connection management
+
+### **Maintainability Features**
+- ✅ TypeScript for type safety
+- ✅ Comprehensive error handling
+- ✅ Consistent naming conventions
+- ✅ No duplicate code patterns
+- ✅ Easy to test and debug
+- ✅ Clear separation of concerns
+- ✅ Documented with inline comments
+
+### **Testing & Validation**
+- Validation utilities are pure functions (easily testable)
+- Backend generic functions reduce test surface area
+- Consistent error handling patterns
+- Health check endpoint for connectivity testing
 
 ## Contributing
 
