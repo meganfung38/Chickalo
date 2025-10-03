@@ -5,23 +5,25 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert,
+  Switch,
 } from 'react-native';
 import { authAPI } from '../services/api';
 
 interface MapScreenProps {
   user: any;
   onLogout: () => void;
+  onNavigateToSettings: () => void;
 }
 
-const MapScreen: React.FC<MapScreenProps> = ({ user, onLogout }) => {
+const MapScreen: React.FC<MapScreenProps> = ({ user, onLogout, onNavigateToSettings }) => {
   const [isActive, setIsActive] = useState(user.is_active || false);
 
-  const handleToggleActivity = () => {
-    setIsActive(!isActive);
-    // TODO: Send location update to backend
+  const handleToggleActivity = (value: boolean) => {
+    setIsActive(value);
+    // TODO: Send activity status to backend
     Alert.alert(
-      'Activity Toggle',
-      isActive ? 'You are now hidden from the map' : 'You are now visible on the map'
+      'Activity Status',
+      value ? 'You are now visible on the map' : 'You are now hidden from the map'
     );
   };
 
@@ -40,9 +42,14 @@ const MapScreen: React.FC<MapScreenProps> = ({ user, onLogout }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Chickalo Map</Text>
-        <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
+        <View style={styles.headerButtons}>
+          <TouchableOpacity onPress={onNavigateToSettings} style={styles.settingsButton}>
+            <Text style={styles.settingsText}>⚙️</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
+            <Text style={styles.logoutText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       
       <View style={styles.content}>
@@ -61,14 +68,21 @@ const MapScreen: React.FC<MapScreenProps> = ({ user, onLogout }) => {
           </Text>
         </View>
         
-        <TouchableOpacity 
-          style={[styles.toggleButton, isActive && styles.toggleButtonActive]} 
-          onPress={handleToggleActivity}
-        >
-          <Text style={[styles.toggleButtonText, isActive && styles.toggleButtonTextActive]}>
-            {isActive ? 'Go Invisible' : 'Go Active'}
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.activityContainer}>
+          <Text style={styles.activityLabel}>Activity Status</Text>
+          <View style={styles.toggleContainer}>
+            <Text style={styles.toggleLabel}>
+              {isActive ? 'Visible on map' : 'Hidden from map'}
+            </Text>
+            <Switch
+              value={isActive}
+              onValueChange={handleToggleActivity}
+              trackColor={{ false: '#FF3B30', true: '#34C759' }}
+              thumbColor={isActive ? '#ffffff' : '#ffffff'}
+              ios_backgroundColor="#FF3B30"
+            />
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -93,6 +107,17 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#333',
+  },
+  headerButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  settingsButton: {
+    padding: 10,
+    marginRight: 10,
+  },
+  settingsText: {
+    fontSize: 20,
   },
   logoutButton: {
     padding: 10,
@@ -136,22 +161,28 @@ const styles = StyleSheet.create({
     color: '#666',
     textAlign: 'center',
   },
-  toggleButton: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
+  activityContainer: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
-  toggleButtonActive: {
-    backgroundColor: '#34C759',
-  },
-  toggleButtonText: {
-    color: 'white',
+  activityLabel: {
     fontSize: 18,
     fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 15,
   },
-  toggleButtonTextActive: {
-    color: 'white',
+  toggleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  toggleLabel: {
+    fontSize: 16,
+    color: '#666',
+    flex: 1,
   },
 });
 

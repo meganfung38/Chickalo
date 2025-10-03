@@ -3,16 +3,20 @@ import { View, StyleSheet } from 'react-native';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import MapScreen from './src/screens/MapScreen';
+import SettingsScreen from './src/screens/SettingsScreen';
 import { authAPI, storageAPI } from './src/services/api';
 
-type Screen = 'login' | 'register' | 'map';
+type Screen = 'login' | 'register' | 'map' | 'settings';
 
 interface User {
   id: number;
   username: string;
   email: string;
   headline: string;
+  avatar_data: any;
+  pronouns: string | null;
   is_active: boolean;
+  created_at: string;
 }
 
 const App: React.FC = () => {
@@ -61,6 +65,10 @@ const App: React.FC = () => {
     setCurrentScreen('login');
   };
 
+  const handleUserUpdate = (updatedUser: User) => {
+    setUser(updatedUser);
+  };
+
   const renderScreen = () => {
     switch (currentScreen) {
       case 'login':
@@ -82,6 +90,16 @@ const App: React.FC = () => {
           <MapScreen
             user={user}
             onLogout={handleLogout}
+            onNavigateToSettings={() => setCurrentScreen('settings')}
+          />
+        ) : null;
+      case 'settings':
+        return user ? (
+          <SettingsScreen
+            user={user}
+            onBack={() => setCurrentScreen('map')}
+            onLogout={handleLogout}
+            onUserUpdate={handleUserUpdate}
           />
         ) : null;
       default:

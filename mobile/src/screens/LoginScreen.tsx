@@ -33,7 +33,9 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onNavigateToRegister
       await storageAPI.setToken(response.token);
       onLogin(response.token, response.user);
     } catch (error: any) {
-      Alert.alert('Login Failed', error.response?.data?.error || 'Something went wrong');
+      console.error('Login failed:', error);
+      const errorMessage = error.response?.data?.error || 'Login failed. Please check your credentials.';
+      Alert.alert('Login Failed', errorMessage);
     } finally {
       setLoading(false);
     }

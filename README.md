@@ -19,34 +19,42 @@ Chickalo enables users to appear on an interactive map as anonymous avatars when
 
 ## Core Features
 
-### MVP Features
-- **User Profiles**: Account creation with email, password, customized avatar, and headline
-- **Activity Toggle**: Users control when their avatar appears on the map
-- **Interactive Map**: Gamified map interface showing nearby active users
-- **Avatar System**: Cartoon-style avatars (like Snapchat Bitmojis) for anonymity
-- **Proximity Detection**: Real-time location sharing within 200-300ft radius
-- **Friend System**: Users can friend other users after mutual agreement
+### ✅ Implemented Features
+- **Complete User Authentication System**: Registration, login, JWT tokens, session persistence
+- **User Profile Management**: Account creation with email, password, customizable avatars, headlines, and pronouns
+- **Activity Toggle**: Users control when their avatar appears on the map via switch component
+- **Interactive Map Interface**: Basic HTML map with WebView integration for location display
+- **Advanced Avatar Customization**: DiceBear Big Smile avatars with 7 customization categories
+- **Settings Management**: Complete profile editing with real-time state updates
+- **Database Integration**: PostgreSQL with proper transactions and error handling
+- **Real-time Communication**: Socket.io setup for future live features
 
-### Future Features (Post-MVP)
+### 🚧 In Progress
+- **Location Services**: GPS tracking and proximity detection implementation
+- **Real-time Map Updates**: Live user positioning and avatar display on map
+
+### 📋 Future Features (Post-MVP)
 - Anonymous messaging system
 - Business profiles and local advertising
 - Event mode for special gatherings
 - Safety and moderation tools
 - Background notifications
+- Friend system with mutual connections
 
 ## Tech Stack
 
-### Frontend (Expo)
+### Frontend (Expo/React Native)
 - **Expo** - Cross-platform mobile development framework
 - **React Native** - Mobile app framework (via Expo)
 - **TypeScript** - Type-safe JavaScript
 - **React Navigation** - Screen navigation
 - **Expo Location** - GPS and location services
-- **Expo Maps** - Interactive map components
-- **Expo SQLite** - Local database storage
+- **React Native WebView** - HTML map integration
 - **Socket.io Client** - Real-time communication
 - **Axios** - HTTP client for API calls
 - **AsyncStorage** - Secure token storage
+- **React Native SVG** - SVG rendering for avatars
+- **DiceBear Avatars** - Avatar generation library
 
 ### Backend (Python Flask)
 - **Flask** - Python web framework
@@ -72,56 +80,59 @@ Chickalo enables users to appear on an interactive map as anonymous avatars when
 
 ```
 chickalo/
-├── mobile/              # Expo app
-│   ├── App.tsx         # Main app component
-│   ├── index.ts        # App entry point
-│   ├── app.json        # Expo configuration
-│   ├── package.json    # Dependencies
-│   ├── tsconfig.json   # TypeScript config
+├── mobile/              # Expo React Native app
+│   ├── App.tsx         # Main app component with navigation
+│   ├── package.json    # Dependencies including DiceBear
 │   ├── src/
-│   │   ├── screens/    # Login, Register, Map screens
+│   │   ├── screens/    # Login, Register, Map, Settings screens
+│   │   │   ├── LoginScreen.tsx
+│   │   │   ├── RegisterScreen.tsx
+│   │   │   ├── MapScreen.tsx
+│   │   │   └── SettingsScreen.tsx
 │   │   ├── services/   # API calls and storage
+│   │   │   └── api.ts  # Axios configuration and auth API
 │   │   └── components/ # Reusable components
-│   └── assets/         # Images and icons
+│   │       └── DiceBearAvatar.tsx
 ├── backend/            # Python Flask API
 │   ├── src/
-│   │   ├── app.py      # Flask application
-│   │   ├── database.py # Database connection
-│   │   ├── auth.py     # Authentication logic
-│   │   ├── controllers/ # Route handlers
-│   │   ├── models/     # Database models
-│   │   ├── routes/     # API routes
-│   │   ├── middleware/ # Custom middleware
-│   │   └── utils/      # Helper functions
+│   │   ├── app.py      # Flask application with Socket.io
+│   │   ├── database.py # PostgreSQL connection pool
+│   │   └── auth.py     # Authentication and user management
 │   ├── database/
-│   │   └── schema.sql   # Database schema
+│   │   └── schema.sql  # Complete database schema
 │   ├── venv/           # Python virtual environment
 │   └── requirements.txt # Python dependencies
-└── docs/              # Documentation
+└── README.md          # This file
 ```
 
 ## Current Status
 
-### ✅ Completed
-- **Project Architecture**: Full-stack setup with Expo frontend and Flask backend
-- **Database Setup**: PostgreSQL with complete schema (users, locations, friends)
-- **Backend API**: Flask server with Socket.io for real-time communication
-- **User Authentication**: Complete login/register system with JWT tokens
-- **Frontend Foundation**: Expo app with navigation and authentication screens
-- **Development Environment**: Virtual environment, dependencies, and tooling
+### ✅ Completed (MVP Ready)
+- **Full-Stack Architecture**: Expo frontend + Flask backend + PostgreSQL
+- **User Authentication**: Complete registration/login system with JWT tokens
+- **User Profile System**: Account creation, unique username generation, profile management
+- **Avatar System**: Advanced DiceBear integration with 7 customization categories:
+  - Background colors (9 options)
+  - Skin colors (8 realistic tones)
+  - Hair styles (13 styles: mohawk, braids, bun, etc.)
+  - Hair colors (8 colors including natural and fun colors)
+  - Eyes (8 expressions: cheery, confused, starstruck, etc.)
+  - Mouth (8 expressions: smile variations, braces, kawaii)
+  - Accessories (9 options including none: glasses, cat ears, etc.)
+- **Settings Interface**: Complete profile editing with:
+  - Headline editing and saving
+  - Pronouns selection (dropdown with 8 common options)
+  - Avatar customization (slideshow interface)
+  - Real-time state management across screens
+- **Map Interface**: Basic interactive map with activity toggle
+- **Database Schema**: Complete with users, user_locations, friends tables
+- **Error Handling**: Secure error messages (no backend details exposed)
 - **Network Configuration**: Mobile app configured for local development
 
-### 🚧 In Progress
-- **Map Implementation**: Interactive map with user avatars
-- **Location Services**: Real-time proximity detection
-- **Activity Toggle**: Show/hide functionality on map
-
-### 📋 Next Steps
-- **Map Integration**: Add Expo Maps to show user locations
+### 🚧 Next Phase
 - **Location Services**: Implement GPS tracking and proximity detection
-- **Real-time Updates**: Socket.io integration for live location sharing
-- **Avatar System**: User avatar customization and display
-- **Testing**: User testing and feedback integration
+- **Real-time Map**: Show live user avatars on map within 200-300ft radius
+- **Socket.io Integration**: Real-time location updates between users
 
 ## Development Setup
 
@@ -157,14 +168,14 @@ brew services start postgresql
 # Create database
 createdb chickalo
 
-# Run schema
+# Run schema (includes pronouns field)
 psql chickalo -f backend/database/schema.sql
 ```
 
 4. **Frontend Setup (Expo)**
 ```bash
 cd mobile
-npm install
+npm install  # Includes DiceBear and SVG packages
 ```
 
 ### Running the Application
@@ -234,7 +245,7 @@ npx expo start
 - **"Connection refused"**: Backend server is not running - start it with `python src/app.py`
 - **"Cannot find module"**: Clear Expo cache with `npx expo start --clear`
 
-## Authentication System
+## Authentication & User System
 
 ### **Implemented Features:**
 - ✅ **User Registration**: Email, password, headline, random username generation
@@ -243,34 +254,95 @@ npx expo start
 - ✅ **Token Management**: JWT tokens with 7-day expiration
 - ✅ **Session Persistence**: AsyncStorage for token storage
 - ✅ **Database Integration**: PostgreSQL with proper transaction handling
+- ✅ **Profile Management**: Headlines, pronouns, avatar customization
+- ✅ **Real-time State Updates**: Changes reflect across all screens immediately
 
 ### **API Endpoints:**
-- `POST /api/auth/register` - User registration
+- `POST /api/auth/register` - User registration with random avatar
 - `POST /api/auth/login` - User login
 - `GET /api/auth/profile` - Get user profile (requires JWT token)
+- `PUT /api/auth/update-headline` - Update user headline
+- `PUT /api/auth/update-pronouns` - Update user pronouns
+- `PUT /api/auth/update-avatar` - Update avatar customization
 
 ### **Mobile Screens:**
 - **LoginScreen**: Email/password login with validation
 - **RegisterScreen**: Account creation with headline
-- **MapScreen**: Main app interface with activity toggle
-- **Navigation**: Seamless flow between screens
+- **MapScreen**: Main app interface with activity toggle and settings navigation
+- **SettingsScreen**: Complete profile management with avatar customization
+
+## Database Schema
+
+### **Users Table**
+- `id` (SERIAL PRIMARY KEY) - Unique user identifier
+- `email` (VARCHAR UNIQUE) - User email address
+- `password_hash` (VARCHAR) - bcrypt hashed password
+- `username` (VARCHAR UNIQUE) - Auto-generated unique username
+- `avatar_data` (JSONB) - Complete DiceBear avatar settings
+- `headline` (TEXT) - User's custom headline/bio
+- `pronouns` (VARCHAR, nullable) - User's pronouns (optional)
+- `is_active` (BOOLEAN) - Activity toggle state
+- `created_at` (TIMESTAMP) - Account creation date
+- `updated_at` (TIMESTAMP) - Last profile update
+
+### **User Locations Table**
+- `id` (SERIAL PRIMARY KEY)
+- `user_id` (INTEGER) - Foreign key to users
+- `latitude` (DECIMAL) - GPS latitude
+- `longitude` (DECIMAL) - GPS longitude
+- `last_updated` (TIMESTAMP) - Location update time
+
+### **Friends Table**
+- `id` (SERIAL PRIMARY KEY)
+- `user1_id` (INTEGER) - First user
+- `user2_id` (INTEGER) - Second user
+- `status` (VARCHAR) - Friendship status
+- `created_at` (TIMESTAMP) - Friendship creation date
+
+## Avatar System
+
+### **DiceBear Big Smile Integration**
+- **Library**: `@dicebear/collection` and `@dicebear/core`
+- **Style**: Big Smile (cartoon-style avatars)
+- **Rendering**: React Native SVG for smooth performance
+- **Customization**: 7 categories with 50+ total options
+- **Storage**: Complete avatar settings saved as JSONB in database
+- **Default**: New users get randomized avatars on registration
+
+### **Customization Categories**
+1. **Background**: 9 color options
+2. **Skin Color**: 8 realistic skin tones
+3. **Hair Style**: 13 styles (short, mohawk, braids, bun, etc.)
+4. **Hair Color**: 8 colors (natural and fun colors)
+5. **Eyes**: 8 expressions (cheery, normal, confused, etc.)
+6. **Mouth**: 8 expressions (smiles, braces, kawaii, etc.)
+7. **Accessories**: 9 options including none (glasses, cat ears, etc.)
+
+### **User Experience**
+- **Slideshow Interface**: Swipe through customization categories
+- **Real-time Preview**: Avatar updates instantly as options are selected
+- **Randomize Feature**: Generate completely new random avatars
+- **Database Persistence**: All customizations saved and synced across devices
 
 ## Key Technical Considerations
 
-### Location Privacy
-- Store approximate locations (rounded to ~50ft accuracy)
-- Implement location data expiration (auto-delete after 24hrs)
-- Use relative positioning rather than exact coordinates
+### Security & Privacy
+- **Password Security**: bcrypt hashing with salt
+- **Token Security**: JWT with expiration and secure storage
+- **Error Handling**: Generic error messages (no backend details exposed)
+- **Data Validation**: Input validation on both frontend and backend
+- **Optional Data**: Pronouns and other personal info are optional
 
 ### Performance Optimization
-- Batch location updates (every 30 seconds)
-- Implement user clustering for crowded areas
-- Use efficient proximity algorithms
+- **Avatar Rendering**: useMemo hooks for efficient re-rendering
+- **Database**: Connection pooling and proper transaction handling
+- **State Management**: Optimized React state updates
+- **Network**: Axios with proper error handling and timeouts
 
-### Real-time Updates
-- WebSocket connections for live updates
-- Implement connection retry logic
-- Handle offline/online state changes
+### Real-time Architecture
+- **Socket.io**: Setup for future real-time features
+- **WebSocket**: Connection handling and retry logic
+- **State Sync**: Real-time updates across all app screens
 
 ## Development Timeline
 
@@ -278,9 +350,31 @@ npx expo start
 - **Phase 2**: ✅ Backend infrastructure and database
 - **Phase 3**: ✅ Mobile app foundation (Expo)
 - **Phase 4**: ✅ User authentication system
-- **Phase 5**: 🚧 Map implementation and location services
-- **Phase 6**: 📋 Core features (real-time updates, proximity detection)
-- **Phase 7**: 📋 Testing and polish
+- **Phase 5**: ✅ Avatar system and profile management
+- **Phase 6**: ✅ Settings interface and state management
+- **Phase 7**: 🚧 Location services and real-time map
+- **Phase 8**: 📋 Testing and polish
+
+## Testing the Current Build
+
+### **Registration Flow**
+1. Open app → Register with email/password/headline
+2. Receive random avatar and unique username
+3. Navigate to map screen with activity toggle
+
+### **Profile Management**
+1. Navigate to Settings from map screen
+2. Edit headline → Save → See changes on map screen
+3. Select pronouns from dropdown → Save
+4. Customize avatar through slideshow interface
+5. All changes persist in database and sync across screens
+
+### **Avatar Customization**
+1. Open Settings → Tap "Customize Avatar"
+2. Swipe through 7 categories of options
+3. See real-time preview of changes
+4. Use randomize button for new avatars
+5. Save changes → Avatar updates everywhere
 
 ## Contributing
 

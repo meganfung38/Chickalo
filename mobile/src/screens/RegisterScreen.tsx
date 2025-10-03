@@ -45,7 +45,9 @@ const RegisterScreen: React.FC<RegisterScreenProps> = ({ onRegister, onNavigateT
       await storageAPI.setToken(response.token);
       onRegister(response.token, response.user);
     } catch (error: any) {
-      Alert.alert('Registration Failed', error.response?.data?.error || 'Something went wrong');
+      console.error('Registration failed:', error);
+      const errorMessage = error.response?.data?.error || 'Registration failed. Please try again.';
+      Alert.alert('Registration Failed', errorMessage);
     } finally {
       setLoading(false);
     }

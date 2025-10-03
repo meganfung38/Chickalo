@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Using your computer's IP address
 // run ifconfig | grep "inet " | grep -v 127.0.0.1 to get your IP address
 // API_BASE_URL = http://<ip_address>:3000
-const API_BASE_URL = 'http://10.144.227.36:3000';
+const API_BASE_URL = 'http://192.168.4.38:3000';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -42,6 +42,27 @@ export const authAPI = {
 
   getProfile: async () => {
     const response = await api.get('/api/auth/profile');
+    return response.data;
+  },
+
+  updateHeadline: async (headline: string) => {
+    const response = await api.put('/api/auth/update-headline', {
+      headline,
+    });
+    return response.data;
+  },
+
+  updateAvatar: async (avatarData: any) => {
+    const response = await api.put('/api/auth/update-avatar', {
+      avatar_data: avatarData,
+    });
+    return response.data;
+  },
+
+  updatePronouns: async (pronouns: string) => {
+    const response = await api.put('/api/auth/update-pronouns', {
+      pronouns,
+    });
     return response.data;
   },
 };
