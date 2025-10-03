@@ -26,6 +26,8 @@ Chickalo enables users to appear on an interactive map as anonymous avatars when
 - **Interactive Map Interface**: Basic HTML map with WebView integration for location display
 - **Advanced Avatar Customization**: DiceBear Big Smile avatars with 7 customization categories
 - **Settings Management**: Complete profile editing with real-time state updates
+- **Dynamic Theme System**: Consistent color theming with activity-based header colors
+- **Modern UI Components**: Floating navigation bar, themed buttons, responsive design
 - **Database Integration**: PostgreSQL with proper transactions and error handling
 - **Real-time Communication**: Socket.io setup for future live features
 
@@ -91,8 +93,10 @@ chickalo/
 │   │   │   └── SettingsScreen.tsx
 │   │   ├── services/   # API calls and storage
 │   │   │   └── api.ts  # Axios configuration and auth API
-│   │   └── components/ # Reusable components
-│   │       └── DiceBearAvatar.tsx
+│   │   └── components/ # Reusable UI components
+│   │       ├── DiceBearAvatar.tsx  # Avatar rendering
+│   │       ├── Header.tsx          # Dynamic themed header
+│   │       └── BottomNavigation.tsx # Floating navigation bar
 ├── backend/            # Python Flask API
 │   ├── src/
 │   │   ├── app.py      # Flask application with Socket.io
@@ -125,6 +129,11 @@ chickalo/
   - Avatar customization (slideshow interface)
   - Real-time state management across screens
 - **Map Interface**: Basic interactive map with activity toggle
+- **Modern UI Design**: 
+  - Dynamic header colors (green when active, orange when inactive)
+  - Floating navigation bar with app logo, activity toggle, and user avatar
+  - Consistent theme colors throughout app (#cc4e00 primary, #457a00 secondary)
+  - Clean white backgrounds with themed accent colors
 - **Database Schema**: Complete with users, user_locations, friends tables
 - **Error Handling**: Secure error messages (no backend details exposed)
 - **Network Configuration**: Mobile app configured for local development
@@ -266,10 +275,10 @@ npx expo start
 - `PUT /api/auth/update-avatar` - Update avatar customization
 
 ### **Mobile Screens:**
-- **LoginScreen**: Email/password login with validation
-- **RegisterScreen**: Account creation with headline
-- **MapScreen**: Main app interface with activity toggle and settings navigation
-- **SettingsScreen**: Complete profile management with avatar customization
+- **LoginScreen**: Email/password login with validation and themed buttons
+- **RegisterScreen**: Account creation with headline and themed buttons
+- **MapScreen**: Main app interface with dynamic header, floating navigation, and activity toggle
+- **SettingsScreen**: Complete profile management with avatar customization and themed UI
 
 ## Database Schema
 
@@ -298,6 +307,24 @@ npx expo start
 - `user2_id` (INTEGER) - Second user
 - `status` (VARCHAR) - Friendship status
 - `created_at` (TIMESTAMP) - Friendship creation date
+
+## Theme System
+
+### **Dynamic Color Theming**
+- **Primary Color**: `#cc4e00` (Orange) - Main buttons, inactive header, primary actions
+- **Secondary Color**: `#457a00` (Green) - Active states, activity indicators, active header
+- **Background**: `white` - Clean, consistent backgrounds throughout app
+- **Text**: `white` on colored backgrounds, `#333` on white backgrounds
+
+### **Dynamic Header**
+- **Active State**: Header turns green (`#457a00`) when user is visible on map
+- **Inactive State**: Header turns orange (`#cc4e00`) when user is hidden from map
+- **Real-time Updates**: Color changes instantly when activity toggle is switched
+
+### **UI Components**
+- **Floating Navigation**: Transparent background with themed button highlights
+- **Themed Buttons**: All action buttons use consistent color scheme
+- **Activity Indicators**: Visual feedback for user's current visibility status
 
 ## Avatar System
 
@@ -363,11 +390,12 @@ npx expo start
 3. Navigate to map screen with activity toggle
 
 ### **Profile Management**
-1. Navigate to Settings from map screen
-2. Edit headline → Save → See changes on map screen
+1. Navigate to Settings from floating navigation bar (tap user avatar)
+2. Edit headline → Save → See changes reflect immediately
 3. Select pronouns from dropdown → Save
 4. Customize avatar through slideshow interface
 5. All changes persist in database and sync across screens
+6. Notice dynamic header color changes based on activity status
 
 ### **Avatar Customization**
 1. Open Settings → Tap "Customize Avatar"
@@ -375,6 +403,12 @@ npx expo start
 3. See real-time preview of changes
 4. Use randomize button for new avatars
 5. Save changes → Avatar updates everywhere
+
+### **UI/UX Features**
+1. Toggle activity status → Watch header color change dynamically
+2. Navigate between screens using floating navigation bar
+3. Experience consistent theme colors throughout app
+4. All buttons and UI elements follow the orange/green color scheme
 
 ## Contributing
 

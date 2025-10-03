@@ -65,6 +65,13 @@ export const authAPI = {
     });
     return response.data;
   },
+
+  updateActivity: async (isActive: boolean) => {
+    const response = await api.put('/api/auth/update-activity', {
+      is_active: isActive,
+    });
+    return response.data;
+  },
 };
 
 export const storageAPI = {

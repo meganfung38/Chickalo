@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from database import db
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from auth import register_user, login_user, get_user_profile, update_user_headline, update_user_avatar, update_user_pronouns
+from auth import register_user, login_user, get_user_profile, update_user_headline, update_user_avatar, update_user_pronouns, update_user_activity
 
 load_dotenv()
 
@@ -62,6 +62,10 @@ def update_avatar():
 @app.route('/api/auth/update-pronouns', methods=['PUT'])
 def update_pronouns():
     return update_user_pronouns()
+
+@app.route('/api/auth/update-activity', methods=['PUT'])
+def update_activity():
+    return update_user_activity()
 
 # Socket.io connection handling
 @socketio.on('connect')

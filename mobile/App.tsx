@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import MapScreen from './src/screens/MapScreen';
@@ -23,6 +23,7 @@ const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('login');
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [isActive, setIsActive] = useState<boolean>(false);
 
   useEffect(() => {
     // Check if user is already logged in
@@ -32,6 +33,7 @@ const App: React.FC = () => {
         try {
           const response = await authAPI.getProfile();
           setUser(response.user);
+          setIsActive(response.user.is_active || false);
           setToken(savedToken);
           setCurrentScreen('map');
         } catch (error) {
@@ -48,6 +50,7 @@ const App: React.FC = () => {
     await storageAPI.setToken(newToken);
     setToken(newToken);
     setUser(userData);
+    setIsActive(userData.is_active || false);
     setCurrentScreen('map');
   };
 
@@ -55,6 +58,7 @@ const App: React.FC = () => {
     await storageAPI.setToken(newToken);
     setToken(newToken);
     setUser(userData);
+    setIsActive(userData.is_active || false);
     setCurrentScreen('map');
   };
 
@@ -67,6 +71,35 @@ const App: React.FC = () => {
 
   const handleUserUpdate = (updatedUser: User) => {
     setUser(updatedUser);
+  };
+
+  const handleToggleActivity = async () => {
+    const newStatus = !isActive;
+    
+    try {
+      // Send activity status to backend
+      const response = await authAPI.updateActivity(newStatus);
+      
+      // Update local state only if backend update succeeds
+      setIsActive(newStatus);
+      
+      // Update user object
+      if (user) {
+        const updatedUser = { ...user, is_active: newStatus };
+        setUser(updatedUser);
+      }
+      
+      Alert.alert(
+        'Activity Status',
+        newStatus ? 'You are now visible on the map' : 'You are now hidden from the map'
+      );
+    } catch (error) {
+      console.error('Failed to update activity status:', error);
+      Alert.alert(
+        'Error',
+        'Failed to update activity status. Please try again.'
+      );
+    }
   };
 
   const renderScreen = () => {
@@ -89,7 +122,8 @@ const App: React.FC = () => {
         return user ? (
           <MapScreen
             user={user}
-            onLogout={handleLogout}
+            isActive={isActive}
+            onToggleActivity={handleToggleActivity}
             onNavigateToSettings={() => setCurrentScreen('settings')}
           />
         ) : null;
@@ -97,6 +131,8 @@ const App: React.FC = () => {
         return user ? (
           <SettingsScreen
             user={user}
+            isActive={isActive}
+            onToggleActivity={handleToggleActivity}
             onBack={() => setCurrentScreen('map')}
             onLogout={handleLogout}
             onUserUpdate={handleUserUpdate}

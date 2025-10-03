@@ -13,11 +13,15 @@ import {
 } from 'react-native';
 import { authAPI, storageAPI } from '../services/api';
 import DiceBearAvatar from '../components/DiceBearAvatar';
+import Header from '../components/Header';
+import BottomNavigation from '../components/BottomNavigation';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 interface SettingsScreenProps {
   user: any;
+  isActive: boolean;
+  onToggleActivity: () => void;
   onBack: () => void;
   onLogout: () => void;
   onUserUpdate: (user: any) => void;
@@ -40,7 +44,7 @@ interface AvatarSettings {
   skinColor?: string[];
 }
 
-const SettingsScreen: React.FC<SettingsScreenProps> = ({ user, onBack, onLogout, onUserUpdate }) => {
+const SettingsScreen: React.FC<SettingsScreenProps> = ({ user, isActive, onToggleActivity, onBack, onLogout, onUserUpdate }) => {
   const [headline, setHeadline] = useState(user.headline || '');
   const [pronouns, setPronouns] = useState(user.pronouns || '');
   const [showPronounsModal, setShowPronounsModal] = useState(false);
@@ -289,19 +293,26 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ user, onBack, onLogout,
     });
   };
 
+  const handleNavigateToMap = () => {
+    onBack();
+  };
+
+  const handleNavigateToSettings = () => {
+    // Already on settings screen, do nothing
+  };
+
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={onBack} style={styles.backButton}>
-          <Text style={styles.backText}>← Back</Text>
-        </TouchableOpacity>
-        <Text style={styles.title}>Settings</Text>
-        <TouchableOpacity onPress={handleLogout} style={styles.logoutButton}>
-          <Text style={styles.logoutText}>Logout</Text>
-        </TouchableOpacity>
-      </View>
+      {/* Header */}
+      <Header username={user.username} isActive={isActive} />
 
-      <ScrollView style={styles.content}>
+      {/* Content Container with proper bounds */}
+      <View style={styles.contentContainer}>
+        <ScrollView 
+          style={styles.content}
+          contentInsetAdjustmentBehavior="automatic"
+          showsVerticalScrollIndicator={false}
+        >
         {/* User Info Section */}
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Account Information</Text>
@@ -372,7 +383,15 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ user, onBack, onLogout,
             <Text style={styles.avatarButtonText}>Customize Avatar</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+
+        {/* Logout Button */}
+        <View style={styles.logoutSection}>
+          <TouchableOpacity onPress={handleLogout} style={styles.logoutButtonNew}>
+            <Text style={styles.logoutButtonText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
+        </ScrollView>
+      </View>
 
       {/* Pronouns Selection Modal */}
       <Modal
@@ -547,6 +566,16 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ user, onBack, onLogout,
           </View>
         </View>
       </Modal>
+
+      {/* Floating Bottom Navigation */}
+      <BottomNavigation
+        currentScreen="settings"
+        isActive={isActive}
+        onToggleActivity={onToggleActivity}
+        onNavigateToMap={handleNavigateToMap}
+        onNavigateToSettings={handleNavigateToSettings}
+        userAvatarData={user.avatar_data}
+      />
     </View>
   );
 };
@@ -554,40 +583,33 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({ user, onBack, onLogout,
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: 'white', // Remove gray background
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: 20,
-    paddingTop: 50,
-    backgroundColor: 'white',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
-  },
-  backButton: {
-    padding: 10,
-  },
-  backText: {
-    color: '#007AFF',
-    fontSize: 16,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  logoutButton: {
-    padding: 10,
-  },
-  logoutText: {
-    color: '#007AFF',
-    fontSize: 16,
+  contentContainer: {
+    flex: 1,
+    paddingBottom: 120, // Reserve space for floating navigation
+    backgroundColor: 'white', // Ensure white background
   },
   content: {
     flex: 1,
     padding: 20,
+    backgroundColor: 'white', // Ensure white background
+  },
+  logoutSection: {
+    padding: 20,
+    backgroundColor: 'white',
+    marginTop: 20,
+  },
+  logoutButtonNew: {
+    backgroundColor: '#cc4e00', // Theme color
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  logoutButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
   },
   section: {
     backgroundColor: 'white',
@@ -671,7 +693,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f8f8f8',
   },
   pronounsOptionSelected: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#cc4e00', // Main theme color
   },
   pronounsOptionText: {
     fontSize: 16,
@@ -704,7 +726,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   saveButton: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#cc4e00', // Main theme color
     padding: 12,
     borderRadius: 10,
     alignItems: 'center',
@@ -718,11 +740,11 @@ const styles = StyleSheet.create({
   avatarButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#457a00', // Green theme color
     padding: 15,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#457a00',
   },
   avatarPreview: {
     marginRight: 15,
@@ -733,8 +755,9 @@ const styles = StyleSheet.create({
   },
   avatarButtonText: {
     fontSize: 16,
-    color: '#333',
+    color: 'white', // White text on theme background
     flex: 1,
+    fontWeight: '600',
   },
   optionButtons: {
     flexDirection: 'row',
@@ -747,11 +770,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderWidth: 1,
     borderColor: '#ddd',
-    backgroundColor: '#f8f8f8',
+    backgroundColor: 'white',
   },
   optionButtonActive: {
-    backgroundColor: '#007AFF',
-    borderColor: '#007AFF',
+    backgroundColor: '#cc4e00', // Main theme color
+    borderColor: '#cc4e00',
   },
   optionButtonText: {
     fontSize: 14,
@@ -761,7 +784,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   randomizeButton: {
-    backgroundColor: '#FF6B35',
+    backgroundColor: '#cc4e00', // Theme color
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
@@ -792,7 +815,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#007AFF',
+    backgroundColor: '#cc4e00', // Main theme color
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -820,7 +843,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   slideIndicatorActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#cc4e00', // Main theme color
   },
   slideContainer: {
     flex: 1,

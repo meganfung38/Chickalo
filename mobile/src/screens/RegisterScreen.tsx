@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
   },
   button: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#cc4e00', // Main theme color
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',

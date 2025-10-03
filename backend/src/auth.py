@@ -226,6 +226,73 @@ def update_user_pronouns():
         # Return generic error message to user
         return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
+def update_user_activity():
+    """Update user activity status"""
+    try:
+        # Get token from header
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({'error': 'No token provided'}), 401
+        
+        token = auth_header.split(' ')[1]
+        
+        # Decode token
+        try:
+            payload = jwt.decode(token, 'your-super-secret-jwt-key-change-this-in-production', algorithms=['HS256'])
+            user_id = payload['user_id']
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        # Get new activity status from request
+        data = request.get_json()
+        is_active = data.get('is_active', False)
+        
+        # Update user activity status
+        conn = db.get_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor.execute("""
+            UPDATE users 
+            SET is_active = %s, updated_at = %s 
+            WHERE id = %s
+            RETURNING id, username, email, headline, avatar_data, pronouns, is_active, created_at
+        """, (is_active, datetime.utcnow(), user_id))
+        
+        user = cursor.fetchone()
+        
+        # COMMIT THE TRANSACTION
+        conn.commit()
+        
+        cursor.close()
+        db.return_connection(conn)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        return jsonify({
+            'message': 'Activity status updated successfully',
+            'user': {
+                'id': user['id'],
+                'username': user['username'],
+                'email': user['email'],
+                'headline': user['headline'],
+                'avatar_data': user['avatar_data'],
+                'pronouns': user['pronouns'],
+                'is_active': user['is_active'],
+                'created_at': user['created_at'].isoformat()
+            }
+        }), 200
+        
+    except Exception as e:
+        # ROLLBACK ON ERROR
+        if 'conn' in locals():
+            conn.rollback()
+        # Log the actual error for debugging
+        print(f"Activity update error: {str(e)}")
+        # Return generic error message to user
+        return jsonify({'error': 'Failed to update activity status.'}), 500
+
 def login_user():
     """Login user"""
     try:
@@ -274,6 +341,73 @@ def login_user():
         print(f"Error: {str(e)}")
         # Return generic error message to user
         return jsonify({'error': 'An error occurred. Please try again.'}), 500
+
+def update_user_activity():
+    """Update user activity status"""
+    try:
+        # Get token from header
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({'error': 'No token provided'}), 401
+        
+        token = auth_header.split(' ')[1]
+        
+        # Decode token
+        try:
+            payload = jwt.decode(token, 'your-super-secret-jwt-key-change-this-in-production', algorithms=['HS256'])
+            user_id = payload['user_id']
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        # Get new activity status from request
+        data = request.get_json()
+        is_active = data.get('is_active', False)
+        
+        # Update user activity status
+        conn = db.get_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor.execute("""
+            UPDATE users 
+            SET is_active = %s, updated_at = %s 
+            WHERE id = %s
+            RETURNING id, username, email, headline, avatar_data, pronouns, is_active, created_at
+        """, (is_active, datetime.utcnow(), user_id))
+        
+        user = cursor.fetchone()
+        
+        # COMMIT THE TRANSACTION
+        conn.commit()
+        
+        cursor.close()
+        db.return_connection(conn)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        return jsonify({
+            'message': 'Activity status updated successfully',
+            'user': {
+                'id': user['id'],
+                'username': user['username'],
+                'email': user['email'],
+                'headline': user['headline'],
+                'avatar_data': user['avatar_data'],
+                'pronouns': user['pronouns'],
+                'is_active': user['is_active'],
+                'created_at': user['created_at'].isoformat()
+            }
+        }), 200
+        
+    except Exception as e:
+        # ROLLBACK ON ERROR
+        if 'conn' in locals():
+            conn.rollback()
+        # Log the actual error for debugging
+        print(f"Activity update error: {str(e)}")
+        # Return generic error message to user
+        return jsonify({'error': 'Failed to update activity status.'}), 500
 
 def update_user_pronouns():
     """Update user pronouns"""
@@ -341,6 +475,73 @@ def update_user_pronouns():
         print(f"Error: {str(e)}")
         # Return generic error message to user
         return jsonify({'error': 'An error occurred. Please try again.'}), 500
+
+def update_user_activity():
+    """Update user activity status"""
+    try:
+        # Get token from header
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({'error': 'No token provided'}), 401
+        
+        token = auth_header.split(' ')[1]
+        
+        # Decode token
+        try:
+            payload = jwt.decode(token, 'your-super-secret-jwt-key-change-this-in-production', algorithms=['HS256'])
+            user_id = payload['user_id']
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        # Get new activity status from request
+        data = request.get_json()
+        is_active = data.get('is_active', False)
+        
+        # Update user activity status
+        conn = db.get_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor.execute("""
+            UPDATE users 
+            SET is_active = %s, updated_at = %s 
+            WHERE id = %s
+            RETURNING id, username, email, headline, avatar_data, pronouns, is_active, created_at
+        """, (is_active, datetime.utcnow(), user_id))
+        
+        user = cursor.fetchone()
+        
+        # COMMIT THE TRANSACTION
+        conn.commit()
+        
+        cursor.close()
+        db.return_connection(conn)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        return jsonify({
+            'message': 'Activity status updated successfully',
+            'user': {
+                'id': user['id'],
+                'username': user['username'],
+                'email': user['email'],
+                'headline': user['headline'],
+                'avatar_data': user['avatar_data'],
+                'pronouns': user['pronouns'],
+                'is_active': user['is_active'],
+                'created_at': user['created_at'].isoformat()
+            }
+        }), 200
+        
+    except Exception as e:
+        # ROLLBACK ON ERROR
+        if 'conn' in locals():
+            conn.rollback()
+        # Log the actual error for debugging
+        print(f"Activity update error: {str(e)}")
+        # Return generic error message to user
+        return jsonify({'error': 'Failed to update activity status.'}), 500
 
 def get_user_profile():
     """Get user profile by token"""
@@ -391,6 +592,73 @@ def get_user_profile():
         # Return generic error message to user
         return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
+def update_user_activity():
+    """Update user activity status"""
+    try:
+        # Get token from header
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({'error': 'No token provided'}), 401
+        
+        token = auth_header.split(' ')[1]
+        
+        # Decode token
+        try:
+            payload = jwt.decode(token, 'your-super-secret-jwt-key-change-this-in-production', algorithms=['HS256'])
+            user_id = payload['user_id']
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        # Get new activity status from request
+        data = request.get_json()
+        is_active = data.get('is_active', False)
+        
+        # Update user activity status
+        conn = db.get_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor.execute("""
+            UPDATE users 
+            SET is_active = %s, updated_at = %s 
+            WHERE id = %s
+            RETURNING id, username, email, headline, avatar_data, pronouns, is_active, created_at
+        """, (is_active, datetime.utcnow(), user_id))
+        
+        user = cursor.fetchone()
+        
+        # COMMIT THE TRANSACTION
+        conn.commit()
+        
+        cursor.close()
+        db.return_connection(conn)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        return jsonify({
+            'message': 'Activity status updated successfully',
+            'user': {
+                'id': user['id'],
+                'username': user['username'],
+                'email': user['email'],
+                'headline': user['headline'],
+                'avatar_data': user['avatar_data'],
+                'pronouns': user['pronouns'],
+                'is_active': user['is_active'],
+                'created_at': user['created_at'].isoformat()
+            }
+        }), 200
+        
+    except Exception as e:
+        # ROLLBACK ON ERROR
+        if 'conn' in locals():
+            conn.rollback()
+        # Log the actual error for debugging
+        print(f"Activity update error: {str(e)}")
+        # Return generic error message to user
+        return jsonify({'error': 'Failed to update activity status.'}), 500
+
 def update_user_pronouns():
     """Update user pronouns"""
     try:
@@ -457,6 +725,73 @@ def update_user_pronouns():
         print(f"Error: {str(e)}")
         # Return generic error message to user
         return jsonify({'error': 'An error occurred. Please try again.'}), 500
+
+def update_user_activity():
+    """Update user activity status"""
+    try:
+        # Get token from header
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({'error': 'No token provided'}), 401
+        
+        token = auth_header.split(' ')[1]
+        
+        # Decode token
+        try:
+            payload = jwt.decode(token, 'your-super-secret-jwt-key-change-this-in-production', algorithms=['HS256'])
+            user_id = payload['user_id']
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        # Get new activity status from request
+        data = request.get_json()
+        is_active = data.get('is_active', False)
+        
+        # Update user activity status
+        conn = db.get_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor.execute("""
+            UPDATE users 
+            SET is_active = %s, updated_at = %s 
+            WHERE id = %s
+            RETURNING id, username, email, headline, avatar_data, pronouns, is_active, created_at
+        """, (is_active, datetime.utcnow(), user_id))
+        
+        user = cursor.fetchone()
+        
+        # COMMIT THE TRANSACTION
+        conn.commit()
+        
+        cursor.close()
+        db.return_connection(conn)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        return jsonify({
+            'message': 'Activity status updated successfully',
+            'user': {
+                'id': user['id'],
+                'username': user['username'],
+                'email': user['email'],
+                'headline': user['headline'],
+                'avatar_data': user['avatar_data'],
+                'pronouns': user['pronouns'],
+                'is_active': user['is_active'],
+                'created_at': user['created_at'].isoformat()
+            }
+        }), 200
+        
+    except Exception as e:
+        # ROLLBACK ON ERROR
+        if 'conn' in locals():
+            conn.rollback()
+        # Log the actual error for debugging
+        print(f"Activity update error: {str(e)}")
+        # Return generic error message to user
+        return jsonify({'error': 'Failed to update activity status.'}), 500
 
 def update_user_headline():
     """Update user headline"""
@@ -523,6 +858,73 @@ def update_user_headline():
         # Return generic error message to user
         return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
+def update_user_activity():
+    """Update user activity status"""
+    try:
+        # Get token from header
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({'error': 'No token provided'}), 401
+        
+        token = auth_header.split(' ')[1]
+        
+        # Decode token
+        try:
+            payload = jwt.decode(token, 'your-super-secret-jwt-key-change-this-in-production', algorithms=['HS256'])
+            user_id = payload['user_id']
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        # Get new activity status from request
+        data = request.get_json()
+        is_active = data.get('is_active', False)
+        
+        # Update user activity status
+        conn = db.get_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor.execute("""
+            UPDATE users 
+            SET is_active = %s, updated_at = %s 
+            WHERE id = %s
+            RETURNING id, username, email, headline, avatar_data, pronouns, is_active, created_at
+        """, (is_active, datetime.utcnow(), user_id))
+        
+        user = cursor.fetchone()
+        
+        # COMMIT THE TRANSACTION
+        conn.commit()
+        
+        cursor.close()
+        db.return_connection(conn)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        return jsonify({
+            'message': 'Activity status updated successfully',
+            'user': {
+                'id': user['id'],
+                'username': user['username'],
+                'email': user['email'],
+                'headline': user['headline'],
+                'avatar_data': user['avatar_data'],
+                'pronouns': user['pronouns'],
+                'is_active': user['is_active'],
+                'created_at': user['created_at'].isoformat()
+            }
+        }), 200
+        
+    except Exception as e:
+        # ROLLBACK ON ERROR
+        if 'conn' in locals():
+            conn.rollback()
+        # Log the actual error for debugging
+        print(f"Activity update error: {str(e)}")
+        # Return generic error message to user
+        return jsonify({'error': 'Failed to update activity status.'}), 500
+
 def update_user_pronouns():
     """Update user pronouns"""
     try:
@@ -589,6 +991,73 @@ def update_user_pronouns():
         print(f"Error: {str(e)}")
         # Return generic error message to user
         return jsonify({'error': 'An error occurred. Please try again.'}), 500
+
+def update_user_activity():
+    """Update user activity status"""
+    try:
+        # Get token from header
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({'error': 'No token provided'}), 401
+        
+        token = auth_header.split(' ')[1]
+        
+        # Decode token
+        try:
+            payload = jwt.decode(token, 'your-super-secret-jwt-key-change-this-in-production', algorithms=['HS256'])
+            user_id = payload['user_id']
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        # Get new activity status from request
+        data = request.get_json()
+        is_active = data.get('is_active', False)
+        
+        # Update user activity status
+        conn = db.get_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor.execute("""
+            UPDATE users 
+            SET is_active = %s, updated_at = %s 
+            WHERE id = %s
+            RETURNING id, username, email, headline, avatar_data, pronouns, is_active, created_at
+        """, (is_active, datetime.utcnow(), user_id))
+        
+        user = cursor.fetchone()
+        
+        # COMMIT THE TRANSACTION
+        conn.commit()
+        
+        cursor.close()
+        db.return_connection(conn)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        return jsonify({
+            'message': 'Activity status updated successfully',
+            'user': {
+                'id': user['id'],
+                'username': user['username'],
+                'email': user['email'],
+                'headline': user['headline'],
+                'avatar_data': user['avatar_data'],
+                'pronouns': user['pronouns'],
+                'is_active': user['is_active'],
+                'created_at': user['created_at'].isoformat()
+            }
+        }), 200
+        
+    except Exception as e:
+        # ROLLBACK ON ERROR
+        if 'conn' in locals():
+            conn.rollback()
+        # Log the actual error for debugging
+        print(f"Activity update error: {str(e)}")
+        # Return generic error message to user
+        return jsonify({'error': 'Failed to update activity status.'}), 500
 
 def update_user_avatar():
     """Update user avatar data"""
@@ -656,6 +1125,73 @@ def update_user_avatar():
         # Return generic error message to user
         return jsonify({'error': 'An error occurred. Please try again.'}), 500
 
+def update_user_activity():
+    """Update user activity status"""
+    try:
+        # Get token from header
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({'error': 'No token provided'}), 401
+        
+        token = auth_header.split(' ')[1]
+        
+        # Decode token
+        try:
+            payload = jwt.decode(token, 'your-super-secret-jwt-key-change-this-in-production', algorithms=['HS256'])
+            user_id = payload['user_id']
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        # Get new activity status from request
+        data = request.get_json()
+        is_active = data.get('is_active', False)
+        
+        # Update user activity status
+        conn = db.get_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor.execute("""
+            UPDATE users 
+            SET is_active = %s, updated_at = %s 
+            WHERE id = %s
+            RETURNING id, username, email, headline, avatar_data, pronouns, is_active, created_at
+        """, (is_active, datetime.utcnow(), user_id))
+        
+        user = cursor.fetchone()
+        
+        # COMMIT THE TRANSACTION
+        conn.commit()
+        
+        cursor.close()
+        db.return_connection(conn)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        return jsonify({
+            'message': 'Activity status updated successfully',
+            'user': {
+                'id': user['id'],
+                'username': user['username'],
+                'email': user['email'],
+                'headline': user['headline'],
+                'avatar_data': user['avatar_data'],
+                'pronouns': user['pronouns'],
+                'is_active': user['is_active'],
+                'created_at': user['created_at'].isoformat()
+            }
+        }), 200
+        
+    except Exception as e:
+        # ROLLBACK ON ERROR
+        if 'conn' in locals():
+            conn.rollback()
+        # Log the actual error for debugging
+        print(f"Activity update error: {str(e)}")
+        # Return generic error message to user
+        return jsonify({'error': 'Failed to update activity status.'}), 500
+
 def update_user_pronouns():
     """Update user pronouns"""
     try:
@@ -722,3 +1258,70 @@ def update_user_pronouns():
         print(f"Error: {str(e)}")
         # Return generic error message to user
         return jsonify({'error': 'An error occurred. Please try again.'}), 500
+
+def update_user_activity():
+    """Update user activity status"""
+    try:
+        # Get token from header
+        auth_header = request.headers.get('Authorization')
+        if not auth_header or not auth_header.startswith('Bearer '):
+            return jsonify({'error': 'No token provided'}), 401
+        
+        token = auth_header.split(' ')[1]
+        
+        # Decode token
+        try:
+            payload = jwt.decode(token, 'your-super-secret-jwt-key-change-this-in-production', algorithms=['HS256'])
+            user_id = payload['user_id']
+        except jwt.ExpiredSignatureError:
+            return jsonify({'error': 'Token expired'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'error': 'Invalid token'}), 401
+        
+        # Get new activity status from request
+        data = request.get_json()
+        is_active = data.get('is_active', False)
+        
+        # Update user activity status
+        conn = db.get_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor.execute("""
+            UPDATE users 
+            SET is_active = %s, updated_at = %s 
+            WHERE id = %s
+            RETURNING id, username, email, headline, avatar_data, pronouns, is_active, created_at
+        """, (is_active, datetime.utcnow(), user_id))
+        
+        user = cursor.fetchone()
+        
+        # COMMIT THE TRANSACTION
+        conn.commit()
+        
+        cursor.close()
+        db.return_connection(conn)
+        
+        if not user:
+            return jsonify({'error': 'User not found'}), 404
+        
+        return jsonify({
+            'message': 'Activity status updated successfully',
+            'user': {
+                'id': user['id'],
+                'username': user['username'],
+                'email': user['email'],
+                'headline': user['headline'],
+                'avatar_data': user['avatar_data'],
+                'pronouns': user['pronouns'],
+                'is_active': user['is_active'],
+                'created_at': user['created_at'].isoformat()
+            }
+        }), 200
+        
+    except Exception as e:
+        # ROLLBACK ON ERROR
+        if 'conn' in locals():
+            conn.rollback()
+        # Log the actual error for debugging
+        print(f"Activity update error: {str(e)}")
+        # Return generic error message to user
+        return jsonify({'error': 'Failed to update activity status.'}), 500
