@@ -2,7 +2,7 @@ import React from 'react';
 import { View, TouchableOpacity, Text, Image } from 'react-native';
 import { styles } from '../styles';
 import { BottomNavigationProps } from '../types';
-import DiceBearAvatar from './DiceBearAvatar';
+import ActivityBorderedAvatar from './ActivityBorderedAvatar';
 
 const BottomNavigation: React.FC<BottomNavigationProps> = ({
   currentScreen,
@@ -48,8 +48,12 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
         onPress={onNavigateToSettings}
         activeOpacity={0.7}
       >
-        <View style={styles.avatarContainer} pointerEvents="none">
-          <DiceBearAvatar settings={userAvatarData} size={52} />
+        <View pointerEvents="none">
+          <ActivityBorderedAvatar 
+            settings={userAvatarData} 
+            size={52}
+            isActive={isActive}
+          />
         </View>
         <Text style={[styles.navLabel, currentScreen === 'settings' && styles.navLabelActive]}>
           Settings

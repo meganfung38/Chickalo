@@ -44,6 +44,7 @@ export default {
     },
     plugins: [
       "expo-location",
+      "expo-font",
       [
         "@rnmapbox/maps",
         {

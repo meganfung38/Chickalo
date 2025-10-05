@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { authAPI, storageAPI } from '../services/api';
 import DiceBearAvatar from '../components/DiceBearAvatar';
+import ActivityBorderedAvatar from '../components/ActivityBorderedAvatar';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
 import { styles } from '../styles';
@@ -254,11 +255,12 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
         >
           {/* User Info Section */}
           <View style={styles.userInfo}>
-            <View style={styles.userInfoAvatar}>
-              <DiceBearAvatar 
-                key={savedAvatarSettings.seed} 
-                settings={savedAvatarSettings} 
-                size={80} 
+            <View style={{ marginBottom: 20 }}>
+              <ActivityBorderedAvatar
+                settings={savedAvatarSettings}
+                size={80}
+                isActive={isActive}
+                seed={savedAvatarSettings.seed}
               />
             </View>
             <Text style={styles.sectionTitle}>{user.username}</Text>

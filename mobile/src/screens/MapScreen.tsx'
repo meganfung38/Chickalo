@@ -46,12 +46,10 @@ const MapScreen: React.FC<MapScreenProps> = ({
 
   // Initialize location and socket on mount
   useEffect(() => {
-    console.log('[MapScreen] Component mounted, initializing...');
     initializeLocationTracking();
     
     return () => {
       // Cleanup on unmount
-      console.log('[MapScreen] Component UNMOUNTING - cleaning up...');
       if (locationSubscription.current) {
         locationSubscription.current.remove();
       }
@@ -61,7 +59,7 @@ const MapScreen: React.FC<MapScreenProps> = ({
 
   // Handle activity toggle changes
   useEffect(() => {
-    if (!hasLocationPermission) return;
+    if (!hasLocationPermission || !userLocation) return;
 
     if (isActive) {
       // User went active: join location tracking
@@ -70,9 +68,10 @@ const MapScreen: React.FC<MapScreenProps> = ({
       // User went inactive: leave location tracking
       handleLeaveLocationTracking();
     }
-  }, [isActive, hasLocationPermission]);
+  }, [isActive, hasLocationPermission, userLocation]);
 
   // Subscribe to location updates from nearby users
+  // This includes all user data: location, headline, avatar, etc.
   useEffect(() => {
     subscribeToLocationUpdates((users) => {
       setNearbyUsers(users);
@@ -134,7 +133,6 @@ const MapScreen: React.FC<MapScreenProps> = ({
 
   const handleJoinLocationTracking = () => {
     try {
-      console.log('[MapScreen] Joining location tracking for user:', user.id);
       joinLocationTracking(user.id);
       if (userLocation) {
         emitLocationUpdate(user.id, userLocation);
@@ -146,7 +144,6 @@ const MapScreen: React.FC<MapScreenProps> = ({
 
   const handleLeaveLocationTracking = () => {
     try {
-      console.log('[MapScreen] Leaving location tracking for user:', user.id);
       leaveLocationTracking(user.id);
       setNearbyUsers([]); // Clear nearby users when inactive
     } catch (error) {
@@ -249,7 +246,6 @@ const MapScreen: React.FC<MapScreenProps> = ({
 
           {/* Current User Marker */}
           <Mapbox.MarkerView
-            key={`current-user-${isActive}`}
             id="current-user"
             coordinate={[userLocation.longitude, userLocation.latitude]}
           >
@@ -272,6 +268,7 @@ const MapScreen: React.FC<MapScreenProps> = ({
                 avatarSettings={nearbyUser.avatar_data}
                 isActive={nearbyUser.is_active}
                 isCurrentUser={false}
+                headline={nearbyUser.headline}
               />
             </Mapbox.MarkerView>
           ))}

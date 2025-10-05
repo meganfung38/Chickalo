@@ -18,6 +18,10 @@ export const COLORS = {
 } as const;
 
 export const TYPOGRAPHY = {
+  FONT_FAMILY: {
+    REGULAR: 'LeagueSpartan_400Regular',
+    BOLD: 'LeagueSpartan_700Bold',
+  },
   SIZES: {
     SMALL: 11,
     MEDIUM: 12,
@@ -123,10 +127,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerText: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.BOLD,
     fontSize: TYPOGRAPHY.SIZES.XLARGE,
     color: COLORS.TEXT_ON_PRIMARY,
     textAlign: 'center',
-    fontWeight: TYPOGRAPHY.WEIGHTS.SEMIBOLD,
   },
 
   // ===================
@@ -151,13 +155,13 @@ export const styles = StyleSheet.create({
     minWidth: 100,
   },
   navLabel: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.REGULAR,
     fontSize: TYPOGRAPHY.SIZES.SMALL,
     color: COLORS.TEXT_SECONDARY,
-    fontWeight: TYPOGRAPHY.WEIGHTS.MEDIUM,
   },
   navLabelActive: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.BOLD,
     color: COLORS.SECONDARY,
-    fontWeight: TYPOGRAPHY.WEIGHTS.SEMIBOLD,
   },
   logoIcon: {
     width: LAYOUT.LOGO_SIZE,
@@ -201,25 +205,27 @@ export const styles = StyleSheet.create({
   // TYPOGRAPHY
   // ===================
   title: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.BOLD,
     fontSize: TYPOGRAPHY.SIZES.XXXLARGE,
-    fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
     color: COLORS.TEXT_PRIMARY,
     textAlign: 'center',
     marginBottom: SPACING.XXXXL,
   },
   subtitle: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.REGULAR,
     fontSize: TYPOGRAPHY.SIZES.LARGE,
     textAlign: 'center',
     marginBottom: SPACING.XXXXL,
     color: COLORS.TEXT_SECONDARY,
   },
   sectionTitle: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.BOLD,
     fontSize: TYPOGRAPHY.SIZES.XLARGE,
-    fontWeight: TYPOGRAPHY.WEIGHTS.SEMIBOLD,
     color: COLORS.TEXT_PRIMARY,
     marginBottom: SPACING.MD,
   },
   bodyText: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.REGULAR,
     fontSize: TYPOGRAPHY.SIZES.LARGE,
     color: COLORS.TEXT_PRIMARY,
     lineHeight: 24,
@@ -283,9 +289,9 @@ export const styles = StyleSheet.create({
     backgroundColor: COLORS.DISABLED_GRAY,
   },
   buttonText: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.BOLD,
     color: COLORS.TEXT_ON_PRIMARY,
     fontSize: TYPOGRAPHY.SIZES.LARGE,
-    fontWeight: TYPOGRAPHY.WEIGHTS.BOLD,
   },
   buttonTextOutline: {
     color: COLORS.TEXT_PRIMARY,
@@ -691,5 +697,42 @@ export const styles = StyleSheet.create({
   inactiveMarkerBorder: {
     borderWidth: 3,
     borderColor: '#cccccc', // Gray border for inactive
+  },
+
+  // ===================
+  // SPEECH BUBBLE (HEADLINE)
+  // ===================
+  speechBubbleContainer: {
+    marginBottom: 8, // Space between bubble and avatar
+    maxWidth: 150,
+    minWidth: 80,
+    alignItems: 'center',
+  },
+  speechBubble: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 16,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 3,
+    elevation: 3,
+  },
+  speechBubbleTail: {
+    width: 0,
+    height: 0,
+    marginTop: -1,
+    borderLeftWidth: 8,
+    borderRightWidth: 8,
+    borderTopWidth: 10,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    // borderTopColor will be set dynamically
+  },
+  headlineText: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.BOLD,
+    fontSize: TYPOGRAPHY.SIZES.MEDIUM,
+    color: COLORS.TEXT_PRIMARY,
+    textAlign: 'center',
   },
 });

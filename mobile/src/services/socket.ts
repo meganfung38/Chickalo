@@ -17,6 +17,7 @@ export interface LocationUpdate {
   longitude: number;
   avatar_data: any;
   is_active: boolean;
+  headline: string | null;
 }
 
 /**
@@ -32,9 +33,7 @@ export const initializeSocket = (token: string): void => {
   socket = io(SOCKET_URL, {
     auth: { token },
     transports: ['websocket'],
-    reconnection: true,
-    reconnectionAttempts: 5,
-    reconnectionDelay: 1000,
+    reconnection: false, // Disable auto-reconnect to prevent crashes
   });
 
   socket.on('connect', () => {
@@ -42,7 +41,11 @@ export const initializeSocket = (token: string): void => {
   });
 
   socket.on('disconnect', (reason) => {
-    console.log('Socket.io disconnected:', reason);
+    console.log('Socket.io disconnected. Reason:', reason);
+    // Don't auto-reconnect if we intentionally disconnected
+    if (reason === 'io client disconnect') {
+      console.log('Client intentionally disconnected, not reconnecting');
+    }
   });
 
   socket.on('connect_error', (error) => {

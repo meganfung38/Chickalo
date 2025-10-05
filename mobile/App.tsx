@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, Text } from 'react-native';
+import { useFonts, LeagueSpartan_400Regular, LeagueSpartan_700Bold } from '@expo-google-fonts/league-spartan';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
 import MapScreen from './src/screens/MapScreen';
@@ -13,6 +14,12 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isActive, setIsActive] = useState<boolean>(false);
+
+  // Load League Spartan font
+  const [fontsLoaded] = useFonts({
+    LeagueSpartan_400Regular,
+    LeagueSpartan_700Bold,
+  });
 
   useEffect(() => {
     // Check if user is already logged in
@@ -60,6 +67,10 @@ const App: React.FC = () => {
 
   const handleUserUpdate = (updatedUser: User) => {
     setUser(updatedUser);
+    // Keep isActive state in sync with user.is_active
+    if (updatedUser.is_active !== isActive) {
+      setIsActive(updatedUser.is_active);
+    }
   };
 
   const handleToggleActivity = async () => {
@@ -78,18 +89,26 @@ const App: React.FC = () => {
         setUser(updatedUser);
       }
       
-      Alert.alert(
-        'Activity Status',
-        newStatus ? 'You are now visible on the map' : 'You are now hidden from the map'
-      );
+      // Don't show alert - it can cause app to background and disconnect socket
+      console.log(`Activity status changed to: ${newStatus ? 'active' : 'inactive'}`);
     } catch (error) {
       console.error('Failed to update activity status:', error);
+      // Only alert on error
       Alert.alert(
         'Error',
         'Failed to update activity status. Please try again.'
       );
     }
   };
+
+  // Show loading screen while fonts load
+  if (!fontsLoaded) {
+    return (
+      <View style={styles.centeredContainer}>
+        <Text style={styles.bodyText}>Loading...</Text>
+      </View>
+    );
+  }
 
   const renderScreen = () => {
     switch (currentScreen) {

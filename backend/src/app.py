@@ -129,25 +129,25 @@ def handle_location_leave(data):
     try:
         user_id = data.get('user_id')
         if not user_id:
-            emit('error', {'message': 'User ID required'})
-            return
+            return  # Silently fail if no user_id
         
         # Remove from active users
         if user_id in active_users:
             del active_users[user_id]
         
-        # Leave location tracking room
-        leave_room('location_tracking')
+        # Leave location tracking room (wrap in try/catch for safety)
+        try:
+            leave_room('location_tracking')
+        except:
+            pass  # Already left or connection closed
         
         # Delete location from database (privacy)
         delete_user_location(user_id)
         
         print(f'User {user_id} left location tracking')
-        emit('status', {'message': 'Location tracking disabled'})
         
     except Exception as e:
         print(f'Error in location:leave: {str(e)}')
-        emit('error', {'message': 'Failed to leave location tracking'})
 
 @socketio.on('location:update')
 def handle_location_update(data):
@@ -161,28 +161,33 @@ def handle_location_update(data):
         longitude = data.get('longitude')
         
         if not all([user_id, latitude is not None, longitude is not None]):
-            emit('error', {'message': 'Missing required data'})
-            return
+            return  # Silently fail if missing data
         
         # Update user location in database
         success = update_user_location(user_id, latitude, longitude)
         
         if not success:
             # User is not active, don't store location
-            emit('location:nearby-users', [])
+            try:
+                emit('location:nearby-users', [])
+            except:
+                pass  # Connection may be closed
             return
         
         # Get nearby active users
         nearby_users = get_nearby_active_users(user_id, latitude, longitude)
         
         # Send nearby users back to the requester
-        emit('location:nearby-users', nearby_users)
+        try:
+            emit('location:nearby-users', nearby_users)
+        except:
+            pass  # Connection may be closed, don't crash
         
         print(f'Location updated for user {user_id}: ({latitude}, {longitude}), nearby users: {len(nearby_users)}')
         
     except Exception as e:
         print(f'Error in location:update: {str(e)}')
-        emit('error', {'message': 'Failed to update location'})
+
 
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 3000))
