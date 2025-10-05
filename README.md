@@ -1,570 +1,303 @@
-# Chickalo
+# 🐔 Chickalo
 
-*An anonymous, consent-based mobile app for spontaneous social interaction in public spaces*
+> *A location-based mobile app for spontaneous, consent-driven social connections in public spaces*
 
-## Proposal Link 
-https://docs.google.com/document/d/15G8fIXyQHO87AUUBRo3NkDl85nDPth-3gokQ9nyrrN0/edit?usp=sharing 
+[![Tech Stack](https://img.shields.io/badge/Stack-React_Native_+_Flask_+_PostgreSQL-blue)]()
+[![Status](https://img.shields.io/badge/Status-Active_Development-green)]()
 
-## Overview
+**Proposal**: [Google Doc](https://docs.google.com/document/d/15G8fIXyQHO87AUUBRo3NkDl85nDPth-3gokQ9nyrrN0/edit?usp=sharing)
 
-Chickalo is a mobile application designed to bridge the gap between digital isolation and real-world social connection. In an increasingly digital world where organic spontaneous social interactions in public spaces have become rare, Chickalo facilitates anonymous, consent-based connections between individuals in shared physical spaces.
+---
 
-## Problem Statement
+## 📖 Overview
 
-Despite the internet connecting billions globally, individuals often struggle to initiate real-world conversations with strangers. Public settings, where natural interaction opportunities arise, are instead dominated by digital isolation. Factors like social anxiety, fear of awkwardness, and safety concerns create invisible social barriers.
+Chickalo enables anonymous, proximity-based social interaction by displaying users as customizable avatars on an interactive map. When users toggle their "activity" status ON, their avatar appears to nearby users within ~250 feet, facilitating safe, playful real-world connections.
 
-## Solution
+### 🎯 Problem
+Despite living in a connected world, spontaneous real-world interactions are rare. Social anxiety, safety concerns, and digital isolation create barriers to organic connections in public spaces.
 
-Chickalo enables users to appear on an interactive map as anonymous avatars when their "activity" toggle is turned on. Within a set proximity (200-300ft), users can view other active users and interact safely and playfully in their immediate environment.
+### 💡 Solution
+Chickalo provides a low-stakes, gamified way to signal openness to interaction while maintaining anonymity and control through an activity toggle.
 
-## Core Features
+---
 
-### ✅ Implemented Features
-- **Complete User Authentication System**: Registration, login, JWT tokens, session persistence
-- **User Profile Management**: Account creation with email, password, customizable avatars, headlines, and pronouns
-- **Activity Toggle**: Users control when their avatar appears on the map via switch component
-- **Interactive Map Interface**: Basic HTML map with WebView integration for location display
-- **Advanced Avatar Customization**: DiceBear Big Smile avatars with 7 customization categories
-- **Settings Management**: Complete profile editing with real-time state updates
-- **Dynamic Theme System**: Consistent color theming with activity-based header colors
-- **Modern UI Components**: Floating navigation bar, themed buttons, responsive design
-- **Database Integration**: PostgreSQL with proper transactions and error handling
-- **Real-time Communication**: Socket.io setup for future live features
+## ✨ Features
+
+### ✅ Implemented
+- **Authentication**: Secure registration/login with JWT tokens, session persistence
+- **Profile Management**: Customizable avatars (DiceBear), headlines, pronouns
+- **Activity Toggle**: Control visibility on map (active = visible, inactive = hidden)
+- **Real-time Map**: Mapbox integration with GPS tracking, live location updates
+- **Avatar System**: 7 customization categories (hair, eyes, accessories, etc.)
+- **Settings Interface**: Edit profile, randomize avatar, save preferences
+- **Modern UI**: Dynamic theme colors, floating navigation, responsive design
+- **Real-time Updates**: Socket.io for live location broadcasting
 
 ### 🚧 In Progress
-- **Location Services**: GPS tracking and proximity detection implementation
-- **Real-time Map Updates**: Live user positioning and avatar display on map
+- Multi-user testing and optimization
+- Performance tuning for real-time updates
 
-### 📋 Future Features (Post-MVP)
-- Anonymous messaging system
-- Business profiles and local advertising
-- Event mode for special gatherings
-- Safety and moderation tools
-- Background notifications
+### 📋 Future (Post-MVP)
+- Anonymous messaging between nearby users
 - Friend system with mutual connections
+- Safety reporting and moderation tools
+- Business profiles for local advertising
 
-## Tech Stack
+---
 
-### Frontend (Expo/React Native)
-- **Expo** - Cross-platform mobile development framework
-- **React Native** - Mobile app framework (via Expo)
-- **TypeScript** - Type-safe JavaScript
-- **React Navigation** - Screen navigation
-- **Expo Location** - GPS and location services
-- **React Native WebView** - HTML map integration
-- **Socket.io Client** - Real-time communication
-- **Axios** - HTTP client for API calls
-- **AsyncStorage** - Secure token storage
-- **React Native SVG** - SVG rendering for avatars
-- **DiceBear Avatars** - Avatar generation library
+## 🛠️ Tech Stack
 
-### Backend (Python Flask)
-- **Flask** - Python web framework
-- **Flask-SocketIO** - Real-time communication
-- **PostgreSQL** - Primary database
-- **psycopg2** - PostgreSQL adapter
-- **Flask-CORS** - Cross-origin resource sharing
-- **Flask-SQLAlchemy** - Database ORM
-- **Flask-Migrate** - Database migrations
-- **Python-dotenv** - Environment configuration
-- **PyJWT** - JSON Web Tokens
-- **bcrypt** - Password hashing
-- **geopy** - Geographic calculations
+| Layer | Technologies |
+|-------|-------------|
+| **Frontend** | React Native, Expo, TypeScript, Mapbox (@rnmapbox/maps) |
+| **Backend** | Python, Flask, Flask-SocketIO |
+| **Database** | PostgreSQL (connection pooling, JSONB for avatar data) |
+| **Real-time** | Socket.io (location broadcasting, proximity updates) |
+| **Location** | expo-location (GPS), Haversine distance calculations |
+| **Auth** | JWT tokens, bcrypt password hashing |
+| **Development** | Xcode (iOS builds), Expo Dev Client |
 
-### Development Tools
-- **Git** - Version control
-- **Python Virtual Environment** - Backend dependency isolation
-- **Node.js (NVM)** - Frontend development
-- **PostgreSQL** - Database server
-- **Expo CLI** - Mobile development
+---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
-chickalo/
-├── mobile/              # Expo React Native app
-│   ├── App.tsx         # Main app component with global state & navigation
-│   ├── package.json    # Dependencies including DiceBear, Axios, Socket.io
+Chickalo/
+├── mobile/                      # React Native app
+│   ├── App.tsx                 # Main app with global state management
 │   ├── src/
-│   │   ├── screens/    # Application screens
-│   │   │   ├── LoginScreen.tsx      # User login interface
-│   │   │   ├── RegisterScreen.tsx   # User registration with validation
-│   │   │   ├── MapScreen.tsx        # Main map view with activity toggle
-│   │   │   └── SettingsScreen.tsx   # Profile management & avatar customization
-│   │   ├── components/ # Reusable UI components
-│   │   │   ├── DiceBearAvatar.tsx   # Avatar rendering with useMemo
-│   │   │   ├── Header.tsx           # Dynamic themed header (activity-based colors)
-│   │   │   └── BottomNavigation.tsx # Floating navigation bar with themed icons
-│   │   ├── services/   # API and storage services
-│   │   │   └── api.ts  # Axios configuration, auth API, generic update functions
-│   │   ├── types/      # TypeScript definitions
-│   │   │   └── index.ts # Centralized interfaces (User, AvatarSettings, Props)
-│   │   ├── styles/     # Styling system
-│   │   │   └── index.ts # Unified stylesheet with theme constants (COLORS, TYPOGRAPHY)
-│   │   ├── utils/      # Utility functions
-│   │   │   └── validation.ts # Centralized form validation (DRY principle)
-│   │   └── constants/  # App constants
-│   │       └── avatar.ts # Avatar options, defaults, pronoun options
-├── backend/            # Python Flask API
+│   │   ├── screens/            # LoginScreen, RegisterScreen, MapScreen, SettingsScreen
+│   │   ├── components/         # Header, BottomNavigation, AvatarMarker, DiceBearAvatar
+│   │   ├── services/           # API client (api.ts), Socket.io client (socket.ts)
+│   │   ├── utils/              # Validation, location (GPS, Haversine)
+│   │   ├── types/              # TypeScript interfaces (centralized)
+│   │   ├── styles/             # Single stylesheet with theme constants
+│   │   ├── constants/          # Avatar options, pronouns
+│   │   └── config/             # Mapbox tokens, API URLs
+│   └── app.config.js           # Expo config with Mapbox plugin
+│
+├── backend/                     # Flask API
 │   ├── src/
-│   │   ├── app.py      # Flask application with Socket.io & API routes
-│   │   ├── database.py # PostgreSQL connection pool with error handling
-│   │   └── auth.py     # Authentication, user management, generic update handlers
+│   │   ├── app.py              # Flask routes + Socket.io handlers
+│   │   ├── auth.py             # User authentication, profile updates
+│   │   ├── location.py         # GPS storage, proximity calculations
+│   │   └── database.py         # PostgreSQL connection pooling
 │   ├── database/
-│   │   └── schema.sql  # Complete database schema (users, locations, friends)
-│   ├── venv/           # Python virtual environment
-│   └── requirements.txt # Python dependencies (Flask, PostgreSQL, JWT, bcrypt)
-└── README.md          # This file
+│   │   └── schema.sql          # Database schema (users, user_locations, friends)
+│   └── requirements.txt        # Python dependencies
+│
+├── README.md                    # This file
+└── CODE_QUALITY_CHECKLIST.md   # Development standards
 ```
 
-## Current Status
+---
 
-### ✅ Completed (MVP Ready)
-- **Full-Stack Architecture**: Expo frontend + Flask backend + PostgreSQL
-- **User Authentication**: Complete registration/login system with JWT tokens
-- **User Profile System**: Account creation, unique username generation, profile management
-- **Avatar System**: Advanced DiceBear integration with 7 customization categories:
-  - Background colors (9 options)
-  - Skin colors (8 realistic tones)
-  - Hair styles (13 styles: mohawk, braids, bun, etc.)
-  - Hair colors (8 colors including natural and fun colors)
-  - Eyes (8 expressions: cheery, confused, starstruck, etc.)
-  - Mouth (8 expressions: smile variations, braces, kawaii)
-  - Accessories (9 options including none: glasses, cat ears, etc.)
-- **Settings Interface**: Complete profile editing with:
-  - Headline editing and saving
-  - Pronouns selection (dropdown with 8 common options)
-  - Avatar customization (slideshow interface)
-  - Real-time state management across screens
-- **Map Interface**: Basic interactive map with activity toggle
-- **Modern UI Design**: 
-  - Dynamic header colors (green when active, orange when inactive)
-  - Floating navigation bar with app logo, activity toggle, and user avatar
-  - Consistent theme colors throughout app (#cc4e00 primary, #457a00 secondary)
-  - Clean white backgrounds with themed accent colors
-- **Code Quality & Architecture**:
-  - Centralized validation utilities (DRY principle)
-  - Unified styling system with theme constants
-  - Generic update functions to eliminate backend duplication
-  - TypeScript interfaces centralized in types directory
-  - Clean, maintainable, and testable codebase
-- **Form Validation**: Robust client-side validation:
-  - Email format validation (regex)
-  - Password minimum length (6 characters)
-  - Password confirmation matching
-  - Required field validation
-  - Real-time form state updates
-- **Database Schema**: Complete with users, user_locations, friends tables
-- **Error Handling**: Secure error messages (no backend details exposed)
-- **Network Configuration**: Mobile app configured for local development
-
-### 🚧 Next Phase
-- **Location Services**: Implement GPS tracking and proximity detection
-- **Real-time Map**: Show live user avatars on map within 200-300ft radius
-- **Socket.io Integration**: Real-time location updates between users
-
-## Development Setup
+## 🚀 Quick Start
 
 ### Prerequisites
-- **Node.js** (v16+) - Install via NVM
-- **Python 3.12+** - For backend development
-- **PostgreSQL** - Database server
-- **Expo CLI** - Mobile development
-- **Git** - Version control
+- **Node.js** (v16+), **Python 3.12+**, **PostgreSQL**, **Xcode** (for iOS)
+- Apple Developer account (free personal team for device testing)
 
-### Installation
-
-1. **Clone the repository**
+### 1. Database Setup
 ```bash
-git clone <repository-url>
-cd chickalo
+brew install postgresql
+brew services start postgresql
+createdb chickalo
+psql chickalo -f backend/database/schema.sql
 ```
 
-2. **Backend Setup (Python)**
+### 2. Backend Setup
 ```bash
 cd backend
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+python src/app.py  # Runs on http://0.0.0.0:3000
 ```
 
-3. **Database Setup**
-```bash
-# Install PostgreSQL
-brew install postgresql
-brew services start postgresql
-
-# Create database
-createdb chickalo
-
-# Run schema (includes pronouns field)
-psql chickalo -f backend/database/schema.sql
-```
-
-4. **Frontend Setup (Expo)**
+### 3. Frontend Setup
 ```bash
 cd mobile
-npm install  # Includes DiceBear and SVG packages
+npm install
+
+# Update API URL with your IP address
+# In mobile/src/services/api.ts:
+# const API_BASE_URL = 'http://YOUR_IP:3000';
+
+# Update Socket URL with your IP address
+# In mobile/src/services/socket.ts:
+# const SOCKET_URL = 'http://YOUR_IP:3000';
 ```
 
-### Running the Application
+### 4. Mapbox Configuration
+1. Create account at [Mapbox](https://mapbox.com)
+2. Get access token (public scope)
+3. Update `mobile/src/config/mapbox.ts`:
+   ```typescript
+   export const MAPBOX_ACCESS_TOKEN = 'your_token_here';
+   ```
 
-1. **Start the backend server**
+### 5. Run the App
 ```bash
-cd backend
-source venv/bin/activate
-python src/app.py
+# Terminal 1: Backend
+cd backend && source venv/bin/activate && python src/app.py
+
+# Terminal 2: Frontend (iOS)
+cd mobile && npx expo run:ios
+
+# Or build from Xcode:
+# 1. Open ios/Chickalo.xcworkspace in Xcode
+# 2. Select your device
+# 3. Trust developer certificate in Settings > General > VPN & Device Management
+# 4. Run (Cmd + R)
 ```
 
-2. **Configure network access (REQUIRED for mobile testing)**
-```bash
-# Find your computer's IP address
-ifconfig | grep "inet " | grep -v 127.0.0.1
+---
 
-# Update mobile/src/services/api.ts with your IP address
-# Replace the API_BASE_URL with your current IP: http://YOUR_IP:3000
-```
+## 🎮 How It Works
 
-3. **Start the mobile app**
-```bash
-cd mobile
-npx expo start
-```
+### User Flow
+1. **Register/Login** → Create account with email/password
+2. **Customize Avatar** → DiceBear avatars with 7 categories (hair, eyes, accessories)
+3. **Toggle Activity** → Turn ON to appear on map, OFF to hide
+4. **View Map** → See nearby active users within ~250 feet
+5. **Update Profile** → Edit headline, pronouns, avatar in Settings
 
-4. **Test the API**
-```bash
-curl http://YOUR_IP:3000/health
-```
+### Location & Privacy
+- **GPS Tracking**: Only when activity is ON
+- **Proximity**: Users see others within ~250 feet (Haversine distance)
+- **Privacy**: Inactive users are NOT visible, locations deleted when toggled OFF
+- **Real-time**: Socket.io broadcasts location updates every 5 seconds
 
-## Network Configuration (Important!)
+### Avatar System
+- **7 Customization Categories**: Background, skin, hair style, hair color, eyes, mouth, accessories
+- **50+ Options**: Mix and match for unique avatars
+- **Storage**: Complete settings saved as JSONB in PostgreSQL
+- **Grayscale**: Inactive users see their avatar grayed out (opacity 0.4)
 
-### **IP Address Changes**
-Your computer's IP address may change when you:
-- Reconnect to WiFi
-- Switch between different networks
-- Restart your computer
-- Move to a different location
+---
 
-### **How to Update API Configuration**
+## 📱 App Screens
 
-1. **Find your current IP address:**
-```bash
-ifconfig | grep "inet " | grep -v 127.0.0.1
-```
+| Screen | Purpose |
+|--------|---------|
+| **LoginScreen** | Email/password authentication |
+| **RegisterScreen** | Account creation with validation (email format, password min 6 chars) |
+| **MapScreen** | Mapbox map with user's avatar + nearby active users |
+| **SettingsScreen** | Profile editing, avatar customization, logout |
 
-2. **Update the mobile app configuration:**
-   - Open `mobile/src/services/api.ts`
-   - Find the line: `const API_BASE_URL = 'http://YOUR_IP:3000';`
-   - Replace `YOUR_IP` with your current IP address
+### UI Components
+- **Header**: Displays "Welcome {username}", changes color based on activity (green = active, orange = inactive)
+- **BottomNavigation**: Floating nav bar with logo, activity toggle, settings button
+- **AvatarMarker**: Custom Mapbox marker rendering DiceBear avatars (colored when active, grayscale when inactive)
 
-3. **Test the connection:**
-```bash
-curl http://YOUR_IP:3000/health
-```
+---
 
-4. **Restart the mobile app:**
-```bash
-cd mobile
-npx expo start
-```
+## 🗄️ Database Schema
 
-### **Troubleshooting Network Issues**
+### `users`
+- `id`, `email` (unique), `password_hash`, `username` (unique)
+- `avatar_data` (JSONB), `headline`, `pronouns`, `is_active` (boolean)
+- `created_at`, `updated_at`
 
-- **"Network Error"**: Your IP address has changed - update the API_BASE_URL
-- **"Connection refused"**: Backend server is not running - start it with `python src/app.py`
-- **"Cannot find module"**: Clear Expo cache with `npx expo start --clear`
+### `user_locations`
+- `id`, `user_id` (FK to users, unique constraint), `latitude`, `longitude`, `last_updated`
+- **ON DELETE CASCADE**: Location deleted when user is deleted
+- **UNIQUE(user_id)**: One location per user
 
-## Authentication & User System
+### `friends` (future)
+- `id`, `user1_id`, `user2_id`, `status`, `created_at`
 
-### **Implemented Features:**
-- ✅ **User Registration**: Email, password, headline, random username generation
-- ✅ **User Login**: Secure authentication with JWT tokens
-- ✅ **Password Security**: bcrypt hashing for password protection
-- ✅ **Token Management**: JWT tokens with 7-day expiration
-- ✅ **Session Persistence**: AsyncStorage for token storage
-- ✅ **Database Integration**: PostgreSQL with proper transaction handling
-- ✅ **Profile Management**: Headlines, pronouns, avatar customization
-- ✅ **Real-time State Updates**: Changes reflect across all screens immediately
+### Indexes
+- `idx_user_locations_user_id`, `idx_users_active` for performance
 
-### **API Endpoints:**
-- `POST /api/auth/register` - User registration with random avatar, validation
-- `POST /api/auth/login` - User login with email/password
-- `GET /api/auth/profile` - Get user profile (requires JWT token)
-- `PUT /api/auth/update-headline` - Update user headline
-- `PUT /api/auth/update-pronouns` - Update user pronouns
-- `PUT /api/auth/update-avatar` - Update avatar customization (JSONB)
-- `PUT /api/auth/update-activity` - Toggle user visibility on map
-- `GET /health` - Backend health check and database connectivity
+---
 
-### **Mobile Screens:**
-- **LoginScreen**: Email/password login with real-time validation and themed buttons
-- **RegisterScreen**: Account creation with:
-  - Email validation (format and uniqueness)
-  - Password validation (min 6 characters, matching confirmation)
-  - Optional headline field
-  - Form disabled until all requirements met
-- **MapScreen**: Main app interface with dynamic header, floating navigation, and activity toggle
-- **SettingsScreen**: Complete profile management with avatar customization and themed UI
+## 🔒 Security & Validation
 
-## Database Schema
+### Authentication
+- **Passwords**: bcrypt hashing with salt
+- **Tokens**: JWT with 7-day expiration
+- **Storage**: AsyncStorage for secure token persistence
 
-### **Users Table**
-- `id` (SERIAL PRIMARY KEY) - Unique user identifier
-- `email` (VARCHAR UNIQUE) - User email address
-- `password_hash` (VARCHAR) - bcrypt hashed password
-- `username` (VARCHAR UNIQUE) - Auto-generated unique username
-- `avatar_data` (JSONB) - Complete DiceBear avatar settings
-- `headline` (TEXT) - User's custom headline/bio
-- `pronouns` (VARCHAR, nullable) - User's pronouns (optional)
-- `is_active` (BOOLEAN) - Activity toggle state
-- `created_at` (TIMESTAMP) - Account creation date
-- `updated_at` (TIMESTAMP) - Last profile update
+### Validation
+- **Frontend**: Real-time form validation (email regex, password min 6 chars, password matching)
+- **Backend**: Server-side validation, generic error messages (no internal details exposed)
+- **Database**: Unique constraints (email, username), foreign key integrity
 
-### **User Locations Table**
-- `id` (SERIAL PRIMARY KEY)
-- `user_id` (INTEGER) - Foreign key to users
-- `latitude` (DECIMAL) - GPS latitude
-- `longitude` (DECIMAL) - GPS longitude
-- `last_updated` (TIMESTAMP) - Location update time
+### Privacy
+- **Activity Control**: Users choose when to be visible
+- **Location Privacy**: GPS only tracked when active, deleted when inactive
+- **Anonymity**: Only avatar and headline visible to others
 
-### **Friends Table**
-- `id` (SERIAL PRIMARY KEY)
-- `user1_id` (INTEGER) - First user
-- `user2_id` (INTEGER) - Second user
-- `status` (VARCHAR) - Friendship status
-- `created_at` (TIMESTAMP) - Friendship creation date
+---
 
-## Validation System
+## 🏗️ Architecture & Code Quality
 
-### **Centralized Validation Utilities**
-All form validation is handled through a centralized `utils/validation.ts` module following DRY principles:
+### Design Principles (DRY, KISS, SRP)
+- **DRY**: Centralized validation (`utils/validation.ts`), unified styles (`styles/index.ts`), generic backend functions (`update_user_field`)
+- **KISS**: Simple, readable code, minimal complexity per module
+- **SRP**: Each file has one clear purpose, modular architecture
 
-**Email Validation:**
-```typescript
-isValidEmail(email: string): boolean
-// Regex pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-// Validates proper email format
-```
+### State Management
+- **Global State**: `App.tsx` manages `user`, `token`, `isActive`, `currentScreen`
+- **Props Drilling**: Avoided by lifting shared state to common parent
+- **Real-time Sync**: Socket.io updates propagate through state callbacks
 
-**Password Validation:**
-```typescript
-isValidPassword(password: string): boolean
-// Minimum 6 characters
-// Does not trim (spaces may be intentional)
-```
+### Performance
+- **Connection Pooling**: PostgreSQL connections managed efficiently
+- **Memoization**: `useMemo` for expensive avatar rendering
+- **Debounced Updates**: Location updates throttled to reduce server load
 
-**Password Matching:**
-```typescript
-doPasswordsMatch(password: string, confirmPassword: string): boolean
-// Both fields must exist and match exactly
-```
+---
 
-**Registration Form Validation:**
-```typescript
-validateRegistrationForm(email, password, confirmPassword)
-// Returns: { isValid: boolean, error: string | null }
-// Comprehensive validation with descriptive error messages
-```
+## 🧪 Testing
 
-### **Real-time Form Validation**
-- **Button State**: Form submit button disabled until all validations pass
-- **Visual Feedback**: Button styling changes based on form validity
-- **Error Messages**: User-friendly error alerts with specific guidance
-- **Edge Case Prevention**: Multiple validation layers (UI + handler + backend)
+### Registration Flow
+1. Open app → Create Account
+2. Enter email (validated), password (min 6 chars), confirm password
+3. Optional headline → Button enables when valid → Random avatar assigned
 
-### **Validation Features**
-- ✅ Email uniqueness checked in backend
-- ✅ Password minimum length enforced
-- ✅ Password confirmation required
-- ✅ Optional fields clearly marked
-- ✅ Real-time validation feedback
-- ✅ No duplication across screens
-- ✅ Testable validation functions
+### Map Flow
+1. Login → Navigate to map
+2. Toggle activity ON → Avatar appears on map (colored)
+3. Toggle activity OFF → Avatar turns grayscale, location hidden from others
 
-## Theme System
+### Profile Management
+1. Navigate to Settings (tap avatar in nav bar)
+2. Edit headline/pronouns → Save → Changes reflect immediately
+3. Customize Avatar → Randomize or select options → Save
 
-### **Dynamic Color Theming**
-- **Primary Color**: `#cc4e00` (Orange) - Main buttons, inactive header, primary actions
-- **Secondary Color**: `#457a00` (Green) - Active states, activity indicators, active header
-- **Background**: `white` - Clean, consistent backgrounds throughout app
-- **Text**: `white` on colored backgrounds, `#333` on white backgrounds
+---
 
-### **Dynamic Header**
-- **Active State**: Header turns green (`#457a00`) when user is visible on map
-- **Inactive State**: Header turns orange (`#cc4e00`) when user is hidden from map
-- **Real-time Updates**: Color changes instantly when activity toggle is switched
+## 🔧 Troubleshooting
 
-### **UI Components**
-- **Floating Navigation**: Transparent background with themed button highlights
-- **Themed Buttons**: All action buttons use consistent color scheme
-- **Activity Indicators**: Visual feedback for user's current visibility status
+| Issue | Solution |
+|-------|----------|
+| **Network Error** | Update `API_BASE_URL` and `SOCKET_URL` with current IP (`ifconfig`) |
+| **Map Black Tiles** | Verify Mapbox access token in `config/mapbox.ts` |
+| **Build Fails** | Run `npx expo prebuild --clean`, delete `ios/` folder, rebuild |
+| **Location Not Working** | Enable location permissions in Settings, set simulator location |
+| **Connection Refused** | Ensure backend is running (`python src/app.py`) |
 
-## Avatar System
+---
 
-### **DiceBear Big Smile Integration**
-- **Library**: `@dicebear/collection` and `@dicebear/core`
-- **Style**: Big Smile (cartoon-style avatars)
-- **Rendering**: React Native SVG for smooth performance
-- **Customization**: 7 categories with 50+ total options
-- **Storage**: Complete avatar settings saved as JSONB in database
-- **Default**: New users get randomized avatars on registration
+## 📚 Documentation
 
-### **Customization Categories**
-1. **Background**: 9 color options
-2. **Skin Color**: 8 realistic skin tones
-3. **Hair Style**: 13 styles (short, mohawk, braids, bun, etc.)
-4. **Hair Color**: 8 colors (natural and fun colors)
-5. **Eyes**: 8 expressions (cheery, normal, confused, etc.)
-6. **Mouth**: 8 expressions (smiles, braces, kawaii, etc.)
-7. **Accessories**: 9 options including none (glasses, cat ears, etc.)
+- **[CODE_QUALITY_CHECKLIST.md](./CODE_QUALITY_CHECKLIST.md)**: Development standards, coding conventions, pre-commit checklist
 
-### **User Experience**
-- **Slideshow Interface**: Swipe through customization categories
-- **Real-time Preview**: Avatar updates instantly as options are selected
-- **Randomize Feature**: Generate completely new random avatars
-- **Database Persistence**: All customizations saved and synced across devices
+---
 
-## Key Technical Considerations
+## 🎓 Development Status
 
-### Security & Privacy
-- **Password Security**: bcrypt hashing with salt
-- **Token Security**: JWT with expiration and secure storage
-- **Error Handling**: Generic error messages (no backend details exposed)
-- **Data Validation**: Comprehensive validation:
-  - Frontend: Real-time form validation with regex patterns
-  - Backend: Server-side validation and sanitization
-  - Database: Unique constraints and foreign key integrity
-- **Input Validation**: Centralized validation utilities (DRY):
-  - Email format validation (regex)
-  - Password strength requirements
-  - Required field checks
-  - Password confirmation matching
-- **Optional Data**: Pronouns and headline are optional for user privacy
+**Phase**: Active Development (MVP Complete)  
+**Next Steps**: Multi-user testing, performance optimization, messaging system
 
-### Performance Optimization
-- **Avatar Rendering**: useMemo hooks for efficient re-rendering
-- **Database**: Connection pooling and proper transaction handling
-- **State Management**: Optimized React state updates with lifting state up pattern
-- **Network**: Axios with proper error handling and timeouts
-- **Code Architecture**: 
-  - DRY principle: Generic functions eliminate duplication
-  - KISS principle: Simple, readable code structure
-  - SRP principle: Single responsibility per function/component
-  - Centralized utilities: Validation, styling, types in dedicated modules
+**Contact**: mfung06@calpoly.edu  
+**Institution**: Cal Poly San Luis Obispo (Senior Project)
 
-### Real-time Architecture
-- **Socket.io**: Setup for future real-time features
-- **WebSocket**: Connection handling and retry logic
-- **State Sync**: Real-time updates across all app screens
+---
 
-## Development Timeline
-
-- **Phase 1**: ✅ Project setup and architecture
-- **Phase 2**: ✅ Backend infrastructure and database
-- **Phase 3**: ✅ Mobile app foundation (Expo)
-- **Phase 4**: ✅ User authentication system
-- **Phase 5**: ✅ Avatar system and profile management
-- **Phase 6**: ✅ Settings interface and state management
-- **Phase 7**: ✅ Code quality refactoring and validation
-- **Phase 8**: 🚧 Location services and real-time map
-- **Phase 9**: 📋 Testing and polish
-
-## Testing the Current Build
-
-### **Registration Flow**
-1. Open app → Tap "Create Account"
-2. Enter valid email (format validated with regex)
-3. Enter password (min 6 characters)
-4. Confirm password (must match)
-5. Optionally add headline
-6. Button enables only when all validations pass
-7. Receive random avatar and unique username
-8. Navigate to map screen with activity toggle
-
-### **Login Flow**
-1. Open app → Tap "Sign in"
-2. Enter registered email and password
-3. JWT token stored securely in AsyncStorage
-4. Navigate to map screen with user state loaded
-
-### **Profile Management**
-1. Navigate to Settings from floating navigation bar (tap user avatar)
-2. Edit headline → Save → See changes reflect immediately
-3. Select pronouns from dropdown → Save
-4. Customize avatar through slideshow interface
-5. All changes persist in database and sync across screens
-6. Notice dynamic header color changes based on activity status
-
-### **Avatar Customization**
-1. Open Settings → Tap "Customize Avatar"
-2. Swipe through 7 categories of options
-3. See real-time preview of changes
-4. Use randomize button for new avatars
-5. Save changes → Avatar updates everywhere
-
-### **UI/UX Features**
-1. Toggle activity status → Watch header color change dynamically
-2. Navigate between screens using floating navigation bar
-3. Experience consistent theme colors throughout app
-4. All buttons and UI elements follow the orange/green color scheme
-
-## Code Quality & Best Practices
-
-### **Architecture Principles**
-The codebase follows industry-standard software engineering principles:
-
-**DRY (Don't Repeat Yourself):**
-- ✅ Centralized validation utilities (`utils/validation.ts`)
-- ✅ Unified styling system (`styles/index.ts`)
-- ✅ Generic update functions in backend (`update_user_field`)
-- ✅ Reusable API update wrapper (`updateUserField`)
-- ✅ Shared type definitions (`types/index.ts`)
-
-**KISS (Keep It Simple, Stupid):**
-- ✅ Clear, readable function names
-- ✅ Single-purpose functions
-- ✅ Minimal complexity per module
-- ✅ Intuitive component structure
-
-**SRP (Single Responsibility Principle):**
-- ✅ Each file has one clear purpose
-- ✅ Separation of concerns (screens, components, services, utils)
-- ✅ Modular architecture with clear boundaries
-
-### **Code Organization**
-- **Frontend**: 
-  - `screens/` - UI screens (Login, Register, Map, Settings)
-  - `components/` - Reusable UI components (Header, Navigation, Avatar)
-  - `services/` - API and storage logic
-  - `utils/` - Pure utility functions (validation)
-  - `types/` - TypeScript interfaces
-  - `styles/` - Centralized styling and theme constants
-  - `constants/` - App-wide constants (avatar options, pronouns)
-
-- **Backend**:
-  - `app.py` - Flask routes and Socket.io setup
-  - `auth.py` - Authentication logic with generic update handlers
-  - `database.py` - PostgreSQL connection management
-
-### **Maintainability Features**
-- ✅ TypeScript for type safety
-- ✅ Comprehensive error handling
-- ✅ Consistent naming conventions
-- ✅ No duplicate code patterns
-- ✅ Easy to test and debug
-- ✅ Clear separation of concerns
-- ✅ Documented with inline comments
-
-### **Testing & Validation**
-- Validation utilities are pure functions (easily testable)
-- Backend generic functions reduce test surface area
-- Consistent error handling patterns
-- Health check endpoint for connectivity testing
-
-## Contributing
-
-This is a senior project for Cal Poly. For questions or contributions, please contact mfung06@calpoly.edu.
-
-## License
+## 📄 License
 
 [To be determined]
