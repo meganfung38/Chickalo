@@ -1,0 +1,1383 @@
+› Planning build
+› Executing react-native Pods/hermes-engine » [CP-User] [Hermes] Replace Hermes for the right configuration, if needed
+› Executing react-native Pods/ReactNativeDependencies » [CP-User] [RNDeps] Replace React Native Dependencies for the right configuration, if needed
+› Copying   @rnmapbox/maps MapboxMaps/MapboxMaps.framework/Headers/MapboxMaps-umbrella.h ➜ ios/Pods/Target/ Support/ Files/MapboxMaps/MapboxMaps-umbrella.h
+› Preparing @rnmapbox/maps Pods/Turf » Turf-Info.plist
+› Preparing Pods/React-cxxreact-React-cxxreact_privacy » ResourceBundle-React-cxxreact_privacy-React-cxxreact-Info.plist
+› Preparing Pods/RNCAsyncStorage-RNCAsyncStorage_resources » ResourceBundle-RNCAsyncStorage_resources-RNCAsyncStorage-Info.plist
+› Preparing Pods/React-Core-React-Core_privacy » ResourceBundle-React-Core_privacy-React-Core-Info.plist
+› Preparing Pods/EXConstants-ExpoConstants_privacy » ResourceBundle-ExpoConstants_privacy-EXConstants-Info.plist
+› Preparing Pods/ExpoFileSystem-ExpoFileSystem_privacy » ResourceBundle-ExpoFileSystem_privacy-ExpoFileSystem-Info.plist
+› Copying   @rnmapbox/maps Turf/Turf.framework/Headers/Turf.h ➜ ios/Pods/Turf/Sources/Turf/Turf.h
+› Copying   @rnmapbox/maps Turf/Turf.framework/Headers/Turf-umbrella.h ➜ ios/Pods/Target/ Support/ Files/Turf/Turf-umbrella.h
+› Preparing expo-constants Pods/EXConstants-EXConstants » ResourceBundle-EXConstants-EXConstants-Info.plist
+› Copying   @rnmapbox/maps MapboxMaps/MapboxMaps.framework/Headers/MapboxMaps.h ➜ ios/Pods/MapboxMaps/Sources/MapboxMaps/MapboxMaps.h
+› Executing @rnmapbox/maps Pods/MapboxMobileEvents » [CP] Copy XCFrameworks
+› Executing @rnmapbox/maps Pods/MapboxCommon » [CP] Copy XCFrameworks
+› Executing react-native Pods/hermes-engine » [CP] Copy XCFrameworks
+› Executing react-native Pods/ReactNativeDependencies » [CP] Copy XCFrameworks
+› Compiling @rnmapbox/maps Pods/Turf » Turf_vers.c
+› Compiling @rnmapbox/maps Pods/Turf » Turf-dummy.m
+› Linking   @rnmapbox/maps Pods/Turf » Turf
+› Signing   @rnmapbox/maps Pods/Turf » Turf.framework
+› Executing @rnmapbox/maps Pods/MapboxCoreMaps » [CP] Copy XCFrameworks
+› Executing react-native Pods/React-Core-prebuilt » [CP-User] [RNDeps] Replace React Native Core for the right configuration, if needed
+› Executing react-native Pods/React-Core-prebuilt » [CP] Copy XCFrameworks
+› Executing react-native Pods/React-RCTFBReactNativeSpec » [CP-User] [RN]Check FBReactNativeSpec
+› Executing Chickalo Pods/ReactCodegen » [CP-User] Generate Specs
+› Compiling @rnmapbox/maps Pods/MapboxMaps » MapboxMaps_vers.c
+› Compiling @rnmapbox/maps Pods/MapboxMaps » MapboxMaps-dummy.m
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/bg.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/bg.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/ca.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/ca.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/bg.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/bg.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/da.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/da.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/cs.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/cs.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/cs.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/cs.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/de.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/de.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/da.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/da.lproj/CompassDirectionLong.strings
+› Preparing Pods/MapboxMaps-MapboxMapsResources » ResourceBundle-MapboxMapsResources-MapboxMaps-Info.plist
+› Copying   MapboxMaps/MapboxMapsResources.bundle/PrivacyInfo.xcprivacy ➜ ios/Pods/MapboxMaps/Sources/MapboxMaps/PrivacyInfo.xcprivacy
+› Copying   MapboxMaps/MapboxMapsResources.bundle/MapboxMaps.json ➜ ios/Pods/MapboxMaps/Sources/MapboxMaps/MapboxMaps.json
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/zh-Hant.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/zh-Hant.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/zh-Hant.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/zh-Hant.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/zh-Hans.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/zh-Hans.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/zh-Hans.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/zh-Hans.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/vi.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/vi.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/vi.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/vi.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/uk.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/uk.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/uk.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/uk.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/sv.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/sv.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/sv.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/sv.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/ru.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/ru.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/ru.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/ru.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/pt-BR.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/pt-BR.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/pt-BR.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/pt-BR.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/lt.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/lt.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/lt.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/lt.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/ko.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/ko.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/ko.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/ko.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/ja.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/ja.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/ja.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/ja.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/he.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/he.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/he.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/he.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/gl.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/gl.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/gl.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/gl.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/fr.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/fr.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/fr.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/fr.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/es.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/es.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/es.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/es.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/en.lproj/OrnamentsLocalizable.strings ➜ MapboxMaps/MapboxMapsResources.bundle/en.lproj/OrnamentsLocalizable.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/en.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/en.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/en.lproj/CompassDirectionLong.strings ➜ MapboxMaps/MapboxMapsResources.bundle/en.lproj/CompassDirectionLong.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/de.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/de.lproj/CompassDirectionShort.strings
+› Copying   ios/Pods/MapboxMaps/Sources/MapboxMaps/Ornaments/Compass/ca.lproj/CompassDirectionShort.strings ➜ MapboxMaps/MapboxMapsResources.bundle/ca.lproj/CompassDirectionShort.strings
+› Preparing @rnmapbox/maps Pods/MapboxMaps » MapboxMaps-Info.plist
+› Copying   @rnmapbox/maps MapboxMaps/MapboxMaps.framework/MapboxMapsResources.bundle ➜ MapboxMaps/MapboxMapsResources.bundle
+› Compiling Chickalo Pods/ReactCodegen » safeareacontext-generated.mm
+› Compiling Chickalo Pods/ReactCodegen » rnsvg-generated.mm
+› Compiling Chickalo Pods/ReactCodegen » rnscreens-generated.mm
+› Compiling Chickalo Pods/ReactCodegen » rnmapbox_maps_specs-generated.mm
+› Compiling Chickalo Pods/ReactCodegen » safeareacontextJSI-generated.cpp
+› Compiling Chickalo Pods/ReactCodegen » rnsvgJSI-generated.cpp
+› Compiling Chickalo Pods/ReactCodegen » rnscreensJSI-generated.cpp
+› Compiling Chickalo Pods/ReactCodegen » rngesturehandler_codegenJSI-generated.cpp
+› Compiling Chickalo Pods/ReactCodegen » rnmapbox_maps_specsJSI-generated.cpp
+› Compiling Chickalo Pods/ReactCodegen » rngesturehandler_codegen-generated.mm
+› Compiling Chickalo Pods/ReactCodegen » rnasyncstorageJSI-generated.cpp
+› Compiling Chickalo Pods/ReactCodegen » rnasyncstorage-generated.mm
+› Compiling Chickalo Pods/ReactCodegen » States.cpp
+› Compiling Chickalo Pods/ReactCodegen » States.cpp
+› Compiling Chickalo Pods/ReactCodegen » States.cpp
+› Compiling Chickalo Pods/ReactCodegen » States.cpp
+› Compiling Chickalo Pods/ReactCodegen » States.cpp
+› Compiling Chickalo Pods/ReactCodegen » ShadowNodes.cpp
+› Compiling Chickalo Pods/ReactCodegen » ShadowNodes.cpp
+› Compiling Chickalo Pods/ReactCodegen » ShadowNodes.cpp
+› Compiling Chickalo Pods/ReactCodegen » ShadowNodes.cpp
+› Compiling Chickalo Pods/ReactCodegen » ShadowNodes.cpp
+› Compiling Chickalo Pods/ReactCodegen » RCTUnstableModulesRequiringMainQueueSetupProvider.mm
+› Compiling Chickalo Pods/ReactCodegen » RCTThirdPartyComponentsProvider.mm
+› Compiling Chickalo Pods/ReactCodegen » RCTModulesConformingToProtocolsProvider.mm
+› Compiling Chickalo Pods/ReactCodegen » RCTModuleProviders.mm
+› Compiling Chickalo Pods/ReactCodegen » Props.cpp
+› Compiling Chickalo Pods/ReactCodegen » Props.cpp
+› Compiling Chickalo Pods/ReactCodegen » Props.cpp
+› Compiling Chickalo Pods/ReactCodegen » Props.cpp
+› Compiling Chickalo Pods/ReactCodegen » Props.cpp
+› Compiling Chickalo Pods/ReactCodegen » EventEmitters.cpp
+› Compiling Chickalo Pods/ReactCodegen » EventEmitters.cpp
+› Compiling Chickalo Pods/ReactCodegen » EventEmitters.cpp
+› Compiling Chickalo Pods/ReactCodegen » EventEmitters.cpp
+› Compiling Chickalo Pods/ReactCodegen » EventEmitters.cpp
+› Compiling Chickalo Pods/ReactCodegen » ComponentDescriptors.cpp
+› Compiling Chickalo Pods/ReactCodegen » ComponentDescriptors.cpp
+› Compiling Chickalo Pods/ReactCodegen » ComponentDescriptors.cpp
+› Compiling Chickalo Pods/ReactCodegen » ComponentDescriptors.cpp
+› Compiling Chickalo Pods/ReactCodegen » ComponentDescriptors.cpp
+› Compiling Chickalo Pods/ReactCodegen » ReactCodegen-dummy.m
+› Linking   @rnmapbox/maps Pods/MapboxMaps » MapboxMaps
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » react-native-safe-area-context-dummy.m
+› Compiling Chickalo Pods/ReactAppDependencyProvider » RCTAppDependencyProvider.mm
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaViewState.cpp
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaViewShadowNode.cpp
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaViewComponentView.mm
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaProviderComponentView.mm
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaContext.mm
+› Compiling react-native-screens Pods/RNScreens » NSString+RNSUtility.mm
+› Compiling react-native-svg Pods/RNSVG » RCTConvert+RNSVG.mm
+› Compiling @react-native-async-storage/async-storage Pods/RNCAsyncStorage » RNCAsyncStorage.mm
+› Compiling react-native-screens Pods/RNScreens » UIWindow+RNScreens.mm
+› Compiling react-native-screens Pods/RNScreens » UIViewController+RNScreens.mm
+› Compiling react-native-screens Pods/RNScreens » UIView+RNSUtility.mm
+› Compiling react-native-screens Pods/RNScreens » UIScrollView+RNScreens.mm
+› Compiling react-native-screens Pods/RNScreens » UINavigationBar+RNSUtility.mm
+› Compiling react-native-screens Pods/RNScreens » RNScreensTurboModule.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSViewControllerInvalidator.mm
+› Compiling react-native-screens Pods/RNScreens » RNSTabsScreenViewController.mm
+› Compiling react-native-screens Pods/RNScreens » RNSTabBarControllerDelegate.mm
+› Compiling react-native-screens Pods/RNScreens » RNSTabBarController.mm
+› Compiling react-native-screens Pods/RNScreens » RNSTabBarAppearanceCoordinator.mm
+› Compiling react-native-screens Pods/RNScreens » RNSSplitViewScreenShadowNode.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSSearchBar.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScrollViewHelper.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScrollViewFinder.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScreenWindowTraits.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScreenViewEvent.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScreenState.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSScreenStackHeaderSubviewState.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSScreenStackHeaderSubviewShadowNode.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSScreenStackHeaderSubview.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScreenStackHeaderConfigState.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSScreenStackHeaderConfigShadowNode.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSScreenStackHeaderConfig.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScreenStackAnimator.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScreenStack.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScreenShadowNode.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSScreenRemovalListener.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSScreenNavigationContainer.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScreenFooter.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScreenContentWrapper.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScreenContainer.mm
+› Compiling react-native-screens Pods/RNScreens » RNSScreen.mm
+› Compiling react-native-screens Pods/RNScreens » RNSReactBaseView.mm
+› Compiling react-native-screens Pods/RNScreens » RNSPercentDrivenInteractiveTransition.mm
+› Compiling react-native-screens Pods/RNScreens » RNSModule.mm
+› Compiling react-native-screens Pods/RNScreens » RNSModalScreenShadowNode.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSModalScreen.mm
+› Compiling react-native-screens Pods/RNScreens » RNSInvalidatedComponentsRegistry.mm
+› Compiling react-native-screens Pods/RNScreens » RNSHeaderHeightChangeEvent.mm
+› Compiling react-native-screens Pods/RNScreens » RNSGammaStubs.mm
+› Compiling react-native-screens Pods/RNScreens » RNSFullWindowOverlayShadowNode.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSFullWindowOverlay.mm
+› Compiling react-native-screens Pods/RNScreens » RNSConvert.mm
+› Compiling react-native-screens Pods/RNScreens » RNSConversions.mm
+› Compiling react-native-screens Pods/RNScreens » RNSConversions-SplitView.mm
+› Compiling react-native-screens Pods/RNScreens » RNSConversions-Fabric.mm
+› Compiling react-native-screens Pods/RNScreens » RNSConversions-BottomTabs.mm
+› Compiling react-native-screens Pods/RNScreens » RNSBottomTabsState.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSBottomTabsShadowNode.cpp
+› Compiling react-native-screens Pods/RNScreens » RNSBottomTabsScreenEventEmitter.mm
+› Compiling react-native-screens Pods/RNScreens » RNSBottomTabsScreenComponentViewManager.mm
+› Compiling react-native-screens Pods/RNScreens » RNSBottomTabsScreenComponentView.mm
+› Compiling react-native-screens Pods/RNScreens » RNSBottomTabsHostEventEmitter.mm
+› Compiling react-native-screens Pods/RNScreens » RNSBottomTabsHostComponentViewManager.mm
+› Compiling react-native-screens Pods/RNScreens » RNSBottomTabsHostComponentView.mm
+› Compiling react-native-screens Pods/RNScreens » RNSBottomTabsHostComponentView+RNSImageLoader.mm
+› Compiling react-native-screens Pods/RNScreens » RNSBackBarButtonItem.mm
+› Compiling react-native-screens Pods/RNScreens » RCTTouchHandler+RNSUtility.mm
+› Compiling react-native-screens Pods/RNScreens » RCTSurfaceTouchHandler+RNSUtility.mm
+› Compiling react-native-screens Pods/RNScreens » RCTImageComponentView+RNSScreenStackHeaderConfig.mm
+› Compiling react-native-screens Pods/RNScreens » RCTConvert+RNScreens.mm
+› Compiling react-native-screens Pods/RNScreens » RCTConvert+RNSBottomTabs.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGViewBox.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGUseManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGUse.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGTopAlignedLabel.ios.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGTextProperties.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGTextPathManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGTextPath.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGTextManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGText.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGTSpanManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGTSpan.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGSymbolManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGSymbol.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGSvgViewModule.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGSvgViewManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGSvgView.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGSolidColorBrush.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGRenderableModule.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGRenderableManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGRenderable.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGRectManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGRect.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGRadialGradientManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGRadialGradient.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGPropHelper.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGPatternManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGPattern.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGPathParser.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGPathMeasure.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGPathManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGPath.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGPainterBrush.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGPainter.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGNodeManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGNode.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGMaskManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGMask.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGMarkerPosition.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGMarkerManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGMarker.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGLinearGradientManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGLinearGradient.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGLineManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGLine.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGLength.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGImageState.cpp
+› Compiling react-native-svg Pods/RNSVG » RNSVGImageShadowNode.cpp
+› Compiling react-native-svg Pods/RNSVG » RNSVGImageManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGImage.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGGroupManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGGroup.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGGlyphContext.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGForeignObjectManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGForeignObject.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGFontData.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGEllipseManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGEllipse.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGDefsManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGDefs.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGContextBrush.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGClipPathManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGClipPath.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGCircleManager.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGCircle.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGBrush.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVGBezierElement.mm
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaViewMode.m
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaViewManager.m
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaViewLocalData.m
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaViewEdges.m
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaViewEdgeMode.m
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaView.m
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaUtils.m
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaShadowView.m
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaProviderManager.m
+› Packaging Chickalo Pods/ReactCodegen » libReactCodegen.a
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCOnInsetsChangeEvent.m
+› Compiling react-native-safe-area-context Pods/react-native-safe-area-context » RNCSafeAreaProvider.m
+› Compiling Chickalo Pods/ReactAppDependencyProvider » ReactAppDependencyProvider-dummy.m
+› Compiling react-native-screens Pods/RNScreens » RNScreens-dummy.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » SwiftUIVirtualViewObjC.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXViewportModule.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXViewportComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXVectorSourceComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXTerrainComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXSymbolLayerComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXStyleImportComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXSkyLayerComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXShapeSourceModule.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXShapeSourceComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXRasterSourceComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXRasterLayerComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXRasterDemSourceComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXPointAnnotationModule.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXPointAnnotationComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXNativeUserLocationComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXMovePointShapeAnimatorModule.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXModelsManager.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXModelsComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXModelLayerComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXMarkerViewContentComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXMarkerViewComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXMapViewModule.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXMapViewComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXLineLayerComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXLightComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXImagesComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXImageSourceComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXImageModule.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXImageComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXHeatmapLayerComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXFillLayerComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXFillExtrusionLayerComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXFabricPropConvert.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXCustomLocationProviderComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXCircleLayerComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXChangeLineOffsetsShapeAnimatorModule.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXCameraModule.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXCameraComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXCalloutComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXBackgroundLayerComponentView.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXAtmosphereComponentView.mm
+› Compiling react-native-svg Pods/RNSVG » RNSVG-dummy.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNFlingHandler.m
+› Compiling @react-native-async-storage/async-storage Pods/RNCAsyncStorage » RNCAsyncStorage-dummy.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » TypedArray.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » SharedRef.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » SharedObject.cpp
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNNativeViewHandler.mm
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGestureHandlerRootViewComponentView.mm
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGestureHandlerModule.mm
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGestureHandlerManager.mm
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGestureHandlerButtonManager.mm
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGestureHandlerButtonComponentView.mm
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGestureHandlerButton.mm
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGestureHandler.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » ObjectDeallocator.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » NativeModule.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » MainThreadInvoker.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » LazyObject.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » JSIUtils.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » ExpoViewShadowNode.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » ExpoViewProps.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » ExpoViewEventEmitter.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » ExpoViewComponentDescriptor.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » ExpoModulesHostObject.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » ExpoFabricViewObjC.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » ExpoBridgeModule.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EventEmitter.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXStringUtils.cpp
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXSharedObjectUtils.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXReactNativeAdapter.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXReactDelegateWrapper.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXRawJavaScriptFunction.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXNativeModulesProxy.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXJavaScriptWeakObject.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXJavaScriptValue.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXJavaScriptTypedArray.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXJavaScriptSharedObjectBinding.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXJavaScriptRuntime.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXJavaScriptObject.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXJSIUtils.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXJSIInstaller.mm
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXJSIConversions.mm
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » rnmapbox-maps-dummy.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXViewportManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXVectorSourceViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXVectorLayer.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXTileStoreModule.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXTerrainViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXSymbolLayerViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXStyleImportManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXSnapshotModule.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXSkyLayerViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXShapeSourceViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXRasterSourceViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXRasterLayerViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXRasterDemSourceViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXPointAnnotationViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXOfflineModuleLegacy.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXOfflineModule.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXNativeUserLocationViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXModule.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXModelLayerViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXMarkerViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXMarkerViewContentManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXMapViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXLogging.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXLocationModule.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXLineLayerViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXLightViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXImagesViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXImageSourceViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXImageManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXHeatmapLayerViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXFillLayerViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXFillExtrusionLayerViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXCustomLocationProviderViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXCircleLayerViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXCameraViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXCalloutViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXBackgroundLayerViewManager.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RCTSwiftLog.m
+› Compiling @rnmapbox/maps Pods/rnmapbox-maps » RNMBXAtmosphereViewManager.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNRotationHandler.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNTapHandler.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNRootViewGestureRecognizer.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNPinchHandler.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNPanHandler.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNManualHandler.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNManualActivationRecognizer.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNLongPressHandler.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNHoverHandler.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGestureHandlerRegistry.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGestureHandlerEvents.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGestureHandlerPointerTracker.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGHVector.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGHStylusData.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNGestureHandler-dummy.m
+› Compiling react-native-gesture-handler Pods/RNGestureHandler » RNForceTouchHandler.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » ExpoModulesCore-dummy.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » RCTComponentData+Privates.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXUtilities.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXSingletonModule.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXReactNativeUserNotificationCenterProxy.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXReactLogHandler.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXPermissionsService.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXPermissionsMethodsDelegate.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXReactNativeEventEmitter.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXModuleRegistryProvider.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXModuleRegistryHolderReactModule.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXModuleRegistryAdapter.m
+› Packaging react-native-safe-area-context Pods/react-native-safe-area-context » libreact-native-safe-area-context.a
+› Packaging Chickalo Pods/ReactAppDependencyProvider » libReactAppDependencyProvider.a
+› Packaging react-native-screens Pods/RNScreens » libRNScreens.a
+› Packaging react-native-svg Pods/RNSVG » libRNSVG.a
+› Packaging react-native-gesture-handler Pods/RNGestureHandler » libRNGestureHandler.a
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXModuleRegistry.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXLogManager.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXExportedModule.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » EXAppDefines.m
+› Compiling expo-modules-core Pods/ExpoModulesCore » CoreModuleHelper.m
+› Packaging @react-native-async-storage/async-storage Pods/RNCAsyncStorage » libRNCAsyncStorage.a
+› Packaging @rnmapbox/maps Pods/rnmapbox-maps » librnmapbox-maps.a
+› Executing @rnmapbox/maps Pods/rnmapbox-maps » Copy generated compatibility header
+› Packaging expo-modules-core Pods/ExpoModulesCore » libExpoModulesCore.a
+› Executing expo-modules-core Pods/ExpoModulesCore » Copy generated compatibility header
+› Compiling expo Pods/Expo » EXReactRootViewFactory.mm
+› Compiling expo Pods/Expo » EXAppDelegateWrapper.mm
+› Compiling expo-maps Pods/ExpoMaps » ExpoMaps-dummy.m
+› Compiling expo-sqlite Pods/ExpoSQLite » ExpoSQLite-dummy.m
+› Compiling expo-sqlite Pods/ExpoSQLite » sqlite3.c
+› Packaging expo-maps Pods/ExpoMaps » libExpoMaps.a
+› Compiling expo-location Pods/ExpoLocation » ExpoLocation-dummy.m
+› Compiling expo-location Pods/ExpoLocation » EXLocationTaskConsumer.m
+› Compiling expo-location Pods/ExpoLocation » EXLocationPermissionRequester.m
+› Compiling expo-location Pods/ExpoLocation » EXLocation.m
+› Compiling expo-location Pods/ExpoLocation » EXGeofencingTaskConsumer.m
+› Compiling expo-location Pods/ExpoLocation » EXForegroundPermissionRequester.m
+› Compiling expo-location Pods/ExpoLocation » EXBaseLocationRequester.m
+› Compiling expo-location Pods/ExpoLocation » EXBackgroundLocationPermissionRequester.m
+› Compiling expo-keep-awake Pods/ExpoKeepAwake » ExpoKeepAwake-dummy.m
+› Compiling expo-font Pods/ExpoFont » ExpoFont-dummy.m
+› Packaging expo-keep-awake Pods/ExpoKeepAwake » libExpoKeepAwake.a
+› Packaging expo-font Pods/ExpoFont » libExpoFont.a
+› Compiling expo-file-system Pods/ExpoFileSystem » ExpoFileSystem-dummy.m
+› Packaging expo-location Pods/ExpoLocation » libExpoLocation.a
+› Compiling expo Pods/ExpoFileSystem » NSData+EXFileSystem.m
+› Compiling expo Pods/ExpoFileSystem » EXTaskHandlersManager.m
+› Compiling expo Pods/ExpoFileSystem » EXSessionUploadTaskDelegate.m
+› Compiling expo Pods/ExpoFileSystem » EXSessionTaskDispatcher.m
+› Compiling expo Pods/ExpoFileSystem » EXSessionTaskDelegate.m
+› Compiling expo Pods/ExpoFileSystem » EXSessionResumableDownloadTaskDelegate.m
+› Compiling expo Pods/ExpoFileSystem » EXSessionHandler.m
+› Compiling expo Pods/ExpoFileSystem » EXSessionDownloadTaskDelegate.m
+› Compiling expo Pods/ExpoFileSystem » EXSessionCancelableUploadTaskDelegate.m
+› Compiling expo-asset Pods/ExpoAsset » ExpoAsset-dummy.m
+› Executing expo-constants Pods/EXConstants » [CP-User] Generate app.config for prebuilt Constants.manifest
+› Executing expo-location Pods/ExpoLocation » Copy generated compatibility header
+› Executing expo-maps Pods/ExpoMaps » Copy generated compatibility header
+› Executing expo-font Pods/ExpoFont » Copy generated compatibility header
+› Executing expo-keep-awake Pods/ExpoKeepAwake » Copy generated compatibility header
+› Compiling expo Pods/ExpoFileSystem » EXFileSystemLocalFileHandler.m
+› Compiling expo Pods/ExpoFileSystem » EXFileSystemAssetLibraryHandler.m
+› Compiling expo Pods/Expo » Expo-dummy.m
+› Compiling expo Pods/Expo » EXLegacyAppDelegateWrapper.m
+› Packaging expo-asset Pods/ExpoAsset » libExpoAsset.a
+› Executing expo-asset Pods/ExpoAsset » Copy generated compatibility header
+› Compiling expo Pods/Expo » EXAppDefinesLoader.m
+› Compiling expo Pods/Expo » EXAppDelegatesLoader.m
+› Packaging expo-file-system Pods/ExpoFileSystem » libExpoFileSystem.a
+› Executing expo-file-system Pods/ExpoFileSystem » Copy generated compatibility header
+› Compiling expo Pods/EXConstants » EXConstantsService.m
+› Compiling expo-constants Pods/EXConstants » EXConstants-dummy.m
+› Compiling expo Pods/EXConstants » EXConstantsInstallationIdProvider.m
+› Packaging expo-constants Pods/EXConstants » libEXConstants.a
+› Executing expo-constants Pods/EXConstants » Copy generated compatibility header
+› Packaging expo-sqlite Pods/ExpoSQLite » libExpoSQLite.a
+› Executing expo-sqlite Pods/ExpoSQLite » Copy generated compatibility header
+› Packaging expo Pods/Expo » libExpo.a
+› Executing expo Pods/Expo » Copy generated compatibility header
+› Compiling Pods/Pods-Chickalo » Pods-Chickalo-dummy.m
+› Packaging Pods/Pods-Chickalo » libPods-Chickalo.a
+› Executing Chickalo » [CP] Check Pods Manifest.lock
+› Executing Chickalo » [Expo] Configure project
+› Linking   Chickalo » __preview.dylib
+› Copying   ./PrivacyInfo.xcprivacy ➜ ios/Chickalo/PrivacyInfo.xcprivacy
+› Copying   ios/Chickalo/Supporting/Expo.plist ➜ ./Expo.plist
+› Compiling Chickalo » SplashScreen.storyboard
+› Preparing Chickalo » Info.plist
+› Compiling Chickalo » Chickalo_vers.c
+› Linking   Chickalo » Chickalo.debug.dylib
+› Generating debug Chickalo » Chickalo.app.dSYM
+› Linking   Chickalo » Chickalo
+› Generating debug Chickalo » Chickalo.app.dSYM
+› Executing Chickalo » Bundle React Native code and images
+› Executing Chickalo » [CP] Copy Pods Resources
+› Executing Chickalo » [CP] Embed Pods Frameworks
+› Signing   Chickalo » Chickalo.debug.dylib
+› Signing   Chickalo » __preview.dylib
+› Signing   Chickalo » Chickalo.app
+› Creating  Chickalo » Chickalo.app
+    Run script build phase '[CP-User] [Hermes] Replace Hermes for the right configuration, if needed' will be run during every build because it does not specify any outputs. To address this issue, either add output dependencies to the script phase, or configure it to run in every build by unchecking "Based on dependency analysis" in the script phase. (in target 'hermes-engine' from project 'Pods')
+› Build Succeeded
+
+› 0 error(s), and 1 warning(s)
+
+Starting Metro Bundler
+Waiting on http://localhost:8081
+› Installing /Users/masterhulkfung/Library/Developer/Xcode/DerivedData/Chickalo-dttvhcsbozdvapcuojybjjrscqsl/Build/Products/Debug-iphonesimulator/Chickalo.app
+› Installing on iPhone 16e
+› Opening on iPhone 16e (com.anonymous.Chickalo)
+› Opening com.anonymous.Chickalo://expo-development-client/?url=http%3A%2F%2F192.168.6.219%3A8081 on iPhone 16e
+
+› Logs for your project will appear below.
+| (node:11608) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+iOS ./index.ts ░░░░░░░░░░░░░░░░  1.0% (1/1)
+| (node:11613) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:11612) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:11611) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:11610) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:11617) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:11616) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:11614) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:11615) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+| (node:11609) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+| (Use `node --trace-warnings ...` to show where the warning was created)
+iOS ./index.ts ▓▓▓▓▓▓▓▓▓▓▓░░░░░ 74.7% (609/770)
+iOS Bundled 7266ms index.ts (1330 modules)
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d39680 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d39680 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c210 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c210 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c150 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c150 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c1b0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c1b0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c180 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c180 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c210 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c210 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c150 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c150 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c1b0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c1b0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c180 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c180 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d505a0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d505a0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d50300 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d50300 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d4e580 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d4e580 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d4cb10 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d4cb10 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d509c0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d509c0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c9c0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c9c0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3ca50 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3ca50 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3dce0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3dce0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c810 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d3c810 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2e280 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2e280 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d537b0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d537b0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d533f0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d533f0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d53780 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d53780 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d53750 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d53750 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d537b0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d537b0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d533f0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d533f0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d53780 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d53780 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d53750 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d53750 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[TextInputUI] Could not find cached accumulator for token=A9ECE00D type:0 in
+-[TUIKeyboardCandidateMultiplexer
+receiveExternalAutocorrectionUpdate:requestToken:]_block_invoke
+[TextInputUI] Could not find cached accumulator for token=A9ECE00D type:1 in
+-[TUIKeyboardCandidateMultiplexer
+_queueOnly_willHandleDeliveryForCandidates:requestToken:]
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2d470 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2d470 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2def0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2def0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2ffc0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2ffc0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2df20 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2df20 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2d470 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d2d470 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d54330 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d54330 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d498c0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d498c0 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d4b030 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d4b030 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[CoreHaptics]        CHHapticPattern.mm:487   +[CHHapticPattern
+patternForKey:error:]: Failed to read pattern library data: Error
+Domain=NSCocoaErrorDomain Code=260 "The file “hapticpatternlibrary.plist”
+couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d4af10 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[UIKitCore] <_UIKBFeedbackGenerator: 0x600003510210>: Error creating
+CHHapticPattern: Error Domain=NSCocoaErrorDomain Code=260 "The file
+“hapticpatternlibrary.plist” couldn’t be opened because there is no such file."
+UserInfo={NSFilePath=/Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSURL=file:///Library/Audio/Tunings/Generic/Haptics/Library/hapticpatternlibrary.plist,
+NSUnderlyingError=0x600000d4af10 {Error Domain=NSPOSIXErrorDomain Code=2 "No
+such file or directory"}}
+[TextInputUI] Result accumulator timeout: 0.250000, exceeded.
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 101ms index.ts (1 module)
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 84ms index.ts (1 module)
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot leave location tracking
+ LOG  Socket.io connected: N2dw0D6L-l5OERD5AAAB
+ INFO  Launching DevTools...
+ LOG  Joined location tracking
+ LOG  Left location tracking
+ LOG  Joined location tracking
+ LOG  Left location tracking
+ WARN  Failed to open debugger. Please check that the dev server is running and reload the app.
+ LOG  Joined location tracking
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 76ms index.ts (1 module)
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: ZH8rMsfR8Fg7sak1AAAD
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket.io connected: pMAgKqpll2NudbvYAAAF
+ LOG  Left location tracking
+ LOG  Joined location tracking
+ LOG  Socket.io disconnected: transport close
+ ERROR  Socket.io connection error: [Error: websocket error]
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 77ms index.ts (1 module)
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: 7WMcPNO-69xQS41BAAAB
+ LOG  Left location tracking
+ LOG  Joined location tracking
+ LOG  Left location tracking
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot leave location tracking
+ LOG  Socket.io connected: GVR3QO28U9RW-gNiAAAD
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot leave location tracking
+ LOG  Socket.io connected: 8wEFvChMyUUsh-3zAAAF
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot leave location tracking
+ LOG  Socket.io connected: X_nZ9Ol7TXn28u2PAAAH
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot leave location tracking
+ LOG  Socket.io connected: HCb0mKt1oKx4MbwKAAAJ
+ LOG  Joined location tracking
+ LOG  Left location tracking
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 74ms index.ts (1 module)
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot leave location tracking
+ LOG  Socket.io connected: 1sbm-pxE0SHpjkLaAAAL
+ LOG  Joined location tracking
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: utqTP3xhfM8vsFDFAAAN
+ LOG  Left location tracking
+ LOG  Joined location tracking
+ LOG  Left location tracking
+ LOG  Joined location tracking
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: iabtS3i4zVoj5S7hAAAP
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: SKyBp_fyZmuyC5dQAAAR
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: xUWzw5cNl5S8JtqGAAAT
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: ah4XbSXvR9Auf8dkAAAV
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: unvHW-YipeJabXQbAAAX
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: wN5omIiySQNBXmK6AAAZ
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 78ms index.ts (1 module)
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: YCKVrMFtEnzcJc_GAAAb
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: _g_piK0n-n-hsJUvAAAd
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: WHX_8HZJWnW50TdPAAAf
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: 84roCCmp9lr7LddEAAAh
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: j5cVA2f0zjOml0GxAAAj
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 84ms index.ts (1 module)
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: zujBT_osK7vchE5rAAAl
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: q2YzkHBlSFiwHbHrAAAn
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 77ms index.ts (1 module)
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: -IsajLDoPd_yt1v5AAAp
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 75ms index.ts (1 module)
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: L1dCwJtTrgkl4ix7AAAr
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket.io connected: QRRZqr54Dd7CHNaOAAAt
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: sCVygRYQhgeSBR7aAAAv
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: I2q4uSKsbfXsO9xoAAAx
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: OaQ3qgpaaH6ATYBTAAAz
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket.io connected: xYVL7n6GHdPyACUbAAA1
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: Z1QAh3MopdKXxmXMAAA3
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: RiK8jb31dr_706C1AAA5
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: FtEU8myKEfyEySmHAAA7
+ LOG  Socket.io disconnected: transport close
+ ERROR  Socket.io connection error: [Error: websocket error]
+ ERROR  Socket.io connection error: [Error: websocket error]
+ ERROR  Socket.io connection error: [Error: websocket error]
+ ERROR  Socket.io connection error: [Error: websocket error]
+ ERROR  Socket.io connection error: [Error: websocket error]
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 108ms index.ts (1 module)
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: i31O7JZopWKg-avlAAAB
+iOS ./index.ts ░░░░░░░░░░░░░░░░  0.0% (0/1)
+iOS Bundled 74ms index.ts (1 module)
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: C9pFIF6dGu-gX6R3AAAD
+ LOG  Left location tracking
+ LOG  Joined location tracking
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: n_azmWgZkKwTz5KcAAAF
+ LOG  Socket.io disconnected: io client disconnect
+ LOG  Socket.io disconnected
+ LOG  Socket not connected, cannot join location tracking
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket not initialized
+ LOG  Socket not connected, cannot emit location
+ LOG  Socket.io connected: 31moLK6qYcsQ1IG2AAAH

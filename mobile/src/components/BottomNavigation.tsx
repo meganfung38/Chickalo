@@ -46,8 +46,9 @@ const BottomNavigation: React.FC<BottomNavigationProps> = ({
       <TouchableOpacity
         style={styles.navButton}
         onPress={onNavigateToSettings}
+        activeOpacity={0.7}
       >
-        <View style={styles.avatarContainer}>
+        <View style={styles.avatarContainer} pointerEvents="none">
           <DiceBearAvatar settings={userAvatarData} size={52} />
         </View>
         <Text style={[styles.navLabel, currentScreen === 'settings' && styles.navLabelActive]}>

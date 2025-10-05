@@ -608,4 +608,88 @@ export const styles = StyleSheet.create({
   hidden: {
     display: 'none',
   },
+
+  // ===================
+  // MAP SCREEN
+  // ===================
+  mapView: {
+    width: '100%',
+    height: '100%',
+  },
+  recenterButton: {
+    position: 'absolute',
+    top: 20,
+    right: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: COLORS.WHITE,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  recenterButtonText: {
+    fontSize: 28,
+    color: COLORS.PRIMARY,
+  },
+  permissionDeniedContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 40,
+  },
+  permissionDeniedEmoji: {
+    fontSize: 60,
+    marginBottom: 20,
+  },
+  permissionDeniedTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: COLORS.PRIMARY,
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  permissionDeniedMessage: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+    lineHeight: 24,
+  },
+  loadingContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    fontSize: 18,
+    color: '#666',
+  },
+
+  // ===================
+  // AVATAR MARKER (MAP COMPONENT)
+  // ===================
+  avatarMarkerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.WHITE,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  currentUserMarkerBorder: {
+    borderWidth: 3,
+    borderColor: COLORS.PRIMARY, // Orange border for current user
+  },
+  activeMarkerBorder: {
+    borderWidth: 3,
+    borderColor: COLORS.SECONDARY, // Green border for active users
+  },
+  inactiveMarkerBorder: {
+    borderWidth: 3,
+    borderColor: '#cccccc', // Gray border for inactive
+  },
 });

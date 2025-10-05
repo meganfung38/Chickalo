@@ -18,7 +18,8 @@ CREATE TABLE IF NOT EXISTS user_locations (
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
     latitude DECIMAL(10, 8) NOT NULL,
     longitude DECIMAL(11, 8) NOT NULL,
-    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(user_id)
 );
 
 -- Friends table

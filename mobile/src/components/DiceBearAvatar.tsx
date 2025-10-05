@@ -51,11 +51,13 @@ const DiceBearAvatar: React.FC<DiceBearAvatarProps> = ({ settings, size = 50 }) 
   }
 
   return (
-    <SvgXml 
-      xml={avatarSvg} 
-      width={size} 
-      height={size}
-    />
+    <View style={{ width: size, height: size, borderRadius: size / 2, overflow: 'hidden' }}>
+      <SvgXml 
+        xml={avatarSvg} 
+        width={size} 
+        height={size}
+      />
+    </View>
   );
 };
 
