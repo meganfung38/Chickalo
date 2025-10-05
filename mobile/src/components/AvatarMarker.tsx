@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 import DiceBearAvatar from './DiceBearAvatar';
 import GrayscaleAvatar from './GrayscaleAvatar';
 import { AvatarSettings } from '../types';
-import { styles } from '../styles';
+import { styles, COLORS } from '../styles';
 
 interface AvatarMarkerProps {
   avatarSettings: AvatarSettings;
@@ -31,12 +31,12 @@ const AvatarMarker: React.FC<AvatarMarkerProps> = ({
   // Extract background color from avatar settings for speech bubble
   const backgroundColor = avatarSettings.backgroundColor 
     ? `#${avatarSettings.backgroundColor[0]}` 
-    : '#b6e3f4';
+    : COLORS.AVATAR_BG_DEFAULT;
   
   // Create darker shade for border (darken by ~30%)
   const darkerColor = avatarSettings.backgroundColor
     ? `#${Math.floor(parseInt(avatarSettings.backgroundColor[0].slice(0, 2), 16) * 0.7).toString(16).padStart(2, '0')}${Math.floor(parseInt(avatarSettings.backgroundColor[0].slice(2, 4), 16) * 0.7).toString(16).padStart(2, '0')}${Math.floor(parseInt(avatarSettings.backgroundColor[0].slice(4, 6), 16) * 0.7).toString(16).padStart(2, '0')}`
-    : '#64b4c8';
+    : COLORS.AVATAR_BG_DARK;
 
   // Determine border style based on activity status
   // Green when active (#457a00), Orange when inactive (#cc4e00)
@@ -62,7 +62,7 @@ const AvatarMarker: React.FC<AvatarMarkerProps> = ({
             borderColor: darkerColor,
             fontSize: 12,
             fontWeight: 'bold',
-            color: '#000',
+            color: COLORS.BLACK,
           }}>
             {headline}
           </Text>

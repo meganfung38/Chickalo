@@ -27,11 +27,13 @@ Chickalo provides a low-stakes, gamified way to signal openness to interaction w
 - **Authentication**: Secure registration/login with JWT tokens, session persistence
 - **Profile Management**: Customizable avatars (DiceBear), headlines, pronouns
 - **Activity Toggle**: Control visibility on map (active = visible, inactive = hidden)
-- **Real-time Map**: Mapbox integration with GPS tracking, live location updates
-- **Avatar System**: 7 customization categories (hair, eyes, accessories, etc.)
+- **Real-time Map**: Mapbox integration with 3D buildings, GPS tracking, live location updates
+- **Avatar System**: 7 customization categories (hair, eyes, accessories, etc.) with randomization
 - **Settings Interface**: Edit profile, randomize avatar, save preferences
-- **Modern UI**: Dynamic theme colors, floating navigation, responsive design
+- **Modern UI**: Dynamic theme colors (green/orange), floating navigation, responsive design
 - **Real-time Updates**: Socket.io for live location broadcasting
+- **Speech Bubbles**: Headlines displayed above avatars on map with matching colors
+- **Activity-Synced Borders**: Avatar borders change color based on activity status (green = active, orange = inactive)
 
 ### 🚧 In Progress
 - Multi-user testing and optimization
@@ -66,28 +68,51 @@ Chickalo/
 ├── mobile/                      # React Native app
 │   ├── App.tsx                 # Main app with global state management
 │   ├── src/
-│   │   ├── screens/            # LoginScreen, RegisterScreen, MapScreen, SettingsScreen
-│   │   ├── components/         # Header, BottomNavigation, AvatarMarker, DiceBearAvatar
-│   │   ├── services/           # API client (api.ts), Socket.io client (socket.ts)
-│   │   ├── utils/              # Validation, location (GPS, Haversine)
+│   │   ├── screens/            # Full-screen components
+│   │   │   ├── LoginScreen.tsx
+│   │   │   ├── RegisterScreen.tsx
+│   │   │   ├── MapScreen.tsx
+│   │   │   └── SettingsScreen.tsx
+│   │   ├── components/         # Reusable UI components
+│   │   │   ├── Header.tsx
+│   │   │   ├── BottomNavigation.tsx
+│   │   │   ├── AvatarMarker.tsx          # Map marker with speech bubble
+│   │   │   ├── DiceBearAvatar.tsx
+│   │   │   ├── GrayscaleAvatar.tsx       # Inactive avatar rendering
+│   │   │   └── ActivityBorderedAvatar.tsx # Avatar with activity-synced border
+│   │   ├── services/           # External service integrations
+│   │   │   ├── api.ts          # REST API client
+│   │   │   └── socket.ts       # Socket.io client for real-time updates
+│   │   ├── utils/              # Helper functions
+│   │   │   ├── validation.ts   # Form validation utilities
+│   │   │   └── location.ts     # GPS, Haversine distance calculations
 │   │   ├── types/              # TypeScript interfaces (centralized)
-│   │   ├── styles/             # Single stylesheet with theme constants
-│   │   ├── constants/          # Avatar options, pronouns
-│   │   └── config/             # Mapbox tokens, API URLs
-│   └── app.config.js           # Expo config with Mapbox plugin
+│   │   │   └── index.ts
+│   │   ├── styles/             # Single unified stylesheet
+│   │   │   └── index.ts        # Theme constants (COLORS, TYPOGRAPHY, SPACING)
+│   │   ├── constants/          # App-wide constants
+│   │   │   ├── avatar.ts       # Avatar customization options
+│   │   │   └── mapStyle.ts     # Map configuration
+│   │   └── config/             # Environment configuration
+│   │       └── mapbox.ts       # Mapbox access token & style URL
+│   ├── app.config.js           # Expo config with Mapbox plugin
+│   ├── package.json
+│   └── assets/                 # Images, fonts
+│       └── Chickalo_LOGO.png
 │
 ├── backend/                     # Flask API
 │   ├── src/
-│   │   ├── app.py              # Flask routes + Socket.io handlers
-│   │   ├── auth.py             # User authentication, profile updates
-│   │   ├── location.py         # GPS storage, proximity calculations
+│   │   ├── app.py              # Flask routes + Socket.io event handlers
+│   │   ├── auth.py             # User authentication, profile updates (JWT)
+│   │   ├── location.py         # GPS storage, proximity calculations (Haversine)
 │   │   └── database.py         # PostgreSQL connection pooling
 │   ├── database/
 │   │   └── schema.sql          # Database schema (users, user_locations, friends)
-│   └── requirements.txt        # Python dependencies
+│   ├── requirements.txt        # Python dependencies
+│   └── venv/                   # Virtual environment (not in git)
 │
 ├── README.md                    # This file
-└── CODE_QUALITY_CHECKLIST.md   # Development standards
+└── CODE_QUALITY_CHECKLIST.md   # Development standards & best practices
 ```
 
 ---
@@ -187,9 +212,12 @@ cd mobile && npx expo run:ios
 | **SettingsScreen** | Profile editing, avatar customization, logout |
 
 ### UI Components
-- **Header**: Displays "Welcome {username}", changes color based on activity (green = active, orange = inactive)
-- **BottomNavigation**: Floating nav bar with logo, activity toggle, settings button
-- **AvatarMarker**: Custom Mapbox marker rendering DiceBear avatars (colored when active, grayscale when inactive)
+- **Header**: Displays "Welcome {username}", dynamic background color (green = active, orange = inactive)
+- **BottomNavigation**: Floating nav bar with Chickalo logo, activity toggle (●/○ icons), settings button (user's avatar)
+- **AvatarMarker**: Custom Mapbox marker with speech bubble headline, activity-synced border colors
+- **ActivityBorderedAvatar**: Reusable avatar component with dynamic border (green when active, orange when inactive)
+- **DiceBearAvatar**: Renders customizable avatars from DiceBear Big Smile collection
+- **GrayscaleAvatar**: Displays inactive avatars with reduced opacity
 
 ---
 
@@ -235,9 +263,9 @@ cd mobile && npx expo run:ios
 ## 🏗️ Architecture & Code Quality
 
 ### Design Principles (DRY, KISS, SRP)
-- **DRY**: Centralized validation (`utils/validation.ts`), unified styles (`styles/index.ts`), generic backend functions (`update_user_field`)
-- **KISS**: Simple, readable code, minimal complexity per module
-- **SRP**: Each file has one clear purpose, modular architecture
+- **DRY**: Centralized validation (`utils/validation.ts`), unified styles (`styles/index.ts`), reusable components (`ActivityBorderedAvatar`), generic backend functions (`update_user_field`)
+- **KISS**: Simple, readable code, minimal complexity per module, no over-engineering
+- **SRP**: Each file has one clear purpose, modular architecture, single responsibility per component
 
 ### State Management
 - **Global State**: `App.tsx` manages `user`, `token`, `isActive`, `currentScreen`
@@ -245,9 +273,10 @@ cd mobile && npx expo run:ios
 - **Real-time Sync**: Socket.io updates propagate through state callbacks
 
 ### Performance
-- **Connection Pooling**: PostgreSQL connections managed efficiently
-- **Memoization**: `useMemo` for expensive avatar rendering
+- **Connection Pooling**: PostgreSQL connections managed efficiently with `psycopg2.pool`
+- **Memoization**: `useMemo` for expensive avatar rendering, `React.memo` removed where causing re-render issues
 - **Debounced Updates**: Location updates throttled to reduce server load
+- **Optimized Re-renders**: Mapbox marker `key` prop changes force updates when needed
 
 ---
 
@@ -284,7 +313,7 @@ cd mobile && npx expo run:ios
 
 ## 📚 Documentation
 
-- **[CODE_QUALITY_CHECKLIST.md](./CODE_QUALITY_CHECKLIST.md)**: Development standards, coding conventions, pre-commit checklist
+- **[CODE_QUALITY_CHECKLIST.md](./CODE_QUALITY_CHECKLIST.md)**: Comprehensive development standards, coding conventions, pre-commit checklist, frontend/backend best practices
 
 ---
 

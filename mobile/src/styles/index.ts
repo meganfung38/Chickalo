@@ -5,16 +5,21 @@ export const COLORS = {
   PRIMARY: '#cc4e00',      // Orange - main buttons, inactive header
   SECONDARY: '#457a00',    // Green - active states, active header
   WHITE: '#ffffff',
+  BLACK: '#000',
   LIGHT_GRAY: '#f5f5f5',
   GRAY: '#f8f8f8',
   BORDER_GRAY: '#ddd',
   DISABLED_GRAY: '#ccc',
   TEXT_PRIMARY: '#333',
   TEXT_SECONDARY: '#666',
+  TEXT_PLACEHOLDER: '#999',
   TEXT_ON_PRIMARY: '#ffffff',
   SUCCESS: '#457a00',
   ERROR: '#ff4444',
   WARNING: '#FF6B35',
+  // Avatar/Speech Bubble colors
+  AVATAR_BG_DEFAULT: '#b6e3f4',
+  AVATAR_BG_DARK: '#64b4c8',
 } as const;
 
 export const TYPOGRAPHY = {

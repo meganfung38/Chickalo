@@ -15,7 +15,7 @@ import DiceBearAvatar from '../components/DiceBearAvatar';
 import ActivityBorderedAvatar from '../components/ActivityBorderedAvatar';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
-import { styles } from '../styles';
+import { styles, COLORS, SPACING } from '../styles';
 import { AVATAR_OPTIONS, getDefaultAvatarSettings, PRONOUN_OPTIONS } from '../constants/avatar';
 import { SettingsScreenProps, AvatarSettings } from '../types';
 
@@ -255,7 +255,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
         >
           {/* User Info Section */}
           <View style={styles.userInfo}>
-            <View style={{ marginBottom: 20 }}>
+            <View style={{ marginBottom: SPACING.XL }}>
               <ActivityBorderedAvatar
                 settings={savedAvatarSettings}
                 size={80}
@@ -292,7 +292,7 @@ const SettingsScreen: React.FC<SettingsScreenProps> = ({
               style={styles.input}
               onPress={() => setShowPronounsModal(true)}
             >
-              <Text style={[styles.bodyText, !pronouns && { color: '#999' }]}>
+              <Text style={[styles.bodyText, !pronouns && { color: COLORS.TEXT_PLACEHOLDER }]}>
                 {pronouns || 'Select pronouns (optional)'}
               </Text>
             </TouchableOpacity>
