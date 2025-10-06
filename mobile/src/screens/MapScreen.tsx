@@ -38,9 +38,12 @@ const MapScreen: React.FC<MapScreenProps> = ({
 }) => {
   const cameraRef = useRef<Mapbox.Camera>(null);
   const locationSubscription = useRef<Location.LocationSubscription | null>(null);
+  const lastEmittedLocation = useRef<Coordinates | null>(null);
+  const emitDebounceTimer = useRef<NodeJS.Timeout | null>(null);
   
   // State
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
+  const [initialCameraPosition, setInitialCameraPosition] = useState<Coordinates | null>(null);
   const [nearbyUsers, setNearbyUsers] = useState<LocationUpdate[]>([]);
   const [hasLocationPermission, setHasLocationPermission] = useState<boolean>(false);
 
@@ -55,6 +58,9 @@ const MapScreen: React.FC<MapScreenProps> = ({
       if (locationSubscription.current) {
         locationSubscription.current.remove();
       }
+      if (emitDebounceTimer.current) {
+        clearTimeout(emitDebounceTimer.current);
+      }
       disconnectSocket();
     };
   }, []);
@@ -64,11 +70,13 @@ const MapScreen: React.FC<MapScreenProps> = ({
     if (!hasLocationPermission) return;
 
     if (isActive) {
-      // User went active: join location tracking
+      // User went active: join location tracking and recenter
       handleJoinLocationTracking();
+      handleRecenterMap();
     } else {
-      // User went inactive: leave location tracking
+      // User went inactive: leave location tracking and recenter
       handleLeaveLocationTracking();
+      handleRecenterMap();
     }
   }, [isActive, hasLocationPermission]);
 
@@ -107,6 +115,7 @@ const MapScreen: React.FC<MapScreenProps> = ({
         longitude: location.coords.longitude,
       };
       setUserLocation(coords);
+      setInitialCameraPosition(coords); // Set initial camera position once
 
       // Initialize Socket.io
       const token = await storageAPI.getToken();
@@ -120,11 +129,35 @@ const MapScreen: React.FC<MapScreenProps> = ({
           latitude: newLocation.coords.latitude,
           longitude: newLocation.coords.longitude,
         };
+        
+        // Update local state immediately for smooth visual updates
         setUserLocation(newCoords);
 
-        // Emit location update if user is active
+        // Debounce network emissions to prevent excessive Socket.io traffic
+        // Only emit if user moved significantly (5+ meters) or after 2 seconds
         if (isActive) {
-          emitLocationUpdate(user.id, newCoords);
+          const shouldEmit = !lastEmittedLocation.current || 
+            calculateDistance(lastEmittedLocation.current, newCoords) >= 5;
+
+          if (shouldEmit) {
+            // Emit immediately if moved 5+ meters
+            emitLocationUpdate(user.id, newCoords);
+            lastEmittedLocation.current = newCoords;
+            
+            // Clear any pending debounce timer
+            if (emitDebounceTimer.current) {
+              clearTimeout(emitDebounceTimer.current);
+            }
+          } else {
+            // Debounce: emit after 2 seconds of small movements
+            if (emitDebounceTimer.current) {
+              clearTimeout(emitDebounceTimer.current);
+            }
+            emitDebounceTimer.current = setTimeout(() => {
+              emitLocationUpdate(user.id, newCoords);
+              lastEmittedLocation.current = newCoords;
+            }, 2000);
+          }
         }
       });
 
@@ -158,8 +191,10 @@ const MapScreen: React.FC<MapScreenProps> = ({
     if (cameraRef.current && userLocation) {
       cameraRef.current.setCamera({
         centerCoordinate: [userLocation.longitude, userLocation.latitude],
-        zoomLevel: 16,
+        zoomLevel: 19, // Very zoomed in for detailed view
+        pitch: 60,
         animationDuration: 1000,
+        animationMode: 'flyTo',
       });
     }
   };
@@ -240,9 +275,9 @@ const MapScreen: React.FC<MapScreenProps> = ({
         >
           <Mapbox.Camera
             ref={cameraRef}
-            zoomLevel={17}
+            zoomLevel={19}
             pitch={60}
-            centerCoordinate={[userLocation.longitude, userLocation.latitude]}
+            centerCoordinate={initialCameraPosition ? [initialCameraPosition.longitude, initialCameraPosition.latitude] : [userLocation.longitude, userLocation.latitude]}
             animationMode="flyTo"
             animationDuration={1000}
           />
@@ -252,6 +287,7 @@ const MapScreen: React.FC<MapScreenProps> = ({
             key={`current-user-${isActive}`}
             id="current-user"
             coordinate={[userLocation.longitude, userLocation.latitude]}
+            anchor={{ x: 0.5, y: 0.5 }}
           >
             <AvatarMarker
               avatarSettings={user.avatar_data}
@@ -267,11 +303,13 @@ const MapScreen: React.FC<MapScreenProps> = ({
               key={`user-${nearbyUser.userId}`}
               id={`user-${nearbyUser.userId}`}
               coordinate={[nearbyUser.longitude, nearbyUser.latitude]}
+              anchor={{ x: 0.5, y: 0.5 }}
             >
               <AvatarMarker
                 avatarSettings={nearbyUser.avatar_data}
                 isActive={nearbyUser.is_active}
                 isCurrentUser={false}
+                headline={nearbyUser.headline}
               />
             </Mapbox.MarkerView>
           ))}

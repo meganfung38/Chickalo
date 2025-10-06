@@ -28,16 +28,17 @@ Chickalo provides a low-stakes, gamified way to signal openness to interaction w
 - **Profile Management**: Customizable avatars (DiceBear), headlines, pronouns
 - **Activity Toggle**: Control visibility on map (active = visible, inactive = hidden)
 - **Real-time Map**: Mapbox integration with 3D buildings, GPS tracking, live location updates
+- **Pokemon Go-Style Tracking**: Real-time location updates (1-second GPS polling, smooth avatar movement)
+- **Smart Location Broadcasting**: Debounced network emissions (5m threshold or 2s intervals) to optimize performance
 - **Avatar System**: 7 customization categories (hair, eyes, accessories, etc.) with randomization
 - **Settings Interface**: Edit profile, randomize avatar, save preferences
 - **Modern UI**: Dynamic theme colors (green/orange), floating navigation, responsive design
-- **Real-time Updates**: Socket.io for live location broadcasting
+- **Real-time Updates**: Socket.io for live location broadcasting with optimized network traffic
 - **Speech Bubbles**: Headlines displayed above avatars on map with matching colors
 - **Activity-Synced Borders**: Avatar borders change color based on activity status (green = active, orange = inactive)
 
 ### 🚧 In Progress
 - Multi-user testing and optimization
-- Performance tuning for real-time updates
 
 ### 📋 Future (Post-MVP)
 - Anonymous messaging between nearby users

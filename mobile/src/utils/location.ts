@@ -5,9 +5,9 @@ import * as Location from 'expo-location';
 export const PROXIMITY_RADIUS_FEET = 250;
 export const PROXIMITY_RADIUS_METERS = PROXIMITY_RADIUS_FEET * 0.3048; // Convert to meters
 
-// Location update interval (milliseconds)
-export const LOCATION_UPDATE_INTERVAL = 10000; // 10 seconds
-export const LOCATION_UPDATE_DISTANCE = 10; // 10 meters minimum movement
+// Location update interval (milliseconds) - Pokemon Go style real-time tracking
+export const LOCATION_UPDATE_INTERVAL = 1000; // 1 second (real-time)
+export const LOCATION_UPDATE_DISTANCE = 1; // 1 meter minimum movement (smooth tracking)
 
 export interface Coordinates {
   latitude: number;
@@ -61,7 +61,7 @@ export const startLocationTracking = async (
 
     const subscription = await Location.watchPositionAsync(
       {
-        accuracy: Location.Accuracy.Balanced,
+        accuracy: Location.Accuracy.BestForNavigation, // High accuracy for real-time tracking
         timeInterval: LOCATION_UPDATE_INTERVAL,
         distanceInterval: LOCATION_UPDATE_DISTANCE,
       },
