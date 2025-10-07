@@ -6,7 +6,7 @@ import { Coordinates } from '../utils/location';
 // Using your computer's IP address
 // run ifconfig | grep "inet " | grep -v 127.0.0.1 to get your IP address
 // API_BASE_URL = http://<ip_address>:3000
-const SOCKET_URL = 'http://192.168.6.219:3000'; // Update this with your backend URL
+const SOCKET_URL = 'http://10.144.49.197:3000'; // Update this with your backend URL
 
 let socket: Socket | null = null;
 

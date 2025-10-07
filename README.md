@@ -1,4 +1,4 @@
-# 🐔 Chickalo
+# Chickalo
 
 > *A location-based mobile app for spontaneous, consent-driven social connections in public spaces*
 
@@ -9,21 +9,21 @@
 
 ---
 
-## 📖 Overview
+## Overview
 
 Chickalo enables anonymous, proximity-based social interaction by displaying users as customizable avatars on an interactive map. When users toggle their "activity" status ON, their avatar appears to nearby users within ~250 feet, facilitating safe, playful real-world connections.
 
-### 🎯 Problem
+### Problem
 Despite living in a connected world, spontaneous real-world interactions are rare. Social anxiety, safety concerns, and digital isolation create barriers to organic connections in public spaces.
 
-### 💡 Solution
+### Solution
 Chickalo provides a low-stakes, gamified way to signal openness to interaction while maintaining anonymity and control through an activity toggle.
 
 ---
 
-## ✨ Features
+## Features
 
-### ✅ Implemented
+### Implemented
 - **Authentication**: Secure registration/login with JWT tokens, session persistence
 - **Profile Management**: Customizable avatars (DiceBear), headlines, pronouns
 - **Activity Toggle**: Control visibility on map (active = visible, inactive = hidden)
@@ -37,10 +37,10 @@ Chickalo provides a low-stakes, gamified way to signal openness to interaction w
 - **Speech Bubbles**: Headlines displayed above avatars on map with matching colors
 - **Activity-Synced Borders**: Avatar borders change color based on activity status (green = active, orange = inactive)
 
-### 🚧 In Progress
+### In Progress
 - Multi-user testing and optimization
 
-### 📋 Future (Post-MVP)
+### Future (Post-MVP)
 - Anonymous messaging between nearby users
 - Friend system with mutual connections
 - Safety reporting and moderation tools
@@ -48,7 +48,7 @@ Chickalo provides a low-stakes, gamified way to signal openness to interaction w
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technologies |
 |-------|-------------|
@@ -62,7 +62,7 @@ Chickalo provides a low-stakes, gamified way to signal openness to interaction w
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Chickalo/
@@ -118,7 +118,7 @@ Chickalo/
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - **Node.js** (v16+), **Python 3.12+**, **PostgreSQL**, **Xcode** (for iOS)
@@ -180,7 +180,7 @@ cd mobile && npx expo run:ios
 
 ---
 
-## 🎮 How It Works
+## How It Works
 
 ### User Flow
 1. **Register/Login** → Create account with email/password
@@ -203,7 +203,7 @@ cd mobile && npx expo run:ios
 
 ---
 
-## 📱 App Screens
+## App Screens
 
 | Screen | Purpose |
 |--------|---------|
@@ -222,7 +222,7 @@ cd mobile && npx expo run:ios
 
 ---
 
-## 🗄️ Database Schema
+## Database Schema
 
 ### `users`
 - `id`, `email` (unique), `password_hash`, `username` (unique)
@@ -242,7 +242,7 @@ cd mobile && npx expo run:ios
 
 ---
 
-## 🔒 Security & Validation
+## Security & Validation
 
 ### Authentication
 - **Passwords**: bcrypt hashing with salt
@@ -261,7 +261,7 @@ cd mobile && npx expo run:ios
 
 ---
 
-## 🏗️ Architecture & Code Quality
+## Architecture & Code Quality
 
 ### Design Principles (DRY, KISS, SRP)
 - **DRY**: Centralized validation (`utils/validation.ts`), unified styles (`styles/index.ts`), reusable components (`ActivityBorderedAvatar`), generic backend functions (`update_user_field`)
@@ -281,7 +281,7 @@ cd mobile && npx expo run:ios
 
 ---
 
-## 🧪 Testing
+## Testing
 
 ### Registration Flow
 1. Open app → Create Account
@@ -300,7 +300,7 @@ cd mobile && npx expo run:ios
 
 ---
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
@@ -312,13 +312,13 @@ cd mobile && npx expo run:ios
 
 ---
 
-## 📚 Documentation
+## Documentation
 
 - **[CODE_QUALITY_CHECKLIST.md](./CODE_QUALITY_CHECKLIST.md)**: Comprehensive development standards, coding conventions, pre-commit checklist, frontend/backend best practices
 
 ---
 
-## 🎓 Development Status
+## Development Status
 
 **Phase**: Active Development (MVP Complete)  
 **Next Steps**: Multi-user testing, performance optimization, messaging system
@@ -328,6 +328,3 @@ cd mobile && npx expo run:ios
 
 ---
 
-## 📄 License
-
-[To be determined]
