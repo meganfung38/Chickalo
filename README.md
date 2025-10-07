@@ -5,7 +5,7 @@
 [![Tech Stack](https://img.shields.io/badge/Stack-React_Native_+_Flask_+_PostgreSQL-blue)]()
 [![Status](https://img.shields.io/badge/Status-Active_Development-green)]()
 
-## Demo Video
+
 **[Watch the current application in action](https://drive.google.com/file/d/1pZ_gVKBkLsySErCQSmm1nAkuad5ZjzNn/view?usp=sharing)**
 
 **Proposal**: [Google Doc](https://docs.google.com/document/d/15G8fIXyQHO87AUUBRo3NkDl85nDPth-3gokQ9nyrrN0/edit?usp=sharing)
