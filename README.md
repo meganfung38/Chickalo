@@ -260,12 +260,7 @@ cd mobile && npx expo run:ios
 
 ---
 
-## Architecture & Code Quality
-
-### Design Principles (DRY, KISS, SRP)
-- **DRY**: Centralized validation (`utils/validation.ts`), unified styles (`styles/index.ts`), reusable components (`ActivityBorderedAvatar`), generic backend functions (`update_user_field`)
-- **KISS**: Simple, readable code, minimal complexity per module, no over-engineering
-- **SRP**: Each file has one clear purpose, modular architecture, single responsibility per component
+## Architecture 
 
 ### State Management
 - **Global State**: `App.tsx` manages `user`, `token`, `isActive`, `currentScreen`
