@@ -112,8 +112,7 @@ Chickalo/
 │   ├── requirements.txt        # Python dependencies
 │   └── venv/                   # Virtual environment (not in git)
 │
-├── README.md                    # This file
-└── CODE_QUALITY_CHECKLIST.md   # Development standards & best practices
+└── README.md                    # This file
 ```
 
 ---
@@ -297,24 +296,6 @@ cd mobile && npx expo run:ios
 1. Navigate to Settings (tap avatar in nav bar)
 2. Edit headline/pronouns → Save → Changes reflect immediately
 3. Customize Avatar → Randomize or select options → Save
-
----
-
-## Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| **Network Error** | Update `API_BASE_URL` and `SOCKET_URL` with current IP (`ifconfig`) |
-| **Map Black Tiles** | Verify Mapbox access token in `config/mapbox.ts` |
-| **Build Fails** | Run `npx expo prebuild --clean`, delete `ios/` folder, rebuild |
-| **Location Not Working** | Enable location permissions in Settings, set simulator location |
-| **Connection Refused** | Ensure backend is running (`python src/app.py`) |
-
----
-
-## Documentation
-
-- **[CODE_QUALITY_CHECKLIST.md](./CODE_QUALITY_CHECKLIST.md)**: Comprehensive development standards, coding conventions, pre-commit checklist, frontend/backend best practices
 
 ---
 
