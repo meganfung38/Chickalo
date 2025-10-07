@@ -8,7 +8,7 @@
 
 **[Watch the current application in action](https://drive.google.com/file/d/1pZ_gVKBkLsySErCQSmm1nAkuad5ZjzNn/view?usp=sharing)**
 
-**Proposal**: [Google Doc](https://docs.google.com/document/d/15G8fIXyQHO87AUUBRo3NkDl85nDPth-3gokQ9nyrrN0/edit?usp=sharing)
+**[Proposal](https://docs.google.com/document/d/15G8fIXyQHO87AUUBRo3NkDl85nDPth-3gokQ9nyrrN0/edit?usp=sharing)**
 
 ---
 
