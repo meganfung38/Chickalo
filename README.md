@@ -8,6 +8,8 @@
 
 **[Demo Recordings](https://drive.google.com/drive/folders/1gJCFfIW81ThgoIUujnJcwPUEaK-cnli_?usp=sharing)**
 
+**[Demo #2](docs-and-resources/IMG_6173.MOV)**
+
 **[Proposal](https://docs.google.com/document/d/15G8fIXyQHO87AUUBRo3NkDl85nDPth-3gokQ9nyrrN0/edit?usp=sharing)**
 
 ---
