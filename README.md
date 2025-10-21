@@ -180,6 +180,8 @@ cd mobile && npx expo run:ios
 # 4. Run (Cmd + R)
 ```
 
+> **📱 For detailed setup instructions, troubleshooting, and different scenarios (fresh build, certificate expired, quick start), see [DEVELOPMENT_SETUP.md](./DEVELOPMENT_SETUP.md)**
+
 ---
 
 ## How It Works

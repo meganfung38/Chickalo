@@ -113,6 +113,9 @@ def handle_location_join(data):
         # Join location tracking room
         join_room('location_tracking')
         
+        # Also join user's personal room for targeted updates
+        join_room(f'location_room_{user_id}')
+        
         print(f'User {user_id} joined location tracking')
         emit('status', {'message': 'Location tracking enabled'})
         
@@ -138,6 +141,7 @@ def handle_location_leave(data):
         # Leave location tracking room (wrap in try/catch for safety)
         try:
             leave_room('location_tracking')
+            leave_room(f'location_room_{user_id}')
         except:
             pass  # Already left or connection closed
         
@@ -179,9 +183,24 @@ def handle_location_update(data):
         
         # Send nearby users back to the requester
         try:
+            print(f'[DEBUG] Emitting {len(nearby_users)} nearby users to user {user_id}')
             emit('location:nearby-users', nearby_users)
-        except:
+        except Exception as e:
+            print(f'[DEBUG] Failed to emit to user {user_id}: {str(e)}')
             pass  # Connection may be closed, don't crash
+        
+        # ALSO notify each nearby user that this user is in their proximity
+        for nearby_user in nearby_users:
+            try:
+                # Get this user's full data to send to nearby user
+                nearby_user_data = get_nearby_active_users(nearby_user['userId'], 
+                                                           nearby_user['latitude'], 
+                                                           nearby_user['longitude'])
+                # Emit to the nearby user's room
+                emit('location:nearby-users', nearby_user_data, 
+                     room=f"location_room_{nearby_user['userId']}")
+            except:
+                pass  # Connection may be closed
         
         print(f'Location updated for user {user_id}: ({latitude}, {longitude}), nearby users: {len(nearby_users)}')
         

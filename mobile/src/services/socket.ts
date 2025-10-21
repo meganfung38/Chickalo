@@ -6,9 +6,11 @@ import { Coordinates } from '../utils/location';
 // Using your computer's IP address
 // run ifconfig | grep "inet " | grep -v 127.0.0.1 to get your IP address
 // API_BASE_URL = http://<ip_address>:3000
-const SOCKET_URL = 'http://10.144.49.197:3000'; // Update this with your backend URL
+const SOCKET_URL = 'http://192.168.6.219:3000'; // Update this with your backend URL
 
 let socket: Socket | null = null;
+let currentUserId: number | null = null;
+let currentIsActive: boolean = false;
 
 export interface LocationUpdate {
   userId: number;
@@ -19,6 +21,24 @@ export interface LocationUpdate {
   is_active: boolean;
   headline: string | null;
 }
+
+/**
+ * Set current user status (to be used for location emissions)
+ * @param userId User's ID
+ * @param isActive User's active status
+ */
+export const setCurrentUserStatus = (userId: number, isActive: boolean): void => {
+  currentUserId = userId;
+  currentIsActive = isActive;
+  console.log(`[Socket] User status updated: userId=${userId}, isActive=${isActive}`);
+};
+
+/**
+ * Get current user's active status
+ */
+export const getCurrentIsActive = (): boolean => {
+  return currentIsActive;
+};
 
 /**
  * Initialize Socket.io connection
@@ -95,7 +115,11 @@ export const subscribeToLocationUpdates = (
     return;
   }
 
+  // Remove any existing listeners to prevent duplicates
+  socket.off('location:nearby-users');
+  
   socket.on('location:nearby-users', (users: LocationUpdate[]) => {
+    console.log('Socket received nearby users:', users.length);
     callback(users);
   });
 };

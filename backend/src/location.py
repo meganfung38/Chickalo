@@ -146,7 +146,7 @@ def get_nearby_active_users(
         
         # Filter by proximity
         for row in results:
-            user_lat, user_lon = row[5], row[6]
+            user_lat, user_lon = float(row[5]), float(row[6])
             
             if is_within_proximity(latitude, longitude, user_lat, user_lon):
                 nearby_users.append({

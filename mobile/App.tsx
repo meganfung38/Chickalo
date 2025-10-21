@@ -8,6 +8,7 @@ import SettingsScreen from './src/screens/SettingsScreen';
 import { authAPI, storageAPI } from './src/services/api';
 import { styles } from './src/styles';
 import { User, Screen } from './src/types';
+import { initializeSocket, disconnectSocket, setCurrentUserStatus } from './src/services/socket';
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('login');
@@ -42,6 +43,23 @@ const App: React.FC = () => {
     checkAuth();
   }, []);
 
+  // Initialize socket when user logs in (only run once when token/user.id changes)
+  useEffect(() => {
+    if (token && user) {
+      console.log('[App] Initializing socket for user:', user.id);
+      initializeSocket(token);
+      setCurrentUserStatus(user.id, isActive);
+    }
+    // No cleanup - socket persists for entire app session
+  }, [token, user?.id]);
+
+  // Update user status in socket service when isActive changes
+  useEffect(() => {
+    if (user) {
+      setCurrentUserStatus(user.id, isActive);
+    }
+  }, [isActive, user]);
+
   const handleLogin = async (newToken: string, userData: User) => {
     await storageAPI.setToken(newToken);
     setToken(newToken);
@@ -59,6 +77,8 @@ const App: React.FC = () => {
   };
 
   const handleLogout = async () => {
+    console.log('[App] Logging out, disconnecting socket');
+    disconnectSocket();
     await storageAPI.removeToken();
     setToken(null);
     setUser(null);

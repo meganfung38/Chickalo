@@ -16,12 +16,12 @@ import {
   Coordinates 
 } from '../utils/location';
 import {
-  initializeSocket,
-  disconnectSocket,
   emitLocationUpdate,
   subscribeToLocationUpdates,
+  unsubscribeFromLocationUpdates,
   joinLocationTracking,
   leaveLocationTracking,
+  getCurrentIsActive,
   LocationUpdate,
 } from '../services/socket';
 import { storageAPI } from '../services/api';
@@ -61,9 +61,10 @@ const MapScreen: React.FC<MapScreenProps> = ({
       if (emitDebounceTimer.current) {
         clearTimeout(emitDebounceTimer.current);
       }
-      disconnectSocket();
+      // Socket is now managed at App level, don't disconnect here
     };
   }, []);
+
 
   // Handle activity toggle changes
   useEffect(() => {
@@ -81,16 +82,24 @@ const MapScreen: React.FC<MapScreenProps> = ({
   }, [isActive, hasLocationPermission]);
 
   // Subscribe to location updates from nearby users
+  // This MUST happen after socket connects, so we check socket status first
   useEffect(() => {
-    subscribeToLocationUpdates((users) => {
-      setNearbyUsers(users);
-    });
+    console.log('[MapScreen] Setting up nearby users subscription');
+    
+    // Wait a moment for socket to fully initialize
+    const setupSubscription = () => {
+      subscribeToLocationUpdates((users) => {
+        console.log('[MapScreen] Received nearby users update:', users.length);
+        setNearbyUsers(users);
+      });
+    };
+    
+    // Set up subscription after a short delay to ensure socket is ready
+    const timer = setTimeout(setupSubscription, 500);
 
     return () => {
-      // Unsubscribe on unmount
-      if (typeof subscribeToLocationUpdates === 'function') {
-        // Note: unsubscribe handled in socket service
-      }
+      clearTimeout(timer);
+      unsubscribeFromLocationUpdates();
     };
   }, []);
 
@@ -117,12 +126,7 @@ const MapScreen: React.FC<MapScreenProps> = ({
       setUserLocation(coords);
       setInitialCameraPosition(coords); // Set initial camera position once
 
-      // Initialize Socket.io
-      const token = await storageAPI.getToken();
-      if (token) {
-        initializeSocket(token);
-      }
-
+      // Socket is initialized at App level, just start watching location
       // Start watching location
       const subscription = await startLocationTracking((newLocation) => {
         const newCoords: Coordinates = {
@@ -135,12 +139,14 @@ const MapScreen: React.FC<MapScreenProps> = ({
 
         // Debounce network emissions to prevent excessive Socket.io traffic
         // Only emit if user moved significantly (5+ meters) or after 2 seconds
-        if (isActive) {
+        // Use global status from socket service (avoids closure issues)
+        if (getCurrentIsActive()) {
           const shouldEmit = !lastEmittedLocation.current || 
             calculateDistance(lastEmittedLocation.current, newCoords) >= 5;
 
           if (shouldEmit) {
             // Emit immediately if moved 5+ meters
+            console.log(`[MapScreen] Emitting location for user ${user.id}`);
             emitLocationUpdate(user.id, newCoords);
             lastEmittedLocation.current = newCoords;
             
@@ -154,8 +160,11 @@ const MapScreen: React.FC<MapScreenProps> = ({
               clearTimeout(emitDebounceTimer.current);
             }
             emitDebounceTimer.current = setTimeout(() => {
-              emitLocationUpdate(user.id, newCoords);
-              lastEmittedLocation.current = newCoords;
+              if (getCurrentIsActive()) {
+                console.log(`[MapScreen] Emitting debounced location for user ${user.id}`);
+                emitLocationUpdate(user.id, newCoords);
+                lastEmittedLocation.current = newCoords;
+              }
             }, 2000);
           }
         }
