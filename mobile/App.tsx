@@ -46,7 +46,6 @@ const App: React.FC = () => {
   // Initialize socket when user logs in (only run once when token/user.id changes)
   useEffect(() => {
     if (token && user) {
-      console.log('[App] Initializing socket for user:', user.id);
       initializeSocket(token);
       setCurrentUserStatus(user.id, isActive);
     }
@@ -77,7 +76,6 @@ const App: React.FC = () => {
   };
 
   const handleLogout = async () => {
-    console.log('[App] Logging out, disconnecting socket');
     disconnectSocket();
     await storageAPI.removeToken();
     setToken(null);

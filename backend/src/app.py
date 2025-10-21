@@ -183,10 +183,8 @@ def handle_location_update(data):
         
         # Send nearby users back to the requester
         try:
-            print(f'[DEBUG] Emitting {len(nearby_users)} nearby users to user {user_id}')
             emit('location:nearby-users', nearby_users)
-        except Exception as e:
-            print(f'[DEBUG] Failed to emit to user {user_id}: {str(e)}')
+        except:
             pass  # Connection may be closed, don't crash
         
         # ALSO notify each nearby user that this user is in their proximity

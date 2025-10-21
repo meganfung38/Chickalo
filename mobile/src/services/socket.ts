@@ -30,7 +30,6 @@ export interface LocationUpdate {
 export const setCurrentUserStatus = (userId: number, isActive: boolean): void => {
   currentUserId = userId;
   currentIsActive = isActive;
-  console.log(`[Socket] User status updated: userId=${userId}, isActive=${isActive}`);
 };
 
 /**
@@ -46,7 +45,6 @@ export const getCurrentIsActive = (): boolean => {
  */
 export const initializeSocket = (token: string): void => {
   if (socket?.connected) {
-    console.log('Socket already connected');
     return;
   }
 
@@ -57,19 +55,15 @@ export const initializeSocket = (token: string): void => {
   });
 
   socket.on('connect', () => {
-    console.log('Socket.io connected:', socket?.id);
+    // Socket connected successfully
   });
 
   socket.on('disconnect', (reason) => {
-    console.log('Socket.io disconnected. Reason:', reason);
-    // Don't auto-reconnect if we intentionally disconnected
-    if (reason === 'io client disconnect') {
-      console.log('Client intentionally disconnected, not reconnecting');
-    }
+    // Socket disconnected - reason logged for debugging if needed
   });
 
   socket.on('connect_error', (error) => {
-    console.error('Socket.io connection error:', error);
+    console.error('Socket connection error:', error);
   });
 };
 
@@ -80,7 +74,6 @@ export const disconnectSocket = (): void => {
   if (socket?.connected) {
     socket.disconnect();
     socket = null;
-    console.log('Socket.io disconnected');
   }
 };
 
@@ -91,7 +84,6 @@ export const disconnectSocket = (): void => {
  */
 export const emitLocationUpdate = (userId: number, location: Coordinates): void => {
   if (!socket?.connected) {
-    console.log('Socket not connected, cannot emit location');
     return;
   }
 
@@ -111,7 +103,6 @@ export const subscribeToLocationUpdates = (
   callback: (users: LocationUpdate[]) => void
 ): void => {
   if (!socket) {
-    console.log('Socket not initialized');
     return;
   }
 
@@ -119,7 +110,6 @@ export const subscribeToLocationUpdates = (
   socket.off('location:nearby-users');
   
   socket.on('location:nearby-users', (users: LocationUpdate[]) => {
-    console.log('Socket received nearby users:', users.length);
     callback(users);
   });
 };
@@ -138,12 +128,10 @@ export const unsubscribeFromLocationUpdates = (): void => {
  */
 export const joinLocationTracking = (userId: number): void => {
   if (!socket?.connected) {
-    console.log('Socket not connected, cannot join location tracking');
     return;
   }
 
   socket.emit('location:join', { user_id: userId });
-  console.log('Joined location tracking');
 };
 
 /**
@@ -152,12 +140,10 @@ export const joinLocationTracking = (userId: number): void => {
  */
 export const leaveLocationTracking = (userId: number): void => {
   if (!socket?.connected) {
-    console.log('Socket not connected, cannot leave location tracking');
     return;
   }
 
   socket.emit('location:leave', { user_id: userId });
-  console.log('Left location tracking');
 };
 
 /**

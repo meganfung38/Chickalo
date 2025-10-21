@@ -31,17 +31,15 @@ Chickalo provides a low-stakes, gamified way to signal openness to interaction w
 - **Profile Management**: Customizable avatars (DiceBear), headlines, pronouns
 - **Activity Toggle**: Control visibility on map (active = visible, inactive = hidden)
 - **Real-time Map**: Mapbox integration with 3D buildings, GPS tracking, live location updates
-- **Pokemon Go-Style Tracking**: Real-time location updates (1-second GPS polling, smooth avatar movement)
+- **Tracking**: Continuous location updates (1-second GPS polling, smooth avatar movement)
 - **Smart Location Broadcasting**: Debounced network emissions (5m threshold or 2s intervals) to optimize performance
+- **Multi-User Real-Time**: Bidirectional Socket.io broadcasting, users see each other instantly when nearby
+- **Production Server**: Gunicorn + eventlet for stable WebSocket connections
 - **Avatar System**: 7 customization categories (hair, eyes, accessories, etc.) with randomization
 - **Settings Interface**: Edit profile, randomize avatar, save preferences
 - **Modern UI**: Dynamic theme colors (green/orange), floating navigation, responsive design
-- **Real-time Updates**: Socket.io for live location broadcasting with optimized network traffic
 - **Speech Bubbles**: Headlines displayed above avatars on map with matching colors
 - **Activity-Synced Borders**: Avatar borders change color based on activity status (green = active, orange = inactive)
-
-### In Progress
-- Multi-user testing and optimization
 
 ### Future (Post-MVP)
 - Anonymous messaging between nearby users
@@ -56,9 +54,9 @@ Chickalo provides a low-stakes, gamified way to signal openness to interaction w
 | Layer | Technologies |
 |-------|-------------|
 | **Frontend** | React Native, Expo, TypeScript, Mapbox (@rnmapbox/maps) |
-| **Backend** | Python, Flask, Flask-SocketIO |
+| **Backend** | Python, Flask, Flask-SocketIO, Gunicorn + eventlet |
 | **Database** | PostgreSQL (connection pooling, JSONB for avatar data) |
-| **Real-time** | Socket.io (location broadcasting, proximity updates) |
+| **Real-time** | Socket.io (bidirectional broadcasting, room-based updates) |
 | **Location** | expo-location (GPS), Haversine distance calculations |
 | **Auth** | JWT tokens, bcrypt password hashing |
 | **Development** | Xcode (iOS builds), Expo Dev Client |
@@ -140,7 +138,13 @@ cd backend
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
-python src/app.py  # Runs on http://0.0.0.0:3000
+
+# For production/multi-user (recommended):
+cd src
+gunicorn --worker-class eventlet -w 1 --bind 0.0.0.0:3000 app:app
+
+# For single-user dev:
+# cd backend && python src/app.py
 ```
 
 ### 3. Frontend Setup
@@ -168,16 +172,11 @@ npm install
 ### 5. Run the App
 ```bash
 # Terminal 1: Backend
-cd backend && source venv/bin/activate && python src/app.py
+cd backend/src && source ../venv/bin/activate
+gunicorn --worker-class eventlet -w 1 --bind 0.0.0.0:3000 app:app
 
-# Terminal 2: Frontend (iOS)
-cd mobile && npx expo run:ios
-
-# Or build from Xcode:
-# 1. Open ios/Chickalo.xcworkspace in Xcode
-# 2. Select your device
-# 3. Trust developer certificate in Settings > General > VPN & Device Management
-# 4. Run (Cmd + R)
+# Terminal 2: Frontend (iOS device)
+cd mobile && npx expo run:ios --device
 ```
 
 > **📱 For detailed setup instructions, troubleshooting, and different scenarios (fresh build, certificate expired, quick start), see [DEVELOPMENT_SETUP.md](./DEVELOPMENT_SETUP.md)**
@@ -194,10 +193,11 @@ cd mobile && npx expo run:ios
 5. **Update Profile** → Edit headline, pronouns, avatar in Settings
 
 ### Location & Privacy
-- **GPS Tracking**: Only when activity is ON
+- **GPS Tracking**: Only when activity is ON, continuous 1-second polling
 - **Proximity**: Users see others within ~250 feet (Haversine distance)
 - **Privacy**: Inactive users are NOT visible, locations deleted when toggled OFF
-- **Real-time**: Socket.io broadcasts location updates every 5 seconds
+- **Real-time**: Bidirectional Socket.io broadcasting with room-based updates
+- **Smart Updates**: Location emitted when moved 5+ meters or after 2 seconds of small movements
 
 ### Avatar System
 - **7 Customization Categories**: Background, skin, hair style, hair color, eyes, mouth, accessories
@@ -274,9 +274,10 @@ cd mobile && npx expo run:ios
 
 ### Performance
 - **Connection Pooling**: PostgreSQL connections managed efficiently with `psycopg2.pool`
-- **Memoization**: `useMemo` for expensive avatar rendering, `React.memo` removed where causing re-render issues
-- **Debounced Updates**: Location updates throttled to reduce server load
-- **Optimized Re-renders**: Mapbox marker `key` prop changes force updates when needed
+- **Production WebSockets**: Gunicorn + eventlet for stable multi-user connections
+- **Debounced Updates**: Location updates throttled (5m threshold or 2s intervals) to reduce server load
+- **Room-Based Broadcasting**: Socket.io rooms for targeted nearby user updates
+- **Smart GPS Polling**: 1-second continuous tracking with intelligent network emission
 
 ---
 
@@ -301,8 +302,8 @@ cd mobile && npx expo run:ios
 
 ## Development Status
 
-**Phase**: Active Development (MVP Complete)  
-**Next Steps**: Multi-user testing, performance optimization, messaging system
+**Phase**: Active Development (MVP Complete + Multi-User Testing)  
+**Next Steps**: Performance optimization, messaging system, safety features
 
 **Contact**: mfung06@calpoly.edu  
 **Institution**: Cal Poly San Luis Obispo (Senior Project)

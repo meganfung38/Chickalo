@@ -5,9 +5,8 @@ import * as Location from 'expo-location';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
 import AvatarMarker from '../components/AvatarMarker';
-import { styles } from '../styles';
+import { styles, COLORS } from '../styles';
 import { MapScreenProps } from '../types';
-import { COLORS } from '../styles';
 import { MAP_BOUNDARY_RADIUS } from '../constants/mapStyle';
 import { 
   requestLocationPermissions, 
@@ -24,7 +23,6 @@ import {
   getCurrentIsActive,
   LocationUpdate,
 } from '../services/socket';
-import { storageAPI } from '../services/api';
 import { MAPBOX_ACCESS_TOKEN, MAPBOX_STYLE_URL } from '../config/mapbox';
 
 // Initialize Mapbox
@@ -49,12 +47,10 @@ const MapScreen: React.FC<MapScreenProps> = ({
 
   // Initialize location and socket on mount
   useEffect(() => {
-    console.log('[MapScreen] Component mounted, initializing...');
     initializeLocationTracking();
     
     return () => {
       // Cleanup on unmount
-      console.log('[MapScreen] Component UNMOUNTING - cleaning up...');
       if (locationSubscription.current) {
         locationSubscription.current.remove();
       }
@@ -84,12 +80,9 @@ const MapScreen: React.FC<MapScreenProps> = ({
   // Subscribe to location updates from nearby users
   // This MUST happen after socket connects, so we check socket status first
   useEffect(() => {
-    console.log('[MapScreen] Setting up nearby users subscription');
-    
     // Wait a moment for socket to fully initialize
     const setupSubscription = () => {
       subscribeToLocationUpdates((users) => {
-        console.log('[MapScreen] Received nearby users update:', users.length);
         setNearbyUsers(users);
       });
     };
@@ -146,7 +139,6 @@ const MapScreen: React.FC<MapScreenProps> = ({
 
           if (shouldEmit) {
             // Emit immediately if moved 5+ meters
-            console.log(`[MapScreen] Emitting location for user ${user.id}`);
             emitLocationUpdate(user.id, newCoords);
             lastEmittedLocation.current = newCoords;
             
@@ -161,7 +153,6 @@ const MapScreen: React.FC<MapScreenProps> = ({
             }
             emitDebounceTimer.current = setTimeout(() => {
               if (getCurrentIsActive()) {
-                console.log(`[MapScreen] Emitting debounced location for user ${user.id}`);
                 emitLocationUpdate(user.id, newCoords);
                 lastEmittedLocation.current = newCoords;
               }
@@ -176,7 +167,6 @@ const MapScreen: React.FC<MapScreenProps> = ({
 
   const handleJoinLocationTracking = () => {
     try {
-      console.log('[MapScreen] Joining location tracking for user:', user.id);
       joinLocationTracking(user.id);
       if (userLocation) {
         emitLocationUpdate(user.id, userLocation);
@@ -188,7 +178,6 @@ const MapScreen: React.FC<MapScreenProps> = ({
 
   const handleLeaveLocationTracking = () => {
     try {
-      console.log('[MapScreen] Leaving location tracking for user:', user.id);
       leaveLocationTracking(user.id);
       setNearbyUsers([]); // Clear nearby users when inactive
     } catch (error) {
