@@ -131,6 +131,7 @@ def get_nearby_active_users(
                 u.avatar_data, 
                 u.is_active,
                 u.headline,
+                u.pronouns,
                 ul.latitude, 
                 ul.longitude,
                 ul.last_updated
@@ -146,18 +147,21 @@ def get_nearby_active_users(
         
         # Filter by proximity
         for row in results:
-            user_lat, user_lon = float(row[5]), float(row[6])
+            user_lat, user_lon = float(row[6]), float(row[7])
             
             if is_within_proximity(latitude, longitude, user_lat, user_lon):
-                nearby_users.append({
+                user_data = {
                     'userId': row[0],
                     'username': row[1],
                     'avatar_data': row[2],
                     'is_active': row[3],
                     'headline': row[4],
+                    'pronouns': row[5],
                     'latitude': float(user_lat),
                     'longitude': float(user_lon),
-                })
+                }
+                print(f"[DEBUG] Nearby user data: {user_data['username']} - pronouns: {user_data['pronouns']}")
+                nearby_users.append(user_data)
         
         return nearby_users
         

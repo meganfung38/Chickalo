@@ -40,6 +40,7 @@ Chickalo provides a low-stakes, gamified way to signal openness to interaction w
 - **Modern UI**: Dynamic theme colors (green/orange), floating navigation, responsive design
 - **Speech Bubbles**: Headlines displayed above avatars on map with matching colors
 - **Activity-Synced Borders**: Avatar borders change color based on activity status (green = active, orange = inactive)
+- **User Interaction**: Tap avatars to view profiles (username, headline, pronouns); tap own avatar to navigate to settings
 
 ### Future (Post-MVP)
 - Anonymous messaging between nearby users
@@ -78,7 +79,8 @@ Chickalo/
 │   │   ├── components/         # Reusable UI components
 │   │   │   ├── Header.tsx
 │   │   │   ├── BottomNavigation.tsx
-│   │   │   ├── AvatarMarker.tsx          # Map marker with speech bubble
+│   │   │   ├── AvatarMarker.tsx          # Map marker with speech bubble (tappable)
+│   │   │   ├── UserInfoModal.tsx         # User profile modal
 │   │   │   ├── DiceBearAvatar.tsx
 │   │   │   ├── GrayscaleAvatar.tsx       # Inactive avatar rendering
 │   │   │   └── ActivityBorderedAvatar.tsx # Avatar with activity-synced border
@@ -190,7 +192,8 @@ cd mobile && npx expo run:ios --device
 2. **Customize Avatar** → DiceBear avatars with 7 categories (hair, eyes, accessories)
 3. **Toggle Activity** → Turn ON to appear on map, OFF to hide
 4. **View Map** → See nearby active users within ~250 feet
-5. **Update Profile** → Edit headline, pronouns, avatar in Settings
+5. **Tap Avatars** → View other users' profiles (username, headline, pronouns)
+6. **Update Profile** → Edit headline, pronouns, avatar in Settings
 
 ### Location & Privacy
 - **GPS Tracking**: Only when activity is ON, continuous 1-second polling
@@ -219,7 +222,8 @@ cd mobile && npx expo run:ios --device
 ### UI Components
 - **Header**: Displays "Welcome {username}", dynamic background color (green = active, orange = inactive)
 - **BottomNavigation**: Floating nav bar with Chickalo logo, activity toggle (●/○ icons), settings button (user's avatar)
-- **AvatarMarker**: Custom Mapbox marker with speech bubble headline, activity-synced border colors
+- **AvatarMarker**: Tappable Mapbox marker with speech bubble headline, activity-synced border colors
+- **UserInfoModal**: Modal displaying user profile (avatar, username, headline, pronouns) with exit button
 - **ActivityBorderedAvatar**: Reusable avatar component with dynamic border (green when active, orange when inactive)
 - **DiceBearAvatar**: Renders customizable avatars from DiceBear Big Smile collection
 - **GrayscaleAvatar**: Displays inactive avatars with reduced opacity
@@ -292,6 +296,8 @@ cd mobile && npx expo run:ios --device
 1. Login → Navigate to map
 2. Toggle activity ON → Avatar appears on map (colored)
 3. Toggle activity OFF → Avatar turns grayscale, location hidden from others
+4. Tap other users' avatars → View their profile in modal
+5. Tap own avatar → Navigate to Settings screen
 
 ### Profile Management
 1. Navigate to Settings (tap avatar in nav bar)

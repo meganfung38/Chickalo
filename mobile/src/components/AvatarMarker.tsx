@@ -1,18 +1,10 @@
 // Custom avatar marker component for map display
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import DiceBearAvatar from './DiceBearAvatar';
 import GrayscaleAvatar from './GrayscaleAvatar';
-import { AvatarSettings } from '../types';
+import { AvatarMarkerProps } from '../types';
 import { styles, COLORS } from '../styles';
-
-interface AvatarMarkerProps {
-  avatarSettings: AvatarSettings;
-  isActive: boolean;
-  isCurrentUser?: boolean;
-  headline?: string | null;
-  size?: number;
-}
 
 /**
  * Avatar marker for map display with speech bubble headline
@@ -20,22 +12,24 @@ interface AvatarMarkerProps {
  * - Inactive users: Grayscale avatar with orange border (current user only visible when inactive)
  * - Border colors: Green = active, Orange = inactive
  * - Speech bubble: Matches avatar background color, only shown when active
+ * - Tappable: onPress handler for user interaction
  */
 const AvatarMarker: React.FC<AvatarMarkerProps> = ({
-  avatarSettings,
+  settings,
   isActive,
   isCurrentUser = false,
   headline,
-  size = 45,
+  onPress,
 }) => {
+  const size = 45;
   // Extract background color from avatar settings for speech bubble
-  const backgroundColor = avatarSettings.backgroundColor 
-    ? `#${avatarSettings.backgroundColor[0]}` 
+  const backgroundColor = settings.backgroundColor 
+    ? `#${settings.backgroundColor[0]}` 
     : COLORS.AVATAR_BG_DEFAULT;
   
   // Create darker shade for border (darken by ~30%)
-  const darkerColor = avatarSettings.backgroundColor
-    ? `#${Math.floor(parseInt(avatarSettings.backgroundColor[0].slice(0, 2), 16) * 0.7).toString(16).padStart(2, '0')}${Math.floor(parseInt(avatarSettings.backgroundColor[0].slice(2, 4), 16) * 0.7).toString(16).padStart(2, '0')}${Math.floor(parseInt(avatarSettings.backgroundColor[0].slice(4, 6), 16) * 0.7).toString(16).padStart(2, '0')}`
+  const darkerColor = settings.backgroundColor
+    ? `#${Math.floor(parseInt(settings.backgroundColor[0].slice(0, 2), 16) * 0.7).toString(16).padStart(2, '0')}${Math.floor(parseInt(settings.backgroundColor[0].slice(2, 4), 16) * 0.7).toString(16).padStart(2, '0')}${Math.floor(parseInt(settings.backgroundColor[0].slice(4, 6), 16) * 0.7).toString(16).padStart(2, '0')}`
     : COLORS.AVATAR_BG_DARK;
 
   // Determine border style based on activity status
@@ -47,8 +41,12 @@ const AvatarMarker: React.FC<AvatarMarkerProps> = ({
   // SIMPLE: Show headline when active, don't show when inactive
   const showHeadline = isActive && headline;
 
+  // Wrapper component based on whether it's tappable
+  const Wrapper = onPress ? TouchableOpacity : View;
+  const wrapperProps = onPress ? { onPress, activeOpacity: 0.7 } : {};
+
   return (
-    <View style={{ alignItems: 'center' }}>
+    <Wrapper style={{ alignItems: 'center' }} {...wrapperProps}>
       {/* Speech Bubble with triangle tail */}
       {showHeadline && (
         <View style={{ marginBottom: 5, alignItems: 'center' }}>
@@ -81,7 +79,7 @@ const AvatarMarker: React.FC<AvatarMarkerProps> = ({
         </View>
       )}
 
-      {/* Avatar - Keep exactly as is */}
+      {/* Avatar */}
       <View
         style={[
           styles.avatarMarkerContainer,
@@ -94,12 +92,12 @@ const AvatarMarker: React.FC<AvatarMarkerProps> = ({
         ]}
       >
         {isActive ? (
-          <DiceBearAvatar settings={avatarSettings} size={size} />
+          <DiceBearAvatar settings={settings} size={size} />
         ) : (
-          <GrayscaleAvatar settings={avatarSettings} size={size} />
+          <GrayscaleAvatar settings={settings} size={size} />
         )}
       </View>
-    </View>
+    </Wrapper>
   );
 };
 

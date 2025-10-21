@@ -5,6 +5,7 @@ import * as Location from 'expo-location';
 import Header from '../components/Header';
 import BottomNavigation from '../components/BottomNavigation';
 import AvatarMarker from '../components/AvatarMarker';
+import UserInfoModal from '../components/UserInfoModal';
 import { styles, COLORS } from '../styles';
 import { MapScreenProps } from '../types';
 import { MAP_BOUNDARY_RADIUS } from '../constants/mapStyle';
@@ -44,6 +45,8 @@ const MapScreen: React.FC<MapScreenProps> = ({
   const [initialCameraPosition, setInitialCameraPosition] = useState<Coordinates | null>(null);
   const [nearbyUsers, setNearbyUsers] = useState<LocationUpdate[]>([]);
   const [hasLocationPermission, setHasLocationPermission] = useState<boolean>(false);
+  const [selectedUser, setSelectedUser] = useState<LocationUpdate | null>(null);
+  const [modalVisible, setModalVisible] = useState<boolean>(false);
 
   // Initialize location and socket on mount
   useEffect(() => {
@@ -197,6 +200,25 @@ const MapScreen: React.FC<MapScreenProps> = ({
     }
   };
 
+  const handleAvatarPress = (nearbyUser: LocationUpdate) => {
+    console.log('[MapScreen] Avatar pressed - User data:', {
+      username: nearbyUser.username,
+      headline: nearbyUser.headline,
+      pronouns: nearbyUser.pronouns,
+    });
+    setSelectedUser(nearbyUser);
+    setModalVisible(true);
+  };
+
+  const handleCurrentUserAvatarPress = () => {
+    onNavigateToSettings();
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setSelectedUser(null);
+  };
+
   const handleRegionDidChange = async () => {
     // Mapbox boundary enforcement
     // Note: Mapbox uses different approach - we'll handle in onCameraChanged
@@ -288,10 +310,11 @@ const MapScreen: React.FC<MapScreenProps> = ({
             anchor={{ x: 0.5, y: 0.5 }}
           >
             <AvatarMarker
-              avatarSettings={user.avatar_data}
+              settings={user.avatar_data}
               isActive={isActive}
               isCurrentUser={true}
               headline={user.headline}
+              onPress={handleCurrentUserAvatarPress}
             />
           </Mapbox.MarkerView>
 
@@ -304,10 +327,11 @@ const MapScreen: React.FC<MapScreenProps> = ({
               anchor={{ x: 0.5, y: 0.5 }}
             >
               <AvatarMarker
-                avatarSettings={nearbyUser.avatar_data}
+                settings={nearbyUser.avatar_data}
                 isActive={nearbyUser.is_active}
                 isCurrentUser={false}
                 headline={nearbyUser.headline}
+                onPress={() => handleAvatarPress(nearbyUser)}
               />
             </Mapbox.MarkerView>
           ))}
@@ -331,6 +355,20 @@ const MapScreen: React.FC<MapScreenProps> = ({
         onNavigateToSettings={onNavigateToSettings}
         userAvatarData={user.avatar_data}
       />
+
+      {/* User Info Modal */}
+      {selectedUser && (
+        <UserInfoModal
+          visible={modalVisible}
+          user={{
+            username: selectedUser.username,
+            headline: selectedUser.headline || '',
+            pronouns: selectedUser.pronouns,
+            avatar_data: selectedUser.avatar_data,
+          }}
+          onClose={handleCloseModal}
+        />
+      )}
     </View>
   );
 };

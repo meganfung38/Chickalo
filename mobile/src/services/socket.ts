@@ -20,6 +20,7 @@ export interface LocationUpdate {
   avatar_data: any;
   is_active: boolean;
   headline: string | null;
+  pronouns: string | null;
 }
 
 /**

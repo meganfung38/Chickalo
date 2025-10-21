@@ -740,4 +740,44 @@ export const styles = StyleSheet.create({
     color: COLORS.TEXT_PRIMARY,
     textAlign: 'center',
   },
+
+  // User Info Modal Specific Styles
+  userInfoModalContainer: {
+    backgroundColor: COLORS.WHITE,
+    borderRadius: SPACING.MD,
+    padding: SPACING.XL,
+    width: '80%',
+    maxWidth: 320,
+    alignItems: 'center',
+    shadowColor: COLORS.BLACK,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  userInfoAvatarContainer: {
+    marginTop: SPACING.MD,
+    marginBottom: SPACING.LG,
+  },
+  userInfoUsername: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.BOLD,
+    fontSize: TYPOGRAPHY.SIZES.XLARGE,
+    color: COLORS.TEXT_PRIMARY,
+    marginBottom: SPACING.SM,
+    textAlign: 'center',
+  },
+  userInfoHeadline: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.REGULAR,
+    fontSize: TYPOGRAPHY.SIZES.REGULAR,
+    color: COLORS.TEXT_SECONDARY,
+    marginBottom: SPACING.SM,
+    textAlign: 'center',
+    fontStyle: 'italic',
+  },
+  userInfoPronouns: {
+    fontFamily: TYPOGRAPHY.FONT_FAMILY.REGULAR,
+    fontSize: TYPOGRAPHY.SIZES.MEDIUM,
+    color: COLORS.TEXT_SECONDARY,
+    textAlign: 'center',
+  },
 });

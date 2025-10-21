@@ -73,5 +73,24 @@ export interface SettingsScreenProps {
   onUserUpdate: (updatedUser: User) => void;
 }
 
+export interface UserInfoModalProps {
+  visible: boolean;
+  user: {
+    username: string;
+    headline: string;
+    pronouns: string | null;
+    avatar_data: AvatarSettings;
+  };
+  onClose: () => void;
+}
+
+export interface AvatarMarkerProps {
+  settings: AvatarSettings;
+  isActive: boolean;
+  isCurrentUser: boolean;
+  headline: string | null;
+  onPress?: () => void;
+}
+
 // Screen types
 export type Screen = 'login' | 'register' | 'map' | 'settings';
