@@ -50,6 +50,18 @@ export interface DiceBearAvatarProps {
 export interface LoginScreenProps {
   onLogin: (token: string, user: User) => void;
   onNavigateToRegister: () => void;
+  onNavigateToForgotPassword?: () => void;
+}
+
+export interface ForgotPasswordScreenProps {
+  onBack: () => void;
+  onTokenSubmit?: (token: string) => void;
+}
+
+export interface ResetPasswordScreenProps {
+  token: string;
+  onSuccess: () => void;
+  onBack: () => void;
 }
 
 export interface RegisterScreenProps {
@@ -93,4 +105,4 @@ export interface AvatarMarkerProps {
 }
 
 // Screen types
-export type Screen = 'login' | 'register' | 'map' | 'settings';
+export type Screen = 'login' | 'register' | 'forgotPassword' | 'resetPassword' | 'map' | 'settings';

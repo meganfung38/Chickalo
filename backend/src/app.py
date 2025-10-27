@@ -1,12 +1,13 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit, join_room, leave_room
+from flask_mail import Mail, Message
 import os
 from dotenv import load_dotenv
 from database import db
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from auth import register_user, login_user, get_user_profile, update_user_headline, update_user_avatar, update_user_pronouns, update_user_activity, verify_jwt_token
+from auth import register_user, login_user, get_user_profile, update_user_headline, update_user_avatar, update_user_pronouns, update_user_activity, verify_jwt_token, request_password_reset, verify_reset_token, reset_password
 from location import update_user_location, delete_user_location, get_nearby_active_users
 
 load_dotenv()
@@ -14,6 +15,17 @@ load_dotenv()
 app = Flask(__name__)
 CORS(app)
 socketio = SocketIO(app, cors_allowed_origins="*")
+
+# Flask-Mail Configuration
+app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
+app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', 587))
+app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'True') == 'True'
+app.config['MAIL_USE_SSL'] = os.getenv('MAIL_USE_SSL', 'False') == 'True'
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER', os.getenv('MAIL_USERNAME'))
+
+mail = Mail(app)
 
 # Test database connection
 @app.route('/health', methods=['GET'])
@@ -67,6 +79,18 @@ def update_pronouns():
 @app.route('/api/auth/update-activity', methods=['PUT'])
 def update_activity():
     return update_user_activity()
+
+@app.route('/api/auth/forgot-password', methods=['POST'])
+def forgot_password():
+    return request_password_reset(mail)
+
+@app.route('/api/auth/verify-reset-token', methods=['POST'])
+def verify_token():
+    return verify_reset_token()
+
+@app.route('/api/auth/reset-password', methods=['POST'])
+def reset_password_route():
+    return reset_password()
 
 # Store active user sessions (user_id -> socket_id mapping)
 active_users = {}

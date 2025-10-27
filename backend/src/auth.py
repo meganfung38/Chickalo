@@ -2,10 +2,16 @@ import bcrypt
 import jwt
 import secrets
 import string
+import re
 from datetime import datetime, timedelta
 from flask import request, jsonify
 from database import db
 import psycopg2.extras
+
+def is_valid_email(email):
+    """Validate email format using regex"""
+    email_regex = r'^[^\s@]+@[^\s@]+\.[^\s@]+$'
+    return re.match(email_regex, email.strip()) is not None
 
 def generate_username():
     """Generate a random username like 'JadeStoneGecko32'"""
@@ -132,6 +138,10 @@ def register_user():
         if not email or not password:
             return jsonify({'error': 'Email and password are required'}), 400
         
+        # Validate email format
+        if not is_valid_email(email):
+            return jsonify({'error': 'Invalid email format'}), 400
+        
         # Check if user already exists
         conn = db.get_connection()
         cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
@@ -184,6 +194,10 @@ def login_user():
         
         if not email or not password:
             return jsonify({'error': 'Email and password are required'}), 400
+        
+        # Validate email format
+        if not is_valid_email(email):
+            return jsonify({'error': 'Invalid email format'}), 400
         
         # Find user
         conn = db.get_connection()
@@ -302,3 +316,184 @@ def update_user_activity():
         'Activity status updated successfully',
         'Failed to update activity status.'
     )
+
+def generate_reset_token():
+    """Generate a secure random token for password reset"""
+    return secrets.token_urlsafe(32)
+
+def validate_reset_token(token: str):
+    """
+    Validate a password reset token.
+    
+    Args:
+        token: The reset token to validate
+    
+    Returns:
+        tuple: (is_valid: bool, reset_token_data: dict | None, error_message: str | None)
+    """
+    if not token:
+        return False, None, 'Token is required'
+    
+    conn = db.get_connection()
+    cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+    cursor.execute("""
+        SELECT id, user_id, expires_at, used 
+        FROM password_reset_tokens 
+        WHERE token = %s
+    """, (token,))
+    reset_token = cursor.fetchone()
+    cursor.close()
+    db.return_connection(conn)
+    
+    if not reset_token:
+        return False, None, 'Invalid or expired token'
+    
+    if reset_token['used']:
+        return False, None, 'Token has already been used'
+    
+    if datetime.utcnow() > reset_token['expires_at']:
+        return False, None, 'Token has expired'
+    
+    return True, reset_token, None
+
+def request_password_reset(mail=None):
+    """Request a password reset - generates token and sends email"""
+    try:
+        data = request.get_json()
+        email = data.get('email')
+        
+        if not email:
+            return jsonify({'error': 'Email is required'}), 400
+        
+        # Validate email format
+        if not is_valid_email(email):
+            return jsonify({'error': 'Invalid email format'}), 400
+        
+        # Check if user exists
+        conn = db.get_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cursor.execute("SELECT id, email, username FROM users WHERE email = %s", (email.strip(),))
+        user = cursor.fetchone()
+        
+        # Always return success message (security: don't reveal if email exists)
+        if not user:
+            cursor.close()
+            db.return_connection(conn)
+            return jsonify({'message': 'If an account exists with this email, a password reset link has been sent'}), 200
+        
+        # Generate reset token
+        reset_token = generate_reset_token()
+        expires_at = datetime.utcnow() + timedelta(minutes=15)  # Token expires in 15 minutes
+        
+        # Invalidate all previous unused tokens for this user (only latest token should work)
+        cursor.execute("""
+            UPDATE password_reset_tokens 
+            SET used = %s 
+            WHERE user_id = %s AND used = %s
+        """, (True, user['id'], False))
+        
+        invalidated_count = cursor.rowcount
+        print(f"[PASSWORD RESET] Invalidated {invalidated_count} old tokens for user {user['id']}")
+        
+        # Store new token in database
+        cursor.execute("""
+            INSERT INTO password_reset_tokens (user_id, token, expires_at, used)
+            VALUES (%s, %s, %s, %s)
+        """, (user['id'], reset_token, expires_at, False))
+        conn.commit()
+        
+        print(f"[PASSWORD RESET] Created new token for user {user['id']}, expires at {expires_at}")
+        cursor.close()
+        db.return_connection(conn)
+        
+        # Send email if mail instance is provided
+        if mail:
+            from email_utils import send_password_reset_email
+            email_sent = send_password_reset_email(mail, user['email'], user['username'], reset_token)
+            if not email_sent:
+                print(f"[WARNING] Email failed to send, but token created for user {user['id']}")
+        else:
+            # Fallback: Log token to console (development mode)
+            reset_link = f"chickalo://reset-password?token={reset_token}"
+            print(f"[PASSWORD RESET] User: {user['username']} ({user['email']})")
+            print(f"[PASSWORD RESET] Token: {reset_token}")
+            print(f"[PASSWORD RESET] Link: {reset_link}")
+            print(f"[PASSWORD RESET] Expires: {expires_at}")
+        
+        return jsonify({'message': 'If an account exists with this email, a password reset link has been sent'}), 200
+        
+    except Exception as e:
+        if 'conn' in locals():
+            conn.rollback()
+        print(f"Password reset request error: {str(e)}")
+        return jsonify({'error': 'An error occurred. Please try again.'}), 500
+
+def verify_reset_token():
+    """Verify if a reset token is valid"""
+    try:
+        data = request.get_json()
+        token = data.get('token')
+        
+        is_valid, reset_token_data, error_message = validate_reset_token(token)
+        
+        if not is_valid:
+            return jsonify({'error': error_message}), 400
+        
+        return jsonify({'message': 'Token is valid'}), 200
+        
+    except Exception as e:
+        print(f"Verify reset token error: {str(e)}")
+        return jsonify({'error': 'An error occurred. Please try again.'}), 500
+
+def reset_password():
+    """Reset password using valid token"""
+    try:
+        data = request.get_json()
+        token = data.get('token')
+        new_password = data.get('password')
+        
+        if not token or not new_password:
+            return jsonify({'error': 'Token and new password are required'}), 400
+        
+        # Validate password length
+        if len(new_password) < 6:
+            return jsonify({'error': 'Password must be at least 6 characters long'}), 400
+        
+        # Validate token
+        is_valid, reset_token, error_message = validate_reset_token(token)
+        
+        if not is_valid:
+            return jsonify({'error': error_message}), 400
+        
+        # Hash new password
+        password_hash = hash_password(new_password)
+        
+        # Update user's password and mark token as used (transaction)
+        conn = db.get_connection()
+        cursor = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        
+        cursor.execute("""
+            UPDATE users 
+            SET password_hash = %s, updated_at = %s 
+            WHERE id = %s
+        """, (password_hash, datetime.utcnow(), reset_token['user_id']))
+        
+        cursor.execute("""
+            UPDATE password_reset_tokens 
+            SET used = %s 
+            WHERE id = %s
+        """, (True, reset_token['id']))
+        
+        conn.commit()
+        cursor.close()
+        db.return_connection(conn)
+        
+        print(f"[PASSWORD RESET] Password successfully reset for user_id: {reset_token['user_id']}")
+        
+        return jsonify({'message': 'Password has been reset successfully'}), 200
+        
+    except Exception as e:
+        if 'conn' in locals():
+            conn.rollback()
+        print(f"Reset password error: {str(e)}")
+        return jsonify({'error': 'An error occurred. Please try again.'}), 500

@@ -3,6 +3,8 @@ import { View, Alert, Text } from 'react-native';
 import { useFonts, LeagueSpartan_400Regular, LeagueSpartan_700Bold } from '@expo-google-fonts/league-spartan';
 import LoginScreen from './src/screens/LoginScreen';
 import RegisterScreen from './src/screens/RegisterScreen';
+import ForgotPasswordScreen from './src/screens/ForgotPasswordScreen';
+import ResetPasswordScreen from './src/screens/ResetPasswordScreen';
 import MapScreen from './src/screens/MapScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import { authAPI, storageAPI } from './src/services/api';
@@ -12,6 +14,7 @@ import { initializeSocket, disconnectSocket, setCurrentUserStatus } from './src/
 
 const App: React.FC = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>('login');
+  const [resetToken, setResetToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isActive, setIsActive] = useState<boolean>(false);
@@ -135,6 +138,7 @@ const App: React.FC = () => {
           <LoginScreen
             onLogin={handleLogin}
             onNavigateToRegister={() => setCurrentScreen('register')}
+            onNavigateToForgotPassword={() => setCurrentScreen('forgotPassword')}
           />
         );
       case 'register':
@@ -144,6 +148,30 @@ const App: React.FC = () => {
             onNavigateToLogin={() => setCurrentScreen('login')}
           />
         );
+      case 'forgotPassword':
+        return (
+          <ForgotPasswordScreen
+            onBack={() => setCurrentScreen('login')}
+            onTokenSubmit={(token) => {
+              setResetToken(token);
+              setCurrentScreen('resetPassword');
+            }}
+          />
+        );
+      case 'resetPassword':
+        return resetToken ? (
+          <ResetPasswordScreen
+            token={resetToken}
+            onSuccess={() => {
+              setResetToken(null);
+              setCurrentScreen('login');
+            }}
+            onBack={() => {
+              setResetToken(null);
+              setCurrentScreen('login');
+            }}
+          />
+        ) : null;
       case 'map':
         return user ? (
           <MapScreen

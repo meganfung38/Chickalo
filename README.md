@@ -8,7 +8,9 @@
 
 **[Demo Recordings](https://drive.google.com/drive/folders/1gJCFfIW81ThgoIUujnJcwPUEaK-cnli_?usp=sharing)**
 
-**[Demo #2](docs-and-resources/DEMO.MOV)**
+**[Demo: General Workflow](docs-and-resources/DEMO.MOV)**
+
+**[Demo: Authentication System](docs-and-resources/AUTH_DEMO.mov)**
 
 **[Proposal](https://docs.google.com/document/d/15G8fIXyQHO87AUUBRo3NkDl85nDPth-3gokQ9nyrrN0/edit?usp=sharing)**
 
@@ -29,20 +31,20 @@ Chickalo provides a low-stakes, gamified way to signal openness to interaction w
 ## Features
 
 ### Implemented
-- **Authentication**: Secure registration/login with JWT tokens, session persistence
+- **Authentication**: JWT tokens, bcrypt password hashing, session persistence
+- **Email Validation**: Frontend regex + backend validation for all auth endpoints
+- **Password Reset**: Secure token-based flow with email delivery, 15-minute expiration, single-use tokens
 - **Profile Management**: Customizable avatars (DiceBear), headlines, pronouns
 - **Activity Toggle**: Control visibility on map (active = visible, inactive = hidden)
 - **Real-time Map**: Mapbox integration with 3D buildings, GPS tracking, live location updates
-- **Tracking**: Continuous location updates (1-second GPS polling, smooth avatar movement)
-- **Smart Location Broadcasting**: Debounced network emissions (5m threshold or 2s intervals) to optimize performance
-- **Multi-User Real-Time**: Bidirectional Socket.io broadcasting, users see each other instantly when nearby
+- **Continuous Tracking**: 1-second GPS polling with smooth avatar gliding
+- **Smart Broadcasting**: Location emitted only when moved 5m+ or after 2s intervals
+- **Multi-User Real-Time**: Bidirectional Socket.io with room-based broadcasting
 - **Production Server**: Gunicorn + eventlet for stable WebSocket connections
-- **Avatar System**: 7 customization categories (hair, eyes, accessories, etc.) with randomization
-- **Settings Interface**: Edit profile, randomize avatar, save preferences
-- **Modern UI**: Dynamic theme colors (green/orange), floating navigation, responsive design
-- **Speech Bubbles**: Headlines displayed above avatars on map with matching colors
-- **Activity-Synced Borders**: Avatar borders change color based on activity status (green = active, orange = inactive)
-- **User Interaction**: Tap avatars to view profiles (username, headline, pronouns); tap own avatar to navigate to settings
+- **Avatar System**: 7 customization categories with 50+ options
+- **Speech Bubbles**: Headlines displayed above avatars with color-matched backgrounds
+- **Activity-Synced Borders**: Dynamic border colors (green = active, orange = inactive)
+- **User Interaction**: Tap avatars to view profiles; tap own avatar for settings
 
 ### Future (Post-MVP)
 - Anonymous messaging between nearby users
@@ -57,11 +59,12 @@ Chickalo provides a low-stakes, gamified way to signal openness to interaction w
 | Layer | Technologies |
 |-------|-------------|
 | **Frontend** | React Native, Expo, TypeScript, Mapbox (@rnmapbox/maps) |
-| **Backend** | Python, Flask, Flask-SocketIO, Gunicorn + eventlet |
+| **Backend** | Python, Flask, Flask-SocketIO, Flask-Mail, Gunicorn + eventlet |
 | **Database** | PostgreSQL (connection pooling, JSONB for avatar data) |
 | **Real-time** | Socket.io (bidirectional broadcasting, room-based updates) |
 | **Location** | expo-location (GPS), Haversine distance calculations |
-| **Auth** | JWT tokens, bcrypt password hashing |
+| **Auth** | JWT tokens, bcrypt hashing, secure token-based password reset |
+| **Email** | Flask-Mail with Gmail SMTP |
 | **Development** | Xcode (iOS builds), Expo Dev Client |
 
 ---
@@ -76,6 +79,8 @@ Chickalo/
 │   │   ├── screens/            # Full-screen components
 │   │   │   ├── LoginScreen.tsx
 │   │   │   ├── RegisterScreen.tsx
+│   │   │   ├── ForgotPasswordScreen.tsx
+│   │   │   ├── ResetPasswordScreen.tsx
 │   │   │   ├── MapScreen.tsx
 │   │   │   └── SettingsScreen.tsx
 │   │   ├── components/         # Reusable UI components
@@ -87,7 +92,7 @@ Chickalo/
 │   │   │   ├── GrayscaleAvatar.tsx       # Inactive avatar rendering
 │   │   │   └── ActivityBorderedAvatar.tsx # Avatar with activity-synced border
 │   │   ├── services/           # External service integrations
-│   │   │   ├── api.ts          # REST API client
+│   │   │   ├── api.ts          # REST API client + AsyncStorage wrapper
 │   │   │   └── socket.ts       # Socket.io client for real-time updates
 │   │   ├── utils/              # Helper functions
 │   │   │   ├── validation.ts   # Form validation utilities
@@ -109,11 +114,12 @@ Chickalo/
 ├── backend/                     # Flask API
 │   ├── src/
 │   │   ├── app.py              # Flask routes + Socket.io event handlers
-│   │   ├── auth.py             # User authentication, profile updates (JWT)
+│   │   ├── auth.py             # Authentication, password reset, profile updates
+│   │   ├── email_utils.py      # Email templates and sending logic
 │   │   ├── location.py         # GPS storage, proximity calculations (Haversine)
 │   │   └── database.py         # PostgreSQL connection pooling
 │   ├── database/
-│   │   └── schema.sql          # Database schema (users, user_locations, friends)
+│   │   └── schema.sql          # Database schema (users, user_locations, password_reset_tokens)
 │   ├── requirements.txt        # Python dependencies
 │   └── venv/                   # Virtual environment (not in git)
 │
@@ -190,12 +196,13 @@ cd mobile && npx expo run:ios --device
 ## How It Works
 
 ### User Flow
-1. **Register/Login** → Create account with email/password
-2. **Customize Avatar** → DiceBear avatars with 7 categories (hair, eyes, accessories)
-3. **Toggle Activity** → Turn ON to appear on map, OFF to hide
-4. **View Map** → See nearby active users within ~250 feet
-5. **Tap Avatars** → View other users' profiles (username, headline, pronouns)
-6. **Update Profile** → Edit headline, pronouns, avatar in Settings
+1. **Register/Login** → Create account with validated email/password
+2. **Forgot Password** (Optional) → Request reset code via email, enter 6-character code, set new password
+3. **Customize Avatar** → 7 categories with 50+ options (hair, eyes, accessories, etc.)
+4. **Toggle Activity** → ON = visible on map, OFF = hidden from others
+5. **View Map** → See nearby active users within ~250 feet, smooth GPS tracking
+6. **Interact** → Tap others' avatars to view profiles, tap own avatar for settings
+7. **Update Profile** → Edit headline, pronouns, avatar; changes sync in real-time
 
 ### Location & Privacy
 - **GPS Tracking**: Only when activity is ON, continuous 1-second polling
@@ -216,9 +223,11 @@ cd mobile && npx expo run:ios --device
 
 | Screen | Purpose |
 |--------|---------|
-| **LoginScreen** | Email/password authentication |
+| **LoginScreen** | Email/password authentication, forgot password link |
 | **RegisterScreen** | Account creation with validation (email format, password min 6 chars) |
-| **MapScreen** | Mapbox map with user's avatar + nearby active users |
+| **ForgotPasswordScreen** | Request reset code via email, enter code for verification |
+| **ResetPasswordScreen** | Set new password with confirmed token |
+| **MapScreen** | Mapbox map with user's avatar + nearby active users, tappable markers |
 | **SettingsScreen** | Profile editing, avatar customization, logout |
 
 ### UI Components
@@ -244,11 +253,18 @@ cd mobile && npx expo run:ios --device
 - **ON DELETE CASCADE**: Location deleted when user is deleted
 - **UNIQUE(user_id)**: One location per user
 
+### `password_reset_tokens`
+- `id`, `user_id` (FK to users), `token` (unique), `expires_at`, `used` (boolean), `created_at`
+- **ON DELETE CASCADE**: Tokens deleted when user is deleted
+- **15-minute expiration**: Tokens valid for 15 minutes after creation
+- **Single-use**: Tokens marked as `used = true` after password reset
+- **Invalidation**: New token requests invalidate all previous unused tokens for that user
+
 ### `friends` (future)
 - `id`, `user1_id`, `user2_id`, `status`, `created_at`
 
 ### Indexes
-- `idx_user_locations_user_id`, `idx_users_active` for performance
+- `idx_user_locations_user_id`, `idx_users_active`, `idx_password_reset_tokens_token`, `idx_password_reset_tokens_user_id` for performance
 
 ---
 
@@ -261,8 +277,16 @@ cd mobile && npx expo run:ios --device
 
 ### Validation
 - **Frontend**: Real-time form validation (email regex, password min 6 chars, password matching)
-- **Backend**: Server-side validation, generic error messages (no internal details exposed)
+- **Backend**: Server-side email format validation, password length checks, generic error messages (no internal details exposed)
 - **Database**: Unique constraints (email, username), foreign key integrity
+
+### Password Reset
+- **Secure Tokens**: 6-character cryptographically random codes (`secrets.token_urlsafe`)
+- **Token Expiration**: 15-minute validity window
+- **Single Use**: Tokens marked as `used = true` after successful password reset
+- **Token Invalidation**: New requests invalidate all previous unused tokens for that user
+- **Email Delivery**: Branded HTML emails via Flask-Mail (Gmail SMTP)
+- **Security**: Generic responses don't reveal if email exists in system
 
 ### Privacy
 - **Activity Control**: Users choose when to be visible
@@ -294,24 +318,32 @@ cd mobile && npx expo run:ios --device
 2. Enter email (validated), password (min 6 chars), confirm password
 3. Optional headline → Button enables when valid → Random avatar assigned
 
+### Password Reset Flow
+1. Login screen → "Forgot password?" link
+2. Enter email → Request reset code
+3. Check email for 6-character code
+4. Enter code → Verify validity
+5. Set new password → Confirm password → Reset complete
+
 ### Map Flow
 1. Login → Navigate to map
-2. Toggle activity ON → Avatar appears on map (colored)
-3. Toggle activity OFF → Avatar turns grayscale, location hidden from others
-4. Tap other users' avatars → View their profile in modal
+2. Toggle activity ON → Avatar appears on map with green border
+3. Toggle activity OFF → Avatar turns grayscale, location hidden
+4. Tap other users' avatars → View profile modal (username, headline, pronouns)
 5. Tap own avatar → Navigate to Settings screen
 
 ### Profile Management
-1. Navigate to Settings (tap avatar in nav bar)
-2. Edit headline/pronouns → Save → Changes reflect immediately
-3. Customize Avatar → Randomize or select options → Save
+1. Settings screen (tap avatar in nav bar)
+2. Edit headline/pronouns → Save → Real-time sync
+3. Customize Avatar → Randomize or manual selection → Save
 
 ---
 
 ## Development Status
 
-**Phase**: Active Development (MVP Complete + Multi-User Testing)  
-**Next Steps**: Performance optimization, messaging system, safety features
+**Phase**: MVP Complete  
+**Current**: Multi-user testing, password reset implementation  
+**Next**: Performance optimization, messaging system, safety features
 
 **Contact**: mfung06@calpoly.edu  
 **Institution**: Cal Poly San Luis Obispo (Senior Project)

@@ -249,6 +249,9 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
+  spacedLinkContainer: {
+    marginTop: SPACING.MD,
+  },
 
   // ===================
   // FORM ELEMENTS

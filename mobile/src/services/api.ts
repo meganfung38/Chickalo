@@ -63,6 +63,22 @@ export const authAPI = {
 
   updateActivity: async (isActive: boolean) => 
     updateUserField('/api/auth/update-activity', { is_active: isActive }),
+
+  // Password reset functions
+  requestPasswordReset: async (email: string) => {
+    const response = await api.post('/api/auth/forgot-password', { email });
+    return response.data;
+  },
+
+  verifyResetToken: async (token: string) => {
+    const response = await api.post('/api/auth/verify-reset-token', { token });
+    return response.data;
+  },
+
+  resetPassword: async (token: string, password: string) => {
+    const response = await api.post('/api/auth/reset-password', { token, password });
+    return response.data;
+  },
 };
 
 export const storageAPI = {

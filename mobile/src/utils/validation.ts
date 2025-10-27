@@ -42,6 +42,11 @@ export const ValidationUtils = {
     
     return null; // No validation errors
   },
+
+  // Extract error message from API response
+  getErrorMessage: (error: any, fallback: string = 'An error occurred. Please try again.'): string => {
+    return error?.response?.data?.error || fallback;
+  },
 };
 
 // Form validation for registration

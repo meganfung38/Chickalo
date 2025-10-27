@@ -9,11 +9,11 @@ import {
   Platform,
 } from 'react-native';
 import { authAPI, storageAPI } from '../services/api';
-import { styles } from '../styles';
+import { styles, SPACING } from '../styles';
 import { LoginScreenProps } from '../types';
 import { ValidationUtils } from '../utils/validation';
 
-const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onNavigateToRegister }) => {
+const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onNavigateToRegister, onNavigateToForgotPassword }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,7 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onNavigateToRegister
       await storageAPI.setToken(response.token);
       onLogin(response.token, response.user);
     } catch (error: any) {
-      Alert.alert('Login Failed', error.response?.data?.error || 'An error occurred during login');
+      Alert.alert('Login Failed', ValidationUtils.getErrorMessage(error, 'An error occurred during login'));
     } finally {
       setLoading(false);
     }
@@ -76,6 +76,10 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ onLogin, onNavigateToRegister
             <Text style={[styles.buttonText, !isFormValid && styles.buttonTextDisabled]}>
               {loading ? 'Signing In...' : 'Sign In'}
             </Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={onNavigateToForgotPassword} style={{ marginTop: SPACING.MD }}>
+            <Text style={styles.linkText}>Forgot password?</Text>
           </TouchableOpacity>
         </View>
         
