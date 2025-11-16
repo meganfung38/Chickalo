@@ -24,29 +24,29 @@
 ### **Timeline: 1 Week Before Test**
 
 #### **Recruiter Checklist**
-- [Y] Recruit 5 testers (diverse demographics: ages 18-30, mix of tech-savvy and non-tech users)
-- [Y] Gather device information from each tester:
-  - [Y] Device model (iPhone 11+, iPad)
-  - [Y] iOS version (iOS 14+)
-  - [Y] Apple ID email (for device provisioning if needed)
-- [Y] Send **[pre-test questionnaire](https://docs.google.com/forms/d/e/1FAIpQLSfcLzJ-PGOEKLCXJnfIAYudrniCwz_ROOA6tRDlv80ILDaQ9Q/viewform?usp=header)** to gauge expectations
-- [Y] Reserve public testing location (ensure WiFi availability-- must be on same network for local installation)
+- Recruit 5 testers (diverse demographics: ages 18-30, mix of tech-savvy and non-tech users)
+- Gather device information from each tester:
+  - Device model (iPhone 11+, iPad)
+  - iOS version (iOS 14+)
+  - Apple ID email (for device provisioning if needed)
+- Send **[pre-test questionnaire](https://docs.google.com/forms/d/e/1FAIpQLSfcLzJ-PGOEKLCXJnfIAYudrniCwz_ROOA6tRDlv80ILDaQ9Q/viewform?usp=header)** to gauge expectations
+- Reserve public testing location (ensure WiFi availability-- must be on same network for local installation)
 
 #### **Technical Preparation**
-- [ ] Update backend IP address to test location's network
-- [ ] Test backend stability with Gunicorn + eventlet
-- [ ] Verify database is clean (reset test accounts if needed)
-- [Y] Prepare production-ready app version 
-- [Y] Test multi-user scenario with 2-3 devices beforehand
+- Update backend IP address to test location's network
+- Test backend stability with Gunicorn + eventlet
+- Verify database is clean (reset test accounts if needed)
+- Prepare production-ready app version 
+- Test multi-user scenario with 2-3 devices beforehand
 
 #### **Materials to Bring**
-- [ ] Laptop with backend running
-- [ ] Mobile hotspot (backup if location WiFi fails)
-- [Y] Instruction sheet (**[quick start guide](https://docs.google.com/document/d/1MDITFQ17ozD3jxaWJT3qKDmcp6u9juWttqFR0zN1vyo/edit?usp=sharing)**)
-- [Y] Feedback survey form
-- [ ] Charging cables and power bank
-- [ ] Notebook for observational notes
-- [ ] Camera/phone for recording (with permission)
+- Laptop with backend running
+- Mobile hotspot (backup if location WiFi fails)
+- Instruction sheet (**[quick start guide](https://docs.google.com/document/d/1MDITFQ17ozD3jxaWJT3qKDmcp6u9juWttqFR0zN1vyo/edit?usp=sharing)**)
+- Feedback survey form
+- Charging cables and power bank
+- Notebook for observational notes
+- Camera/phone for recording (with permission)
 
 ---
 
@@ -131,8 +131,6 @@ curl http://localhost:3000/api/auth/profile
 
 ### **Phase 2: Device Setup (60-90 min, participants present)**
 
-#### **Option A: Pre-Built App Installation (Recommended)**
-
 **Prerequisites for Each Tester:**
 1. iPhone or iPad with iOS 14+
 2. Device connected to same WiFi as backend
@@ -152,7 +150,7 @@ curl http://localhost:3000/api/auth/profile
 
 ---
 
-**Method 2: Manual Registration in Xcode (If Automatic Fails)**
+**Manual Registration in Xcode**
 
 1. **Open Xcode and Select Project**
 
@@ -180,12 +178,6 @@ curl http://localhost:3000/api/auth/profile
    - Sign in with your Apple ID
    - Click "Devices" → "All"
    - You should see the device listed with its name and UDID
-
----
-
-#### **Installation Steps (PER DEVICE - Repeat 5 Times)**
-
-**⏱️ Time: 10-15 minutes per device**
 
 ---
 
