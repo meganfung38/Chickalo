@@ -21,8 +21,6 @@
 
 ## Pre-Test Preparation
 
-### **Timeline: 1 Week Before Test**
-
 #### **Recruiter Checklist**
 - Recruit 5 testers (diverse demographics: ages 18-30, mix of tech-savvy and non-tech users)
 - Gather device information from each tester:
