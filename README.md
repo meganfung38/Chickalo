@@ -5,6 +5,7 @@
 [![Tech Stack](https://img.shields.io/badge/Stack-React_Native_+_Flask_+_PostgreSQL-blue)]()
 [![Status](https://img.shields.io/badge/Status-Active_Development-green)]()
 
+**[Testing Results](docs-and-resources/testing/TESTING_RESULTS_SUMMARY.md)**
 
 **[Demo Recordings](https://drive.google.com/drive/folders/1gJCFfIW81ThgoIUujnJcwPUEaK-cnli_?usp=sharing)**
 
